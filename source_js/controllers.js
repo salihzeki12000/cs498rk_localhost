@@ -42,3 +42,18 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function
   };
 
 }]);
+
+
+mp4Controllers.controller('CreateHostAdController', ['$scope' , '$window' , function($scope, $window) {
+  $scope.text = "HELLOOOOO";
+  $scope.address = "";
+  $scope.bio = "";
+  $scope.roomTypes = [{"name": "Single Bed", "value": "Single Bed"}]
+  $scope.roomType = $scope.roomTypes[0];
+  $scope.date = "";
+  $scope.tags = [];
+  $scope.submitForm = function(){
+    console.log("horray");
+  }
+
+}]);

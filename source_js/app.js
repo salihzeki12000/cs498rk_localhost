@@ -18,6 +18,10 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/llamalist.html',
     controller: 'LlamaListController'
   }).
+  when('/createHostAd', {
+    templateUrl: 'partials/createHostAd.html',
+    controller: 'CreateHostAdController'
+  }).
   otherwise({
     redirectTo: '/settings'
   });

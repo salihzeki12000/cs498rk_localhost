@@ -1,0 +1,47 @@
+<div ng-controller='CreateHostAdController' class="container">
+<h2>Post a Host Ad</h2>		
+	<form class="row">
+		<div class="col-md-3">
+			<div class="form-group row">
+				<img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
+				<input type="file"/>
+			</div>
+			<div class="form-group row">
+				<label for="tags" class="control-label">Tags</label>
+				<input ng-model="tags" id="tags" class="form-control"/>
+				<p>Dancing x</p>
+			</div>
+			<div class="form-group">
+				<button ng-click="submitForm()" class="btn btn-success btn-lg">Submit</button>
+			</div>
+		</div>
+		<div class="col-md-5">
+			<div class="form-group row">
+				<label for="address" class="control-label">Address</label>
+				<input ng-model="address" id="address" class="form-control" placeholder="123 Main St"/>
+			</div>
+			<div class="form-group row">
+				<label for="bio" class="control-label">Bio - tell us about yourself</label>
+				<textarea ng-model="bio" class="form-control" id="bio"></textarea>
+			</div>
+			<div class="form-group row">
+				<label for="room" class="col-sm-3 control-label">Room Type</label>
+				<select ng-model="roomType" ng-options="name for room in roomTypes" id="room" class="col-sm-10 form-control"></select>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-4"><img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
+				<input type="file"/></div>
+				<div class="col-md-4"><img ng-src="http://i.imgur.com/MYCsJyAb.jpg"><input type="file"/></div>
+				<div class="col-md-4"><img ng-src="http://i.imgur.com/MYCsJyAb.jpg"><input type="file"/></div>
+			</div>
+			<div style="text-align:center">Pictures of my home</div>
+
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label for="date" class="control-label">Date</label>
+				<input ng-model="date" id="date" type="date" placeholder="we'll put a plugin here" class="form-control"/>
+			</div>
+		</div>
+	</form>
+</div>
