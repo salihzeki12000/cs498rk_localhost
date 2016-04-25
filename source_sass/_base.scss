@@ -1,4 +1,4 @@
-// Add any custom Sass & CSS here
+/* CREATE AD PG */
 .form-control {
 	width: 85%;
 }
@@ -6,4 +6,82 @@
 #room{
 	display: inline;
 	width: 55% !important;
+}
+
+
+/* INDEX */
+.navbar {
+	width:100%;
+	.nav {
+		#profile-img {
+			border-radius: 50%;
+			height: 27px;
+		}
+	}
+}
+
+/* LANDING PG */
+header {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  background-position: center;
+  background-image: url('http://randomwallpapers.net/new-york-city-landscape-usa-world-1920x1080-wallpaper331510.jpg');
+  text-align: center;
+  color: white;
+  .header-content {
+      position: relative;
+      text-align: center;
+      padding: 100px 15px 100px;
+      width: 100%;
+      .header-content-inner {
+          h1 {
+              font-weight: 700;
+              text-transform: uppercase;
+              margin-top: 0;
+              margin-bottom: 0;
+          }
+					hr {
+              margin: 30px auto;
+          }
+          p {
+              font-weight: 300;
+              color: fade(white, 70%);
+              font-size: 16px;
+              margin-bottom: 50px;
+          }
+      }
+  }
+}
+
+section {
+  padding: 100px 0;
+}
+
+#custom-search-input{
+  padding: 3px;
+  border: solid 1px #E4E4E4;
+  border-radius: 6px;
+  background-color: #fff;
+	input{
+	    border: 0;
+	    box-shadow: none;
+	}
+	button{
+	    margin: 2px 0 0 0;
+	    background: none;
+	    box-shadow: none;
+	    border: 0;
+	    color: #666666;
+	    padding: 0 8px 0 10px;
+	    border-left: solid 1px #ccc;
+	}
+	button:hover{
+	    border: 0;
+	    box-shadow: none;
+	    border-left: solid 1px #ccc;
+	}
+	.glyphicon-search{
+	    font-size: 23px;
+	}
 }

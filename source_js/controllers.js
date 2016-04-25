@@ -1,6 +1,6 @@
 var mp4Controllers = angular.module('mp4Controllers', []);
 
-mp4Controllers.controller('FirstController', ['$scope', 'CommonData'  , function($scope, CommonData) {
+mp4Controllers.controller('SignupController', ['$scope', 'CommonData'  , function($scope, CommonData) {
   $scope.data = "";
    $scope.displayText = ""
 
@@ -12,7 +12,7 @@ mp4Controllers.controller('FirstController', ['$scope', 'CommonData'  , function
 
 }]);
 
-mp4Controllers.controller('SecondController', ['$scope', 'CommonData' , function($scope, CommonData) {
+mp4Controllers.controller('LoginController', ['$scope', 'CommonData' , function($scope, CommonData) {
   $scope.data = "";
 
   $scope.getData = function(){
@@ -23,7 +23,7 @@ mp4Controllers.controller('SecondController', ['$scope', 'CommonData' , function
 }]);
 
 
-mp4Controllers.controller('LlamaListController', ['$scope', '$http', 'Llamas', '$window' , function($scope, $http,  Llamas, $window) {
+mp4Controllers.controller('ProfileController', ['$scope', '$http', 'Llamas', '$window' , function($scope, $http,  Llamas, $window) {
 
   Llamas.get().success(function(data){
     $scope.llamas = data;
