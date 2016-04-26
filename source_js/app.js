@@ -26,6 +26,22 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/landingPage.html',
     controller: 'CreateHostAdController'
   }).
+  when('/travellerhost', {
+    templateUrl: 'partials/hostOrTraveller.html',
+    controller: 'CreateHostAdController'
+  }).
+  when('/travellersearch', {
+    templateUrl: 'partials/travellerSearch.html',
+    controller: 'CreateHostAdController'
+  }).
+  when('/hostbio', {
+    templateUrl: 'partials/hostBio.html',
+    controller: 'CreateHostAdController'
+  }).
+  when('/searchads', {
+    templateUrl: 'partials/searchAds.html',
+    controller: 'CreateHostAdController'
+  }).
   otherwise({
     redirectTo: '/landing'
   });

@@ -1,13 +1,17 @@
 var mp4Controllers = angular.module('mp4Controllers', []);
 
-mp4Controllers.controller('SignupController', ['$scope', 'CommonData'  , function($scope, CommonData) {
+mp4Controllers.controller('LandingPageController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
   $scope.data = "";
    $scope.displayText = ""
 
-  $scope.setData = function(){
-    CommonData.setData($scope.data);
-    $scope.displayText = "Data set"
+}]);
 
+mp4Controllers.controller('SignupController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
+  $scope.data = "";
+   $scope.displayText = ""
+
+  $scope.signup = function(){
+    $window.location.href= "#/travellerhost";
   };
 
 }]);

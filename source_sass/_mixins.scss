@@ -1,2 +1,7 @@
 // Insert your mixins
-// Mixins
+@mixin transition($seconds) {
+	-webkit-transition: all $seconds ease;
+	-moz-transition: all $seconds ease;
+	-o-transition: all $seconds ease;
+	-ms-transition: all $seconds ease;
+}
