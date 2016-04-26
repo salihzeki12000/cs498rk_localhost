@@ -1,23 +1,25 @@
-<div class="list" ng-controller='LoginController'>
-  <header>
-        <div class="header-content">
-            <div class="header-content-inner">
-                <h1>Get the Local Experience</h1>
-                <hr>
-                <p>Stay with locals and explore new cities off the beaten path</p>
-                <div id="custom-search-input">
-                  <div class="input-group col-md-12">
-                      <input type="text" class="form-control input-lg" placeholder="Choose a City..." />
-                      <span class="input-group-btn">
-                          <button class="btn btn-info btn-lg" type="button">
-                              <i class="glyphicon glyphicon-search"></i>
-                          </button>
-                      </span>
-                    </div>
-                </div>
-                <a href="#/landing/#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
-            </div>
-        </div>
+<div class="list" ng-controller='LandingPageController'>
+    <header class="landing">
+      <div class="header-content">
+          <div class="header-content-inner">
+              <h1>Get the Local Experience</h1>
+              <hr>
+              <p>Stay with locals and explore new cities off the beaten path</p>
+              <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input type="text" class="form-control input-lg" placeholder="Choose a City..." />
+                    <span class="input-group-btn">
+                      <a href="#/signup">
+                        <button class="btn btn-info btn-lg" type="button">
+                          <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                      </a>
+                    </span>
+                  </div>
+              </div>
+              <a href="#/landing/#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
+          </div>
+      </div>
     </header>
 
     <section class="bg-primary" id="about">

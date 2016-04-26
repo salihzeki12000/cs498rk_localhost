@@ -1,0 +1,61 @@
+<div ng-controller='CreateHostAdController' class="container">
+	<section>
+		<h2>Name</h2>
+		<form class="row">
+			<div class="col-md-3">
+				<div class="form-group row">
+					<img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
+				</div>
+				<div class="form-group row">
+					<h5>Tags</h5>
+					<p>Dancing</p>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group row">
+					<p>123 S Main St</p>
+				</div>
+				<div class="form-group row">
+					<h5>Bio</h5>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Why do we use it?
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a mor
+</p>
+				</div>
+				<div class="form-group row">
+					<h5>Room Type</h5>
+					<p>Private Room</p>
+				</div>
+				<div style="text-align:center">Pictures of my home</div>
+				<div class="form-group row">
+					<div class="col-md-4"><img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
+					<input type="file"/></div>
+					<div class="col-md-4"><img ng-src="http://i.imgur.com/MYCsJyAb.jpg"><input type="file"/></div>
+					<div class="col-md-4"><img ng-src="http://i.imgur.com/MYCsJyAb.jpg"><input type="file"/></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="date" class="control-label">Date</label><!--include this calendar: https://phamductri.github.io/turn-calendar/-->
+					<input ng-model="date" id="date" type="date" placeholder="we'll put a plugin here" class="form-control"/>
+				</div>
+			</div>
+      <div id="map" style="width: 400px; height:500px;"></div>
+      <script>
+        function initMap() {
+          var mapDiv = document.getElementById('map');
+          var map = new google.maps.Map(mapDiv, {
+            center: {lat: 44.540, lng: -78.546},
+            zoom: 8
+          });
+        }
+      </script>
+      <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+          async defer></script>
+			<div class="form-group">
+				<button ng-click="submitForm()" class="btn btn-success btn-lg">Request This Room</button>
+			</div>
+		</form>
+	</section>
+</div>
