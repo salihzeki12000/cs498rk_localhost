@@ -142,3 +142,18 @@ section {
 		}
 	}
 }
+/*profile page*/
+.setRating{
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+.setRating > span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+}
+.setRating > span:hover:before,
+.setRating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+}
