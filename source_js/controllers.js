@@ -32,7 +32,11 @@ mp4Controllers.controller('ProfileController', ['$scope', '$http', 'Llamas', '$w
   Llamas.get().success(function(data){
     $scope.llamas = data;
   });
-
+  $scope.editListing = function(){
+      newURL = "#/createHostAd"
+      $window.location.href = newURL;
+      //do a bunch of other things.
+  }
 
 }]);
 
@@ -59,5 +63,9 @@ mp4Controllers.controller('CreateHostAdController', ['$scope' , '$window' , func
   $scope.submitForm = function(){
     console.log("horray");
   }
+
+}]);
+
+mp4Controllers.controller('MatchingController', ['$scope', '$window', function($scope, $window){
 
 }]);

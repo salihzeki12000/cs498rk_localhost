@@ -1,9 +1,90 @@
 <div class="list" ng-controller='ProfileController'>
+    <section class="profileInfo row">
+        <h4 class="col-sm-3">Person Name<p>
+        <img src="personsface.jpg"/></h4>
+        <div class="col-sm-5 text-left">
+            Age: ___<p>
+            Location: ___ <p>
+            Male <p>
+
+        </div>
+        <div class="col-sm-4">
+            More information
+        </div>
+        <div class="col-sm-12">
+            <p>
+            <a href="#/travellersearch" class="btn btn-primary">Travel somewhere new!</a>
+        </div>
+    </section>
+    <section class="row">
+        <h4 class="text-center">Current Host Ad</h4>
+        <button ng-click="editListing()" class="btn btn-primary btn-sm center-block">Edit Listing</button>
+
+        <div class="col-sm-2 text-center">
+            Listing Picture<p>
+            <img src=ladidadad class="thumbnail"/>
+        </div>
+        <div class="col-sm-6 text-left">
+            <div class="rating">
+                ★★★★☆ (2)
+            </div>
+            Insert a bunch of description here
+            <!--Room description here + stars and stuff-->
+        </div>
+        <div class="col-sm-4">
+            Map here <p>
+            <img src=map.jpg class="thumbnail"/><br>
+            Address: _________________<p>
+            <a href="#/abcdef/hostbio">Go to Listing</a>
+
+        </div>
+    </section>
 	<section>
+        <h4 class="text-center">Travel History</h4>
 	<ul>
-		<li ng-repeat="llama in llamas">
+		<li ng-repeat="listings in llamas">
 			<h3>{{llama.name}}</h3>
 		</li>
+        <li class="row">
+            <div class="col-sm-2 text-center">
+                Listing Picture<p>
+                <img src=ladidadad class="thumbnail"/>
+            </div>
+            <div class="col-sm-6 text-left">
+                <div class="rating">
+                    ★★★★☆ (276)
+                </div>
+                Insert a bunch of description here
+                <!--Room description here + stars and stuff-->
+            </div>
+            <div class="col-sm-4">
+                Map here <p>
+                <img src=map.jpg class="thumbnail"/><br>
+                Address: _________________<p>
+                <a href="#/abcdef/hostbio">Go to Listing</a>
+
+            </div>
+        </li>
+        <li class="row">
+            <div class="col-sm-2 text-center">
+                Listing Picture<p>
+                <img src=ladidadad class="thumbnail"/>
+            </div>
+            <div class="col-sm-6 text-left">
+                <div class="rating">
+                    ★★★☆☆ (9)
+                </div>
+                Insert a bunch of description here
+                <!--Room description here + stars and stuff-->
+            </div>
+            <div class="col-sm-4">
+                Map here <p>
+                <img src=map.jpg class="thumbnail"/><br>
+                Address: _________________<p>
+                <a href="#/abcdef/hostbio">Go to Listing</a>
+
+            </div>
+        </li>
 	</ul>
-</section>
+    </section>
 </div>

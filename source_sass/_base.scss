@@ -1,7 +1,3 @@
-body {
-	font-family: $font;
-}
-
 /* CREATE AD PG */
 .form-control {
 	width: 85%;
@@ -15,37 +11,13 @@ body {
 
 /* INDEX */
 .navbar {
-	@include transition(0.3s);
 	width:100%;
-	.navbar-brand {
-		@include transition(0.3s);
-	}
 	.nav {
-
-		.nav-button {
-			@include transition(0.3s);
-		}
-
 		#profile-img {
 			border-radius: 50%;
 			height: 27px;
 		}
 	}
-}
-
-.nav-btn-top {
-	font-size: 20px;
-	@include transition(0.3s);
-}
-
-.brand-top {
-	font-size: 25px;
-	@include transition(0.3s);
-}
-
-.nav-top {
-	background-color: rgba(0,0,0,.1);
-	@include transition(0.3s);
 }
 
 /* LANDING PG */
@@ -54,12 +26,13 @@ header {
   width: 100%;
   min-height: auto;
   background-position: center;
-	text-align: center;
+  background-image: url('http://randomwallpapers.net/new-york-city-landscape-usa-world-1920x1080-wallpaper331510.jpg');
+  text-align: center;
   color: white;
   .header-content {
       position: relative;
       text-align: center;
-      padding: 200px 15px 200px;
+      padding: 100px 15px 100px;
       width: 100%;
       .header-content-inner {
           h1 {
@@ -79,15 +52,6 @@ header {
           }
       }
   }
-}
-
-.landing {
-	background-image: url('http://randomwallpapers.net/new-york-city-landscape-usa-world-1920x1080-wallpaper331510.jpg');
-}
-.host-traveller {
-	background-image: url('https://static.pexels.com/photos/22794/pexels-photo.jpg');
-	max-width: 100%;
-	height: auto;
 }
 
 section {
@@ -122,23 +86,18 @@ section {
 	}
 }
 
-
-/* SEARCH ADS */
-#search-ads {
-	.search {
-		margin: 100px 100px 0;
-	}
-	section {
-		margin: 0 100px;
-	}
-	.navbar-fixed-side {
-		margin-top: 20px;
-		width: 40px;
-		position: fixed;
-		ul {
-			margin: 20px 0;
-			text-decoration: none;
-			list-style-type: none;
-		}
-	}
+/*profile page*/
+.setRating{
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+.setRating > span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+}
+.setRating > span:hover:before,
+.setRating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
 }
