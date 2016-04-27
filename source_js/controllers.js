@@ -14,23 +14,24 @@ mp4Controllers.controller('LandingPageController', ['$scope', '$window', 'Common
    $scope.roomImg = CommonData.getRoomImg();
 }]);
 
-mp4Controllers.controller('SignupController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
+mp4Controllers.controller('SignupController', ['$scope', 'Auth', '$window', 'CommonData'  , function($scope, Auth, $window, CommonData) {
   $scope.data = "";
    $scope.displayText = "";
    $scope.user = "";
    $scope.img = CommonData.getProfileImg();
   $scope.signup = function(){
+    Auth.login();
     CommonData.setUser($scope.user);
     $window.location.href= "#/travellerhost";
   };
 
 }]);
 
-mp4Controllers.controller('LoginController', ['$scope', 'CommonData' , function($scope, CommonData) {
+mp4Controllers.controller('LoginController', ['$scope', 'Auth', 'CommonData' , function($scope, Auth, CommonData) {
   $scope.data = "";
 
-  $scope.getData = function(){
-    $scope.data = CommonData.getData();
+  $scope.login = function(){
+    Auth.login();
 
   };
 
