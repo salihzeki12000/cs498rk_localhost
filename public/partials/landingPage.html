@@ -1,6 +1,7 @@
 <div class="list" ng-controller='LandingPageController'>
-    <header class="landing">
-      <div class="header-content">
+<!--     <header class="landing"> -->
+    <header>
+<!--       <div class="header-content">
           <div class="header-content-inner">
               <h1>Get the Local Experience</h1>
               <hr>
@@ -19,8 +20,31 @@
               </div>
               <a href="#/landing/#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
           </div>
-      </div>
+      </div> -->
     </header>
+    <header class="bg-video-container">
+        <video autoplay loop muted id="bg-video">
+            <source src="data/nyc.mp4" type="video/mp4" />
+        </video>
+        <div class="title-container">
+            <h1 class="title">LocalHost</h1>
+            <h2 class="sub-title">Stay with Locals and Meet Travelers</h2>
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for cities">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
+
 
     <section class="bg-primary" id="about">
         <div class="container">

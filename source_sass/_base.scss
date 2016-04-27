@@ -2,6 +2,13 @@ body {
 	font-family: $font;
 }
 
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 /* CREATE AD PG */
 .form-control {
 	width: 85%;
@@ -87,6 +94,7 @@ header {
 .landing {
 	background-image: url('http://randomwallpapers.net/new-york-city-landscape-usa-world-1920x1080-wallpaper331510.jpg');
 }
+
 .host-traveller {
 	background-image: url('https://static.pexels.com/photos/22794/pexels-photo.jpg');
 	max-width: 100%;
@@ -95,6 +103,45 @@ header {
 
 section {
   padding: 100px 0;
+}
+
+#bg-video {
+	width: auto;
+	min-width: 100%;
+	height: auto;
+	background-size: cover;
+	z-index: -11;
+}
+
+.bg-video-container {
+	position: relative;
+	width: 100%;
+	max-height: 600px;
+	overflow: hidden;
+
+}
+
+.title-container {
+	width: 100%;
+	min-width: 1200px;
+	top: 120px;
+	position: absolute;
+}
+
+.title {
+	margin-top: 40px;
+	font-size: 120px;
+	color: white;
+	text-align: center;
+	font-family: $flobster;
+	text-shadow: 0px 0px 30px black;
+}
+
+.sub-title {
+	font-size: 60px;
+	color: white;
+	font-family: $findieflower;
+	text-shadow: 0px 0px 30px black;
 }
 
 #custom-search-input{
@@ -188,4 +235,30 @@ section {
 	.travel-history li, section {
 		border-bottom: 1px solid rgba(0,0,0,.3);
 	}
+}
+
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+    
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
 }
