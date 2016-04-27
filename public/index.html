@@ -12,8 +12,9 @@
     <!-- Custom Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Lobster+Two:400,700,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500,400italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Angular Scripts -->
     <!-- NOTE: removing the ".min." can help debugging in the console-->
     <script src="https://use.fonticons.com/383a4556.js"></script>
@@ -42,10 +43,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-switch-when="false">
             <ul class="nav navbar-nav navbar-right">
               <li class="nav-button">
-                <a class="page-scroll" href="#/landing/#about">About</a>
+                <a class="page-scroll" href="#/landing/#about"  style="color: #F26322;">About</a>
               </li>
-              <li class="nav-button"><a href="#/signup" ng-click="auth.login()">Signup</a></li>
-              <li class="nav-button"><a href="#/login" ng-click="auth.login()">Login</a></li>
+              <li class="nav-button"><a href="#/signup" ng-click="auth.login()"  style="color: #F26322;">Signup</a></li>
+              <li class="nav-button"><a href="#/login" ng-click="auth.login()"  style="color: #F26322;">Login</a></li>
             </ul>
         </div>
 
@@ -70,7 +71,19 @@
   </nav>
 
   <div ng-view></div>
-
+  <footer class="canvas-stripe">
+      <div class="row">
+        <h4 style="font-size: 14px; margin-top: 8px; color: white;">CS 498RK Spring 2016 copyright &copy; Team localhost</h4>
+      </div>
+      <div class="row" style="display: flex; justify-content: center;">
+        <a href="http://twitter.com/OmniMickey" class="fa fa-twitter media-icon" target="_blank"></a>
+        <a href="http://facebook.com/chuanhaozhuge" class="fa fa-facebook media-icon" target="_blank"></a>
+        <a href="http://youtube.com/user/ECEILLINOIS" class="fa fa-youtube media-icon" target="_blank"></a>
+        <a href="http://linkedin.com/in/chuanhao-zhuge-98748a74" class="fa fa-linkedin media-icon" target="_blank"></a>
+        <a href="http://instagram.com/omnimickey/" class="fa fa-instagram media-icon" target="_blank"></a>
+        <a href="http://weibo.com" class="fa fa-weibo media-icon" target="_blank"></a>
+      </div>
+  </footer>
 
   <!-- Scripts -->
   <script src="./lib/jquery-2.1.3.min/index.js"></script>

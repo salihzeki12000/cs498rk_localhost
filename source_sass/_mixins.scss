@@ -5,3 +5,10 @@
 	-o-transition: all $seconds ease;
 	-ms-transition: all $seconds ease;
 }
+
+@mixin transition-speed($sec) {
+    transition: all $sec;
+    -moz-transition: all $sec;
+    -webkit-transition: all $sec;
+    -o-transition: all $sec;
+}

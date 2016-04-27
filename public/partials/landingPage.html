@@ -1,7 +1,7 @@
 <div class="list" ng-controller='LandingPageController'>
 <!--     <header class="landing"> -->
-    <header>
-<!--       <div class="header-content">
+<!--     <header>
+      <div class="header-content">
           <div class="header-content-inner">
               <h1>Get the Local Experience</h1>
               <hr>
@@ -20,8 +20,8 @@
               </div>
               <a href="#/landing/#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
           </div>
-      </div> -->
-    </header>
+      </div>
+    </header> -->
     <header class="bg-video-container">
         <video autoplay loop muted id="bg-video">
             <source src="data/nyc.mp4" type="video/mp4" />
@@ -46,8 +46,8 @@
 
 
 
-    <section class="bg-primary" id="about">
-        <div class="container">
+    <section class="section-meet-people" id="about" style="margin-top: 20px">
+<!--         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">We've got what you need!</h2>
@@ -56,9 +56,61 @@
                     <a href="#landing/#services" class="page-scroll btn btn-default btn-xl">Get Started!</a>
                 </div>
             </div>
+        </div> -->
+        <div class="row">
+            <div class="col-sm-12 col-md-4" style="padding-top: 100px">
+                <h2>Be the guide, meet new people</h2>
+                <div btnContainer>
+                    <a href="#landing/#services" style="text-decoration: none"><div class="btn-orange">How it works</div></a>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-8">
+                <div class="canvas-white" style="height: 500px">
+                    <h4 class="caption">CONNECTED WITH</h4>
+                    <div class="icon" >
+                        <img src="data/people-icon.png">
+                    </div>
+                    <div style="display: flex; justify-content: center;">
+                        <img class="thumb-img" src="data/alex.png">
+                        <img class="thumb-img" src="data/zack.png">
+                    </div>
+                    <h4 class="caption" style="font-weight: bold">Alex    <------>    Zack</h4>
+                    <div class="middle-bar"></div>
+                    <h5>When I was traveling solo around Europe this summer, I used Couchsurfing to meet new people. Zack was at the weekly Couchsurfing event in Barcelona and I feel so lucky to have met him! I enjoyed our conversations about life, and he showed me the best shop to grab an authentic batido milkshake. After just a few short days of hanging in the city, I felt as though I had known him for years.</h5>
+                </div>
+            </div>
         </div>
+
+
     </section>
 
+    <section class="section-explore" style="margin-top: 20px">
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <div class="canvas-white" style="height: 500px">
+                    <h4 class="caption" style="color: white">STAYED WITH</h4>
+                    <div class="icon" >
+                        <img src="data/plane-icon.png">
+                    </div>
+                    <div style="display: flex; justify-content: center;">
+                        <img class="thumb-img" src="data/annie.png">
+                        <img class="thumb-img" src="data/caitlyn.png">
+                    </div>
+                    <h4 class="caption" style="color: white; font-weight: bold">Annie    <------>    Caitlyn</h4>
+                    <div class="middle-bar"></div>
+                    <h5 style="color: white">Caitlyn is amazing! I loved spending time with her, and her openness and caring nature was so genuine and refreshing. When my suitcase didn't arrive until my second day, she was kind enough to loan me the comfiest pajamas to wear to sleep that first night, thank you again! A highlight of my trip includes celebrating her birthday with a dance party in the living room. Hope to see you again soon!</h5>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4" style="padding-top: 100px">
+                <h2>Explore the world with friends you never met</h2>
+                <div btnContainer>
+                    <a href="#landing/#services" style="text-decoration: none"><div class="btn-orange">Plan a trip</div></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+<!-- 
     <section id="services">
         <div class="container">
             <div class="row">
@@ -100,9 +152,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <section class="no-padding" id="portfolio">
+        <h4>HOT CITIES</h4>
+        <h4>UNDER CONSTRUCTION</h4>
         <div class="container-fluid">
             <div class="row no-gutter">
                 <div class="col-lg-4 col-sm-6">
