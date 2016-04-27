@@ -32,10 +32,18 @@
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for cities">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                        </span>
+                      <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control input-lg" placeholder="Choose a City..." ng-model="city"/>
+                            <span class="input-group-btn">
+                                <a href="#/searchads">
+                                  <button class="btn btn-info btn-lg" type="button" ng-click="chooseCity(city)">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                  </button>
+                                </a>
+                            </span>
+                          </div>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -110,7 +118,7 @@
 
         </div>
     </section>
-<!-- 
+<!--
     <section id="services">
         <div class="container">
             <div class="row">
