@@ -1,7 +1,7 @@
 <div class="list" ng-controller='ProfileController'>
     <section class="profileInfo row">
         <h4 class="col-sm-3">Person Name<p>
-        <img src="personsface.jpg"/></h4>
+        <img ng-src="{{img}}"/></h4>
         <div class="col-sm-5 text-left">
             Age: ___<p>
             Location: ___ <p>
@@ -22,7 +22,7 @@
 
         <div class="col-sm-2 text-center">
             Listing Picture<p>
-            <img src=ladidadad class="thumbnail"/>
+            <img ng-src="{{roomImg}}" class="thumbnail"/>
         </div>
         <div class="col-sm-6 text-left">
             <div class="rating">
@@ -33,7 +33,7 @@
         </div>
         <div class="col-sm-4">
             Map here <p>
-            <img src=map.jpg class="thumbnail"/><br>
+            <img ng-src="{{mapImg}}" class="thumbnail"/><br>
             Address: _________________<p>
             <a href="#/abcdef/hostbio">Go to Listing</a>
 
@@ -48,7 +48,7 @@
         <li class="row">
             <div class="col-sm-2 text-center">
                 Listing Picture<p>
-                <img src=ladidadad class="thumbnail"/>
+                <img ng-src="{{roomImg}}"  class="thumbnail"/>
             </div>
             <div class="col-sm-6 text-left">
                 <div class="rating">
@@ -59,7 +59,7 @@
             </div>
             <div class="col-sm-4">
                 Map here <p>
-                <img src=map.jpg class="thumbnail"/><br>
+                <img ng-src="{{mapImg}}" class="thumbnail"/><br>
                 Address: _________________<p>
                 <a href="#/abcdef/hostbio">Go to Listing</a>
 
@@ -68,7 +68,7 @@
         <li class="row">
             <div class="col-sm-2 text-center">
                 Listing Picture<p>
-                <img src=ladidadad class="thumbnail"/>
+                <img ng-src="{{roomImg}}" class="thumbnail"/>
             </div>
             <div class="col-sm-6 text-left">
                 <div class="rating">
@@ -79,7 +79,7 @@
             </div>
             <div class="col-sm-4">
                 Map here <p>
-                <img src=map.jpg class="thumbnail"/><br>
+                <img ng-src="{{mapImg}}"  class="thumbnail"/><br>
                 Address: _________________<p>
                 <a href="#/abcdef/hostbio">Go to Listing</a>
 

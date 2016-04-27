@@ -4,6 +4,9 @@ mp4Services.factory('CommonData', function(){
     var data = "";
     var user = "";
     var city = "";
+    var commonProfileImg = "http://i.imgur.com/a7emodJ.jpg";
+    var commonRoomImg = "http://i.imgur.com/tXMM9Ed.jpg";
+    var mapImg = "http://i.imgur.com/ODTtRQr.png";
     return{
         getUser : function(){
             return user;
@@ -16,6 +19,15 @@ mp4Services.factory('CommonData', function(){
         },
         setCity: function(newCity){
             city = newCity;
+        },
+        getProfileImg: function(){
+          return commonProfileImg;
+        },
+        getRoomImg: function(){
+          return commonRoomImg;
+        },
+        getMapImg: function(){
+          return mapImg;
         }
     }
 });

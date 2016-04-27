@@ -3,20 +3,22 @@ var mp4Controllers = angular.module('mp4Controllers', []);
 mp4Controllers.controller('MainCtrl', ['$scope', 'Auth', 'CommonData', function($scope, Auth, CommonData) {
   $scope.auth = Auth;
   $scope.user = CommonData.getUser();
+  $scope.img = CommonData.getProfileImg();
   console.log(Auth.loggedIn);
 }]);
 
 mp4Controllers.controller('LandingPageController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
   $scope.data = "";
    $scope.displayText = ""
-
+   $scope.img = CommonData.getProfileImg();
+   $scope.roomImg = CommonData.getRoomImg();
 }]);
 
 mp4Controllers.controller('SignupController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
   $scope.data = "";
    $scope.displayText = "";
    $scope.user = "";
-
+   $scope.img = CommonData.getProfileImg();
   $scope.signup = function(){
     CommonData.setUser($scope.user);
     $window.location.href= "#/travellerhost";
@@ -44,7 +46,7 @@ mp4Controllers.controller('TravellerSearchController', ['$scope', '$window', 'Co
 
 }]);
 
-mp4Controllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
+mp4Controllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData) {
   $scope.city = CommonData.getCity();
 
   $scope.changeCity = function (city) {
@@ -53,11 +55,10 @@ mp4Controllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
   }
 }]);
 
-mp4Controllers.controller('ProfileController', ['$scope', '$http', 'Llamas', '$window' , function($scope, $http,  Llamas, $window) {
-
-  Llamas.get().success(function(data){
-    $scope.llamas = data;
-  });
+mp4Controllers.controller('ProfileController', ['$scope', '$http', '$window', 'CommonData', function($scope, $http, $window, CommonData) {
+  $scope.img = CommonData.getProfileImg();
+  $scope.roomImg = CommonData.getRoomImg();
+  $scope.mapImg = CommonData.getMapImg();
   $scope.editListing = function(){
       newURL = "#/createHostAd"
       $window.location.href = newURL;
@@ -78,7 +79,7 @@ mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function
 }]);
 
 
-mp4Controllers.controller('CreateHostAdController', ['$scope' , '$window' , function($scope, $window) {
+mp4Controllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', function($scope, $window, CommonData) {
   $scope.text = "HELLOOOOO";
   $scope.address = "";
   $scope.bio = "";
@@ -86,6 +87,8 @@ mp4Controllers.controller('CreateHostAdController', ['$scope' , '$window' , func
   $scope.roomType = $scope.roomTypes[0];
   $scope.date = "";
   $scope.tags = [];
+  $scope.img = CommonData.getProfileImg();
+  $scope.roomImg = CommonData.getRoomImg();
   $scope.submitForm = function(){
     console.log("horray");
   }
@@ -94,4 +97,8 @@ mp4Controllers.controller('CreateHostAdController', ['$scope' , '$window' , func
 
 mp4Controllers.controller('MatchingController', ['$scope', '$window', function($scope, $window){
 
+}]);
+
+mp4Controllers.controller('HostBioController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData){
+  $scope.roomImg = CommonData.getRoomImg();
 }]);

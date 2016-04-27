@@ -1,19 +1,37 @@
 <div class="list" ng-controller='SignupController'>
-<section>
+<section class="container">
     <h1><span class="fa fa-sign-in"></span> Signup</h1>
 
     <!-- SIGNUP FORM -->
     <form>
-        <div class="form-group">
-            <label>Email</label>
-            <input type="text" class="form-control" name="email" ng-model="user.email">
+        <div class="row">
+            <div class="form-group col-sm-11 col-md-6">
+                <label>Email</label>
+                <input type="text" class="form-control" name="email" ng-model="user.email">
+            </div>
         </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" name="password" ng-model="user.password">
+        <div class="row">
+            <div class="form-group col-sm-11 col-md-6">
+                <label>Upload a profile picture</label>
+                <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
+                <input type="file"/>
+            </div>
         </div>
-
-        <button type="submit" ng-click="signup()">Signup</button>
+        <div class="row">
+            <div class="form-group col-sm-11 col-md-6">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" ng-model="user.password">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-11 col-md-6">
+                <label>Type Password Again</label>
+                <input type="password" class="form-control" name="password" ng-model="user.password">
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary" ng-click="signup()">Signup</button>
+        </div>
     </form>
 
     <hr>
