@@ -12,6 +12,9 @@ body {
 	width: 55% !important;
 }
 
+.input-group {
+	margin: 0;
+}
 
 /* INDEX */
 .navbar {
@@ -125,11 +128,23 @@ section {
 
 /* SEARCH ADS */
 #search-ads {
+
+	.ad {
+		border-bottom: 1px solid rgba(0,0,0,.1);
+	}
 	.search {
 		margin: 100px 100px 0;
 	}
 	section {
 		margin: 0 100px;
+	}
+	.search-img {
+		position: relative;
+		.price {
+			position: absolute;
+			top: 80%;
+			background-color: rgba(256,256,256,.7);
+		}
 	}
 	.navbar-fixed-side {
 		margin-top: 20px;
@@ -142,6 +157,7 @@ section {
 		}
 	}
 }
+
 /*profile page*/
 .setRating{
     unicode-bidi: bidi-override;

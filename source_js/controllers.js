@@ -1,5 +1,11 @@
 var mp4Controllers = angular.module('mp4Controllers', []);
 
+mp4Controllers.controller('MainCtrl', ['$scope', 'Auth', 'CommonData', function($scope, Auth, CommonData) {
+  $scope.auth = Auth;
+  $scope.user = CommonData.getUser();
+  console.log(Auth.loggedIn);
+}]);
+
 mp4Controllers.controller('LandingPageController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
   $scope.data = "";
    $scope.displayText = ""
@@ -8,9 +14,11 @@ mp4Controllers.controller('LandingPageController', ['$scope', '$window', 'Common
 
 mp4Controllers.controller('SignupController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
   $scope.data = "";
-   $scope.displayText = ""
+   $scope.displayText = "";
+   $scope.user = "";
 
   $scope.signup = function(){
+    CommonData.setUser($scope.user);
     $window.location.href= "#/travellerhost";
   };
 
@@ -26,6 +34,24 @@ mp4Controllers.controller('LoginController', ['$scope', 'CommonData' , function(
 
 }]);
 
+mp4Controllers.controller('TravellerSearchController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
+  $scope.city = "";
+
+  $scope.chooseCity = function (city) {
+    console.log("city chosen: " + city);
+    CommonData.setCity(city);
+  }
+
+}]);
+
+mp4Controllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
+  $scope.city = CommonData.getCity();
+
+  $scope.changeCity = function (city) {
+    CommonData.setCity(city);
+    console.log("city changed: " + city);
+  }
+}]);
 
 mp4Controllers.controller('ProfileController', ['$scope', '$http', 'Llamas', '$window' , function($scope, $http,  Llamas, $window) {
 

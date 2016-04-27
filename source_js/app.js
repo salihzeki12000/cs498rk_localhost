@@ -32,15 +32,19 @@ app.config(['$routeProvider', function($routeProvider) {
   }).
   when('/travellersearch', {
     templateUrl: 'partials/travellerSearch.html',
-    controller: 'CreateHostAdController'
+    controller: 'TravellerSearchController'
   }).
   when('/:hostID/hostbio', {
     templateUrl: 'partials/hostBio.html',
     controller: 'CreateHostAdController'
   }).
+  when('/hostbio', {
+    templateUrl: 'partials/hostBio.html',
+    controller: 'CreateHostAdController'
+  }).
   when('/searchads', {
     templateUrl: 'partials/searchAds.html',
-    controller: 'CreateHostAdController'
+    controller: 'SearchAdsController'
   }).
   when('/matched', {
       templateUrl: 'partials/matched.html',
