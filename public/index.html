@@ -10,10 +10,7 @@
     <link rel="stylesheet" href="./css/styles.css">
 
     <!-- Custom Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
 
     <!-- Angular Scripts -->
     <!-- NOTE: removing the ".min." can help debugging in the console-->
@@ -25,7 +22,7 @@
     <script src="./js/services.js"></script>
 </head>
 
-<body ng-app="mp4">
+<body ng-app="mp4" ng-controller="MainCtrl">
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -37,33 +34,34 @@
           </button>
           <a class="navbar-brand" href="#/landing">LocalHost</a>
         </div>
+        <div ng-switch="auth.loggedIn">
+          <!-- SHOW BEFORE LOGGED IN -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-switch-when="false">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="nav-button">
+                  <a class="page-scroll" href="#/landing/#about">About</a>
+                </li>
+                <li class="nav-button"><a href="#/signup" ng-click="auth.login()">Signup</a></li>
+                <li class="nav-button"><a href="#/login" ng-click="auth.login()">Login</a></li>
+              </ul>
+          </div>
 
-        <!-- SHOW BEFORE LOGGED IN
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-              <li class="nav-button">
-                <a class="page-scroll" href="#/landing/#about">About</a>
-              </li>
-              <li class="nav-button"><a href="#/signup">Signup</a></li>
-              <li class="nav-button"><a href="#/login">Login</a></li>
-            </ul>
-        </div>-->
 
-
-        <!--SHOW ONCE LOGGED IN!-->
-        <ul class="nav navbar-nav navbar-right">
-          <li class="nav-button"><a href="#/travellersearch" title="Search Host Ads"><i class="glyphicon glyphicon-search"></i></a></li>
-          <li class="nav-button"><a href="#/createHostAd" title="Create Host Ad"><i class="fa fa-plus"></i></a></li>
-            <li class="dropdown nav-button">
-            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img id="profile-img" src="https://gymkhana.iitb.ac.in/~sports/images/profile.png" alt="Profile Picture"> <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#/profile">Profile</a></li>
-              <li><a href="#/settings">Settings</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#/logout">Log out</a></li>
-            </ul>
-          </li>
-        </ul>
+          <!--SHOW ONCE LOGGED IN!-->
+          <ul class="nav navbar-nav navbar-right" ng-switch-when="true">
+            <li class="nav-button"><a href="#/travellersearch" title="Search Host Ads"><i class="glyphicon glyphicon-search"></i></a></li>
+            <li class="nav-button"><a href="#/createHostAd" title="Create Host Ad"><i class="fa fa-plus"></i></a></li>
+              <li class="dropdown nav-button">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img id="profile-img" src="https://gymkhana.iitb.ac.in/~sports/images/profile.png" alt="Profile Picture"> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#/profile">Profile</a></li>
+                <li><a href="#/settings">Settings</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#/logout" ng-click="auth.logout()">Log out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
 

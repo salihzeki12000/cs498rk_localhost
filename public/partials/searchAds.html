@@ -1,11 +1,13 @@
 <div ng-controller='CreateHostAdController' id="search-ads">
   <div id="custom-search-input" class="search">
     <div class="input-group col-md-12">
-        <input type="text" class="form-control input-lg" placeholder="Choose a City..." />
+        <input type="text" class="form-control input-lg" placeholder="{{city}}" ng-model="city" />
         <span class="input-group-btn">
-            <a href="#/searchads"><button class="btn btn-info btn-lg" type="button">
+            <a href="#/searchads">
+              <button class="btn btn-info btn-lg" type="button" ng-click="changeCity(city)">
                 <i class="glyphicon glyphicon-search"></i>
-            </button></a>
+              </button>
+            </a>
         </span>
       </div>
   </div>
@@ -29,44 +31,39 @@
 
       <div class="col-sm-10 col-md-10 col-lg-10">
         <div class="row ad">
-          <div class="col-md-4">
-            <h4>Name</h4>
-          </div>
-
-          <div class="col-md-4">
-            <p><b>Room Type: </b>Private Room</p>
-          </div>
-          <div class="col-md-4">
-            <p><b>Price: </b>$50/day</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
-          </div>
-
-          <div class="col-md-8">
+          <div class="col-md-3 col-md-offset-1">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-12 search-img">
+                <p class="price">$50/day </p>
+                <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <p><b>Room Type: </b>Private Room</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5">
+            <div class="row">
+              <div class="col-md-12 search-img">
+                <a href="#/hostbio"><h4>Name</h4></a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
                 <h6>Bio</h6>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,...</p>
               </div>
             </div>
-        <div class="col-md-3">
-          <div id="map" style="width: 400px; height:500px;"></div>
-          <script>
-            function initMap() {
-              var mapDiv = document.getElementById('map');
-              var map = new google.maps.Map(mapDiv, {
-                center: {lat: 44.540, lng: -78.546},
-                zoom: 8
-              });
-            }
-          </script>
+          </div>
+            <div class="col-md-3">
+              <img src="http://i.stack.imgur.com/yEshb.gif">
+            </div>
+        </div>
         </div>
       </div>
     </div>
-  </div>
-  </div>
   </div>
 </div>
