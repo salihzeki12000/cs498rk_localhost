@@ -1,4 +1,4 @@
-var mp4Controllers = angular.module('mp4Controllers', []);
+var mp4Controllers = angular.module('mp4Controllers', ['720kb.datepicker']);
 
 mp4Controllers.controller('MainCtrl', ['$scope', 'Auth', 'CommonData', function($scope, Auth, CommonData) {
   $scope.auth = Auth;
@@ -48,7 +48,7 @@ mp4Controllers.controller('TravellerSearchController', ['$scope', '$window', 'Co
 
 mp4Controllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData) {
   $scope.city = CommonData.getCity();
-
+  $scope.roomTypes = [{"name": "Single Bed", "value": "Single Bed"}];
   $scope.changeCity = function (city) {
     CommonData.setCity(city);
     console.log("city changed: " + city);

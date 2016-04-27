@@ -20,6 +20,7 @@
     <script src="./js/app.js"></script>
     <script src="./js/controllers.js"></script>
     <script src="./js/services.js"></script>
+    <link href="./lib/angularjs-datepicker/src/css/angular-datepicker.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body ng-app="mp4" ng-controller="MainCtrl">
@@ -48,19 +49,21 @@
 
 
           <!--SHOW ONCE LOGGED IN!-->
-          <ul class="nav navbar-nav navbar-right" ng-switch-when="true">
-            <li class="nav-button"><a href="#/travellersearch" title="Search Host Ads"><i class="glyphicon glyphicon-search"></i></a></li>
-            <li class="nav-button"><a href="#/createHostAd" title="Create Host Ad"><i class="fa fa-plus"></i></a></li>
-              <li class="dropdown nav-button">
-              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img id="profile-img" ng-src="{{img}}" alt="Profile Picture"> <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#/profile">Profile</a></li>
-                <li><a href="#/settings">Settings</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#/logout" ng-click="auth.logout()">Log out</a></li>
-              </ul>
-            </li>
-          </ul>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-switch-when="true">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="nav-button"><a href="#/travellersearch" title="Search Host Ads"><i class="glyphicon glyphicon-search"></i></a></li>
+              <li class="nav-button"><a href="#/createHostAd" title="Create Host Ad"><i class="fa fa-plus"></i></a></li>
+                <li class="dropdown nav-button">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img id="profile-img" ng-src="{{img}}" alt="Profile Picture"> <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#/profile">Profile</a></li>
+                  <li><a href="#/settings">Settings</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#/logout" ng-click="auth.logout()">Log out</a></li>
+                </ul>
+              </li>
+            </ul>
+        </div>
         </div>
       </div>
     </nav>
@@ -73,6 +76,7 @@
     <!--<script src="./foundation6_lib/js/foundation.min.js"></script>-->
     <script src="./js/script.js"></script>
     <script src="./lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./lib/angularjs-datepicker/src/js/angular-datepicker.js"></script>
     <!--<script>
     $(document).foundation();
   </script>-->
