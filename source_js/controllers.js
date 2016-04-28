@@ -1,43 +1,59 @@
-var mp4Controllers = angular.module('mp4Controllers', ['720kb.datepicker']);
+var appControllers = angular.module('appControllers', ['720kb.datepicker']);
 
-mp4Controllers.controller('MainCtrl', ['$scope', 'Auth', 'CommonData', function($scope, Auth, CommonData) {
+appControllers.controller('MainCtrl', ['$scope', 'Auth', 'CommonData', function($scope, Auth, CommonData) {
   $scope.auth = Auth;
   $scope.user = CommonData.getUser();
   $scope.img = CommonData.getProfileImg();
   console.log(Auth.loggedIn);
 }]);
 
-mp4Controllers.controller('LandingPageController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
+appControllers.controller('LandingPageController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
   $scope.data = "";
    $scope.displayText = ""
    $scope.img = CommonData.getProfileImg();
    $scope.roomImg = CommonData.getRoomImg();
 }]);
 
-mp4Controllers.controller('SignupController', ['$scope', 'Auth', '$window', 'CommonData'  , function($scope, Auth, $window, CommonData) {
+appControllers.controller('ProfileController', ['$scope', '$http', 'Users', function($scope, $http, Users) {
+   $scope.profile = false;
+   Users.get().success(function(data) {
+     console.log("frontend profile" + JSON.stringify(data));
+		if(!data.error) {
+			$scope.profile = true;
+			$scope.user = data.data.user;
+		}
+
+   });
+ }]);
+
+appControllers.controller('LoginController', ['$scope', '$window', 'Users', function($scope, $window, Users) {
   $scope.data = "";
-   $scope.displayText = "";
-   $scope.user = "";
-   $scope.img = CommonData.getProfileImg();
-  $scope.signup = function(){
-    Auth.login();
-    CommonData.setUser($scope.user);
-    $window.location.href= "#/travellerhost";
+   $scope.displayText = ""
+
+  $scope.login = function() {
+    console.log($scope.user);
+    Users.postLogIn($scope.user).success(function (data) {
+      console.log("success");
+      $window.location.href = '#/profile';
+    });
   };
 
 }]);
 
-mp4Controllers.controller('LoginController', ['$scope', 'Auth', 'CommonData' , function($scope, Auth, CommonData) {
+appControllers.controller('SignupController', ['$scope', '$window', 'Users', function($scope, $window, Users) {
   $scope.data = "";
 
-  $scope.login = function(){
-    Auth.login();
-
-  };
+  $scope.signup = function() {
+    console.log($scope.user);
+    Users.postSignUp($scope.user).success(function (data) {
+      console.log("data: " + JSON.stringify(data));
+      $window.location.href = '#/profile';
+    });
+  }
 
 }]);
 
-mp4Controllers.controller('TravellerSearchController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
+appControllers.controller('TravellerSearchController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
   $scope.city = "";
 
   $scope.chooseCity = function (city) {
@@ -47,7 +63,7 @@ mp4Controllers.controller('TravellerSearchController', ['$scope', '$window', 'Co
 
 }]);
 
-mp4Controllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData) {
+appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData) {
   $scope.city = CommonData.getCity();
   $scope.roomTypes = [{"name": "Single Bed", "value": "Single Bed"}];
   $scope.changeCity = function (city) {
@@ -56,31 +72,19 @@ mp4Controllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
   }
 }]);
 
-mp4Controllers.controller('ProfileController', ['$scope', '$http', '$window', 'CommonData', function($scope, $http, $window, CommonData) {
-  $scope.img = CommonData.getProfileImg();
-  $scope.roomImg = CommonData.getRoomImg();
-  $scope.mapImg = CommonData.getMapImg();
-  $scope.editListing = function(){
-      newURL = "#/createHostAd"
-      $window.location.href = newURL;
-      //do a bunch of other things.
-  }
-
-}]);
-
-mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
+appControllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
   $scope.url = $window.sessionStorage.baseurl;
 
   $scope.setUrl = function(){
+    console.log("base url: " +$scope.url);
     $window.sessionStorage.baseurl = $scope.url;
     $scope.displayText = "URL set";
-
   };
 
 }]);
 
 
-mp4Controllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', function($scope, $window, CommonData) {
+appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', function($scope, $window, CommonData) {
   $scope.text = "HELLOOOOO";
   $scope.address = "";
   $scope.bio = "";
@@ -96,10 +100,10 @@ mp4Controllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 
 }]);
 
-mp4Controllers.controller('MatchingController', ['$scope', '$window', function($scope, $window){
+appControllers.controller('MatchingController', ['$scope', '$window', function($scope, $window){
 
 }]);
 
-mp4Controllers.controller('HostBioController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData){
+appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData){
   $scope.roomImg = CommonData.getRoomImg();
 }]);

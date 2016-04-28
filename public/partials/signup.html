@@ -1,42 +1,30 @@
 <div class="list" ng-controller='SignupController'>
-<section class="container">
-    <h1><span class="fa fa-sign-in"></span> Signup</h1>
+  <div class="row">
 
-    <!-- SIGNUP FORM -->
-    <form>
-        <div class="row">
-            <div class="form-group col-sm-11 col-md-6">
+    <div class="column">
+
+        <h1><span class="fa fa-sign-in"></span> Signup</h1>
+
+        <!-- LOGIN FORM -->
+        <form>
+            <div class="form-group">
                 <label>Email</label>
                 <input type="text" class="form-control" name="email" ng-model="user.email">
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-sm-11 col-md-6">
-                <label>Upload a profile picture</label>
-                <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
-                <input type="file"/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-sm-11 col-md-6">
+            <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control" name="password" ng-model="user.password">
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-sm-11 col-md-6">
-                <label>Type Password Again</label>
-                <input type="password" class="form-control" name="password" ng-model="user.password">
-            </div>
-        </div>
-        <div class="row">
-            <button type="submit" class="btn btn-primary" ng-click="signup()">Signup</button>
-        </div>
-    </form>
 
-    <hr>
+            <button ng-click="signup()" type="submit">Signup</button>
+        </form>
 
-    <p>Already have an account? <a href="#/login">Login</a></p>
-    <p>Or go <a href="#/landing">home</a>.</p>
-</section>
+        <hr>
+
+        <p>Already have an account? <a href="#/login">Login</a></p>
+        <p>Or go <a href="#/">home</a>.</p>
+
+    </div>
+
+  </div>
 </div>

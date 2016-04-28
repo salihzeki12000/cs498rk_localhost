@@ -1,6 +1,60 @@
-var mp4Services = angular.module('mp4Services', []);
+var appServices = angular.module('appServices', []);
 
-mp4Services.factory('CommonData', function(){
+appServices.factory('CommonData', function(){
+    var data = "";
+    return{
+        getData : function(){
+            return data;
+        },
+        setData : function(newData){
+            data = newData;
+        }
+    }
+});
+
+appServices.factory('Users', function($http, $window) {
+    return {
+        get : function() {
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.get(baseUrl+'/profile');
+        },
+        postSignUp : function(user) {
+            var baseUrl = $window.sessionStorage.baseurl;
+
+              console.log("baseurl: "+ baseUrl);
+            return $http.post(baseUrl+'/signup', user);
+        },
+        postLogIn: function(user) {
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.post(baseUrl+'login', user);
+        }
+    }
+});
+
+appServices.factory('User', function($http, $window) {
+    return {
+        getFromId : function(userId) {
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.get(baseUrl+'/api/users/' + userId);
+        },
+        getFromName : function(userName) {
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.get(baseUrl+'/api/users' + "?where={ \"name\": \"" + userName + "\"}");
+        },
+        put : function(userId, updatedUser) {
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.put(baseUrl+'/api/users/' + userId, updatedUser);
+        },
+        delete : function(userId) {
+            var baseUrl = $window.sessionStorage.baseurl;
+            //TODO: reassign assigned tasks to undefined!
+            return $http.delete(baseUrl+'/api/users/' + userId);
+        }
+    }
+});
+
+
+appServices.factory('CommonData', function(){
     var data = "";
     var user = "";
     var city = "";
@@ -32,7 +86,7 @@ mp4Services.factory('CommonData', function(){
     }
 });
 
-mp4Services.service('Auth', function() {
+appServices.service('Auth', function() {
   var auth = {};
 
   auth.loggedIn = false;
@@ -46,13 +100,4 @@ mp4Services.service('Auth', function() {
   };
 
   return auth;
-});
-
-mp4Services.factory('Llamas', function($http, $window) {
-    return {
-        get : function() {
-            var baseUrl = $window.sessionStorage.baseurl;
-            return $http.get(baseUrl+'/api/llamas');
-        }
-    }
 });

@@ -1,4 +1,4 @@
-var app = angular.module('mp4', ['ngRoute', 'mp4Controllers', 'mp4Services']);
+var app = angular.module('mp4', ['ngRoute', 'appControllers', 'appServices']);
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
