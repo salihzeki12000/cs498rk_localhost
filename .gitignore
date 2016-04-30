@@ -1,8 +1,9 @@
 .DS_Store
 
 .sass-cache/
-node_modules/
+Frontend/node_modules/
+Backend/node_modules/
 npm-debug.log
-public/css/
-public/js/
-public/lib/
+Frontend/public/css/
+Frontend/public/js/
+Frontend/public/lib/
