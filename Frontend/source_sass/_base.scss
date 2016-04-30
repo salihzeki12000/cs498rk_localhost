@@ -1,6 +1,7 @@
 body {
 
 	font-family: $font;
+	padding-top: 50px;
 }
 
 * {
@@ -214,7 +215,7 @@ header {
 h2 {
 	position: relative;
 	font-family: $fubuntu;
-	color: white;
+	/*color: white;*/
 	font-size: 42px;
 	text-align: center;
 }

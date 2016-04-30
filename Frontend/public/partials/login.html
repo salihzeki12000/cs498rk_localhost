@@ -1,11 +1,10 @@
 <div class="list" ng-controller='LoginController'>
-  First Controller
   <div class="row">
 
     <div class="column">
 
-        <h1><span class="fa fa-sign-in"></span> Login</h1>
-
+        <!--<h1><i class="fa fa-sign-in" aria-hidden="true"></i> Login</h1>-->
+        <h1><i class="glyphicon glyphicon-user"></i> Login</h1>
         <!-- LOGIN FORM -->
         <form action="/login" method="post">
             <div class="form-group">
@@ -17,7 +16,7 @@
                 <input type="password" class="form-control" ng-model="user.password" name="password">
             </div>
 
-            <button ng-click="login()" type="submit">Login</button>
+            <button ng-click="login()" type="submit" class="btn btn-orange">Login</button>
         </form>
 
         <hr>
