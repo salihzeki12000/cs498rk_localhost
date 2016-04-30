@@ -1,4 +1,31 @@
-<div class="profile" ng-controller='ProfileController'>
+<div ng-controller="ProfileController" class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        <a href="/logout" class="button small" ng-show="profile">Logout</a>
+    </div>
+
+    <div class="row">
+        <!-- PROFILE INFORMATION -->
+            <div class="well" ng-show="profile">
+                <h3><span class="fa fa-user"></span> Profile</h3>
+
+                    <p>
+                        <strong>id</strong>: {{user._id}}<br>
+                        <strong>email</strong>: {{user.local.email}}<br>
+                        <strong>password</strong>: {{user.local.password}}
+                    </p>
+            </div>
+            <div class="jumbotron text-center" ng-hide="profile">
+                <a href="#/login" class="button">Login</a>
+                <a href="#/signup" class="button">Signup</a>
+            </div>
+
+</div>
+
+
+
+<!--<div class="profile" ng-controller='ProfileController'>
     <section class="profileInfo row">
       <div class="row">
           <h4 class="col-sm-12 text-center">Overview</h4>
@@ -31,7 +58,7 @@
           <br>
           <a href="#/travellersearch" class="btn btn-primary">Travel somewhere new!</a>
         </div>
-      </div> <!--row-->
+      </div> row
     </section>
     <section class="row">
         <div class="row">
@@ -47,7 +74,7 @@
                 ★★★★☆ (2)
             </div>
             Insert a bunch of description here
-            <!--Room description here + stars and stuff-->
+            <!Room description here + stars and stuff
         </div>
         <div class="col-sm-4">
             <img ng-src="{{mapImg}}" class="thumbnail"/><br>
@@ -71,7 +98,7 @@
                     ★★★★☆ (276)
                 </div>
                 Insert a bunch of description here
-                <!--Room description here + stars and stuff-->
+                <!Room description here + stars and stuff-
             </div>
             <div class="col-sm-4">
                 <img ng-src="{{mapImg}}" class="thumbnail"/><br>
@@ -89,7 +116,7 @@
                     ★★★☆☆ (9)
                 </div>
                 Insert a bunch of description here
-                <!--Room description here + stars and stuff-->
+                <!Room description here + stars and stuff-
             </div>
             <div class="col-sm-4">
                 <img ng-src="{{mapImg}}"  class="thumbnail"/><br>
@@ -99,4 +126,4 @@
         </li>
 	</ul>
     </section>
-</div>
+</div>-->
