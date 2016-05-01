@@ -89,7 +89,7 @@ appServices.factory('CommonData', function(){
 appServices.service('Auth', function() {
   var auth = {};
 
-  auth.loggedIn = false;
+  auth.loggedIn = true;//false;
 
   auth.login = function() {
     auth.loggedIn = true;

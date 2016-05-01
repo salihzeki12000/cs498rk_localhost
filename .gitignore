@@ -7,3 +7,5 @@ npm-debug.log
 Frontend/public/css/
 Frontend/public/js/
 Frontend/public/lib/
+
+Frontend/source_js/services.js
