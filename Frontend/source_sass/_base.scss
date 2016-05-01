@@ -16,8 +16,54 @@ flexbox-container {
 	justify-content: center;
 }
 
-.obj-centered {
-	margin: 0 auto;
+h2 {
+	position: relative;
+	font-family: $fubuntu;
+	/*color: white;*/
+	font-size: 42px;
+	text-align: center;
+}
+
+h4 {
+	margin-top: 2px;
+	position: relative;
+	font-family: $fubuntu;
+	color: $uiuc-orange;
+	font-size: 22px;
+	text-align: center;
+}
+
+h5 {
+	padding: 20px;
+	font-family: $fubuntu;
+	color: $dark-blue;
+	font-size: 18px;
+	text-align: center;
+}
+
+.btn-orange {
+	padding: 0 20px;
+	margin: 4px;
+	min-width: 120px;
+	height: 40px;
+	background-color: white;
+	font-family: $fubuntu;
+	font-size: 18px;
+	text-align: center;
+	color: $uiuc-orange;
+	border: 2px solid $uiuc-orange;
+	border-radius: 6px;
+}
+
+.btn-orange:hover {
+	background-color: $transparent-uiuc-orange;
+	color: white;
+	@include transition-speed(0.2s);
+}
+
+.container {
+	margin: 0;
+	padding: 0;
 }
 
 /* CREATE AD PG */
@@ -25,13 +71,12 @@ flexbox-container {
 	width: 85%;
 }
 
-#room{
-	display: inline;
-	width: 55% !important;
-}
-
 .input-group {
 	margin: 0;
+}
+
+.obj-centered {
+	margin: 0 auto;
 }
 
 /* INDEX */
@@ -174,26 +219,6 @@ header {
 	text-align: center;
 }
 
-.btn-orange {
-	padding: 0 20px;
-	margin: 4px;
-	min-width: 120px;
-	height: 40px;
-	background-color: white;
-	font-family: $fubuntu;
-	font-size: 18px;
-	text-align: center;
-	color: $uiuc-orange;
-	border: 2px solid $uiuc-orange;
-	border-radius: 6px;
-}
-
-.btn-orange:hover {
-	background-color: $transparent-uiuc-orange;
-	color: white;
-	@include transition-speed(0.2s);
-}
-
 .icon {
 	width: 40px;
 	margin: 0 auto;
@@ -212,34 +237,9 @@ header {
 	border-radius: 70px;
 }
 
-h2 {
-	position: relative;
-	font-family: $fubuntu;
-	/*color: white;*/
-	font-size: 42px;
-	text-align: center;
-}
-
-h4 {
-	margin-top: 2px;
-	position: relative;
-	font-family: $fubuntu;
-	color: $uiuc-orange;
-	font-size: 22px;
-	text-align: center;
-}
-
 .caption {
 	padding-top: 10px;
 	color: $dark-gray;
-}
-
-h5 {
-	padding: 20px;
-	font-family: $fubuntu;
-	color: $dark-blue;
-	font-size: 18px;
-	text-align: center;
 }
 
 .media-icon {
@@ -385,6 +385,12 @@ h5 {
 	.travel-history li, section {
 		border-bottom: 1px solid rgba(0,0,0,.3);
 	}
+}
+
+/*Create Host Ad Page*/
+#room, #price{
+	display: inline;
+	width: 55% !important;
 }
 
 

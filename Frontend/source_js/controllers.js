@@ -85,11 +85,11 @@ appControllers.controller('SettingsController', ['$scope' , '$window' , function
 
 
 appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', function($scope, $window, CommonData) {
-  $scope.text = "HELLOOOOO";
   $scope.address = "";
   $scope.bio = "";
   $scope.roomTypes = [{"name": "Single Bed", "value": "Single Bed"}]
   $scope.roomType = $scope.roomTypes[0];
+  $scope.price = "";
   $scope.date = "";
   $scope.tags = [];
   $scope.img = CommonData.getProfileImg();
