@@ -1,4 +1,4 @@
-<div ng-controller='CreateHostAdController' id="search-ads">
+<div ng-controller='SearchAdsController' id="search-ads">
   <div id="custom-search-input" class="search">
     <div class="input-group col-md-12">
         <input type="text" class="form-control input-lg" placeholder="{{city}}" ng-model="city" />
@@ -134,7 +134,43 @@
             </div>
           </div>
         </div>
-        <div class="row ad">
+
+        <div ng-repeat="ad in ads"> 
+          <div class="row ad">
+            <div class="col-md-3 col-md-offset-1">
+              <div class="row">
+                <div class="col-md-12 search-img">
+                  <p class="price">${{ad.price}}/day</p>
+                  <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="room-type"><b>Room Type: </b>{{ad.roomType}}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-5">
+              <div class="row">
+                <div class="col-md-12 search-img">
+                  <a href="#/hostbio"><h4>{{ad.hostName}}</h4></a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h6>Bio</h6>
+                  <p>{{ad.bio}}</p>
+                </div>
+              </div>
+            </div>
+              <div class="col-md-3">
+                <img src="http://i.stack.imgur.com/yEshb.gif">
+              </div>
+          </div>
+        </div>
+        
+        <!--<div class="row ad">
           <div class="col-md-3 col-md-offset-1">
             <div class="row">
               <div class="col-md-12 search-img">
@@ -293,7 +329,7 @@
             <div class="col-md-3">
               <img src="http://i.stack.imgur.com/yEshb.gif">
             </div>
-        </div>
+        </div>-->
         </div>
       </div>
     </div>

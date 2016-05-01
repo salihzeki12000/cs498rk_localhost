@@ -24,11 +24,11 @@ app.config(['$routeProvider', function($routeProvider) {
   }).
   when('/landing', {
     templateUrl: 'partials/landingPage.html',
-    controller: 'CreateHostAdController'
+    controller: 'LandingPageController'
   }).
   when('/travellerhost', {
     templateUrl: 'partials/hostOrTraveller.html',
-    controller: 'CreateHostAdController'
+    controller: 'hostOrTravellerController'
   }).
   when('/travellersearch', {
     templateUrl: 'partials/travellerSearch.html',
@@ -36,11 +36,11 @@ app.config(['$routeProvider', function($routeProvider) {
   }).
   when('/:hostID/hostbio', {
     templateUrl: 'partials/hostBio.html',
-    controller: 'CreateHostAdController'
+    controller: 'HostBioController'
   }).
   when('/hostbio', {
     templateUrl: 'partials/hostBio.html',
-    controller: 'CreateHostAdController'
+    controller: 'HostBioController'
   }).
   when('/searchads', {
     templateUrl: 'partials/searchAds.html',
