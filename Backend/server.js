@@ -8,6 +8,7 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
 	configDB = require('./config/database.js');
+	Listing = require('./models/listing');
 
 mongoose.connect(configDB.url); // db connection
 //debugging!
@@ -45,6 +46,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./app/routes.js')(app, passport);
+
+//you can put listing api calls here
 
 app.listen(port);
 console.log('Server running on port ' + port);

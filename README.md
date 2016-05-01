@@ -1,6 +1,7 @@
 # CS 498RK Final Project group Localhost
 
-## Setup:
+## Run these after downloading files
+```
 npm install
 bower install
 grunt compass
