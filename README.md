@@ -1,6 +1,6 @@
 # CS 498RK Final Project group Localhost
 
-## Run these after downloading files
+## Run these in the Frontend folder after downloading files 
 ```
 npm install
 bower install

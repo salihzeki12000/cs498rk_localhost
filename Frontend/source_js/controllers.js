@@ -8,11 +8,12 @@ appControllers.controller('MainCtrl', ['$scope', '$window', 'Auth', 'CommonData'
   console.log("logged in? " + Auth.loggedIn);
 }]);
 
-appControllers.controller('LandingPageController', ['$scope', '$window', 'CommonData'  , function($scope, $window, CommonData) {
+appControllers.controller('LandingPageController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData) {
   $scope.data = "";
   $scope.displayText = ""
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();
+  $scope.hotCities = [{name: 'Chicago'}, {name: 'New York'}, {name: 'London'}, {name: 'San Francisco'}, {name: 'Seattle'}, {name: 'Paris'}];
 }]);
 
 appControllers.controller('ProfileController', ['$scope', '$http', 'Users', function($scope, $http, Users) {
@@ -70,6 +71,7 @@ appControllers.controller('TravellerSearchController', ['$scope', '$window', 'Co
 appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData', 'Listings', function($scope, $window, CommonData, Listings) {
   $scope.city = CommonData.getCity();
   $scope.roomTypes = CommonData.getRoomTypes();
+  $scope.roomType = $scope.roomTypes[0];
   $scope.ads = Listings.getSampleListings().data; 
   $scope.changeCity = function (city) {
     CommonData.setCity(city);
@@ -95,7 +97,8 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.roomTypes = CommonData.getRoomTypes();
   $scope.roomType = $scope.roomTypes[0];
   $scope.price = "";
-  $scope.date = "";
+  $scope.dateStart = "";
+  $scope.dateEnd = "";
   $scope.tags = [];
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();

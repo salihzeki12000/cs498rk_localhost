@@ -60,8 +60,10 @@ h5 {
 	@include transition-speed(0.2s);
 }
 
-.container {
-	margin: 0;
+.no-padding {
+	padding: 0 !important;
+	width: 100%;
+	max-width: none;
 }
 
 /* CREATE AD PG */
@@ -163,10 +165,13 @@ header {
 }
 
 .landing-section {
+	@extend .no-padding;
+	position: relative;
 	margin-top: 2px;
 	height: 500px;
 	width: 100%;
 }
+
 .section-how-works {
 	@extend .landing-section;
 	background-color: $orange-background;
@@ -190,10 +195,14 @@ header {
 	background-size: cover;
 }
 
+.section-hot-cities {
+	@extend .landing-section;
+}
+
 .vertical-align {
 	position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+  	top: 50%;
+  	transform: translateY(-50%);
 }
 
 
@@ -261,16 +270,16 @@ header {
 }
 
 .bg-video-container {
+	@extend .no-padding;
 	position: relative;
 	width: 100%;
 	max-height: 600px;
 	overflow: hidden;
-
 }
 
 .title-container {
 	width: 100%;
-	min-width: 1200px;
+	/*min-width: 1200px;*/
 	top: 120px;
 	position: absolute;
 }
@@ -319,6 +328,9 @@ header {
 	}
 }
 
+.landing-heading {
+	color: white;
+}
 
 /* SEARCH ADS */
 #search-ads {
