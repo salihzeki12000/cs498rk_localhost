@@ -13,7 +13,10 @@ appControllers.controller('LandingPageController', ['$scope', '$window', 'Common
   $scope.displayText = ""
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();
-  $scope.hotCities = [{name: 'Chicago'}, {name: 'New York'}, {name: 'London'}, {name: 'San Francisco'}, {name: 'Seattle'}, {name: 'Paris'}];
+  var imagePath = './data/';
+  $scope.hotCities = [{name: 'Chicago', img: imagePath+'chicago.jpg'},{name: 'New York', img: imagePath+'newYork.jpg'},
+  {name: 'London', img: imagePath+'london.jpeg'}, {name: 'San Francisco', img: imagePath+'sanFran.jpg'},
+  {name: 'Seattle', img: imagePath+'seattle.jpg'}, {name: 'Paris', img: imagePath+'paris.jpg'}];
 }]);
 
 appControllers.controller('ProfileController', ['$scope', '$http', 'Users', function($scope, $http, Users) {
