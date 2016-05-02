@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = mongoose.Schema({
+	postedHostAds: [String] // id of ads
 	local: {
 		email		: String,
 		password	: String
