@@ -30,7 +30,7 @@
     <section class="row">
       <div class="container-fluid">
 
-      <div class="col-sm-10 col-md-10 col-lg-10">
+      <div class="col-sm-10">
         <div id="searchModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
 
@@ -102,7 +102,7 @@
               </div>
               <div class="modal-body">
                 <label for="rating" class="col-sm-3 control-label">Minimum Rating</label>
-        				<select ng-model="roomType" id="room" class="col-sm-10 form-control">
+        				<select ng-model="rating" id="room" class="col-sm-10 form-control">
         				  <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -126,8 +126,11 @@
                 <h4 class="modal-title">Price</h4>
               </div>
               <div class="modal-body">
-              Filter by price interval:
-            </div>
+              <label for="low">Low</label>
+              <input ng-model="priceLow" type="number" id="low" placeholder="low">
+              <label for="high">High</label>
+              <input ng-model="priceHigh" type="number" id="high" placeholder="high">
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-search"></i></button>
               </div>
