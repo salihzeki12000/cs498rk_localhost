@@ -45,12 +45,20 @@ appServices.factory('Listings', function($http, $window){
         postListing : function(listing){
             return $http.post(baseUrl+'/listings', listing);
         },
-        getListings : function(){
-            return $http.get(baseUrl+'/listings');
+        getListingsByCity : function(city){
+            return $http.get(baseUrl+'/listings?where={"city":"'+city+'"}');
+        },
+        filterListings : function(city, roomType, dateBegin, dateEnd, priceLow, priceHigh){
+            var cityQ = '"city":"'+city+'"';
+            var roomQ = '"roomType":"'+roomType+'"';
+            var dateQ = '"date": {"$gte":'+dateBegin+'}, "price": {"$lte":'+dateEnd+'}';
+            var priceQ = '"price": {"$gte":'+priceLow+'}, "price": {"$lte":'+priceHigh+'}';
+            var query = '/listings?where={'+cityQ+','+roomQ+','+dateQ+','+priceQ+'}';
+            console.log(query);
+            return $http.get(baseUrl+query);
         },
         //fake data, generate this better with a script once we can add stuff in 
         getSampleListings : function(){
-            //console.log("populating with sample listings");
             return {message: "OK",
                     data: [{id: 1, Address: '123 Green St.', hostName: 'Sarah', bio: 'This is the most fun adventure you will ever have',
                     price: 60, roomType: 'Private Room', date: 'tomorrow', tags: ['Rock Climbing', 'Nature']},
