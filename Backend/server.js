@@ -218,7 +218,9 @@ listingsRoute.post(function(req,res){
     var d = new Date();
     var newListing = new Listing({
         hostName: data.hostName,
+		hostID: data.hostID,
         bio: data.bio,
+		address: data.address,
         date: data.date,
         roomType: data.roomType,
         currentTraveler: data.currentTraveler,
