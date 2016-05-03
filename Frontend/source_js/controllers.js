@@ -13,7 +13,15 @@ appControllers.controller('LandingPageController', ['$scope', '$window', 'Common
   $scope.displayText = ""
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();
-  $scope.hotCities = [{name: 'Chicago'}, {name: 'New York'}, {name: 'London'}, {name: 'San Francisco'}, {name: 'Seattle'}, {name: 'Paris'}];
+  var imagePath = './data/';
+  $scope.hotCities = [{name: 'Chicago', img: imagePath+'chicago.jpg'},{name: 'New York', img: imagePath+'newYork.jpg'},
+  {name: 'London', img: imagePath+'london.jpeg'}, {name: 'San Francisco', img: imagePath+'sanFran.jpg'},
+  {name: 'Seattle', img: imagePath+'seattle.jpg'}, {name: 'Paris', img: imagePath+'paris.jpg'}];
+
+  $scope.clickCity = function(city){
+    CommonData.setCity(city);
+    $window.location.href = '#/searchads';
+  }
 }]);
 
 appControllers.controller('ProfileController', ['$scope', '$http', 'Users', function($scope, $http, Users) {
@@ -91,20 +99,18 @@ appControllers.controller('SettingsController', ['$scope' , '$window' , function
 }]);
 
 
-appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', function($scope, $window, CommonData) {
-  $scope.address = "";
-  $scope.bio = "";
+appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', 'Listings', function($scope, $window, CommonData, Listings) {
   $scope.roomTypes = CommonData.getRoomTypes();
-  $scope.roomType = $scope.roomTypes[0];
-  $scope.price = "";
-  $scope.dateStart = "";
-  $scope.dateEnd = "";
-  $scope.tags = [];
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();
+  $scope.listing = {address: "", bio: "", roomType: $scope.roomTypes[0], price: 0, dateStart: "", dateEnd: "", tags: []};
   $scope.submitForm = function(){
-    console.log("horray");
+    console.log("create host ad");
+    /*Listings.postListing($scope.listing).success(function(data){
+      console.log(data);
+    });*/
   }
+
 }]);
 
 appControllers.controller('MatchingController', ['$scope', '$window', function($scope, $window){
