@@ -1,55 +1,98 @@
 <div ng-controller='CreateHostAdController' class="container">
-<section>
-	<h2>Create a Host Ad</h2>
-	<form class="row">
-		<div class="col-md-6">
-			<div class="form-group row">
-				<label for="address" class="control-label">Address</label>
-				<input ng-model="listing.address" id="address" class="form-control" placeholder="123 Main St" required/>
+	<section>
+		<h2>Create a Host Ad</h2>
+		<h4>Room - a sweet place for your guest</h4>
+		<form class="row">
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+					<label for="summery" class="control-label">Summary</label>
+					<textarea ng-model="listing.summery" class="form-control" id="bio" placeholder="Overview of the trip you are offering" style="width: 100%" required></textarea>
+				</div>			
 			</div>
-			<div class="form-group row">
-				<label for="bio" class="control-label">Bio</label>
-				<textarea ng-model="listing.bio" class="form-control" id="bio" placeholder="tell us about yourself" required></textarea>
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+					<label for="address" class="control-label">Address</label>
+					<input ng-model="listing.address" id="address" class="form-control" placeholder="123 Main St" style="width: 100%" required/>
+				</div>
 			</div>
-			<div class="form-group row">
-				<label for="price" class="col-sm-3 control-label">Price</label>
-				<input ng-model="listing.price" type="number" class="col-sm-9 form-control" id="price" min=0 required>
-			</div>
-			<div class="form-group row">
-				<label for="room" class="col-sm-3 control-label">Room Type</label>
-				<select ng-model="listing.roomType" ng-options="room.name for room in roomTypes" id="room" class="col-sm-9 form-control"></select>
-			</div>
-			<div class="form-group row">
-				<div class="col-md-4"><img ng-src="{{roomImg}}">
-				<input type="file"/></div>
-				<div class="col-md-4"><img ng-src="{{roomImg}}"><input type="file"/></div>
-				<div class="col-md-4"><img ng-src="{{roomImg}}"><input type="file"/></div>
-			</div>
-			<div style="text-align:center">Upload pictures of your home</div>
 
-		</div>
-		<div class="col-md-6">
-			<h5>Date range for listing</h5>
-			<div class="form-group">
-				<datepicker>
-                    <input ng-model="listing.dateStart" type="text" date-format="fullDate" placeholder="Beginning" class="form-control" required/>
-                </datepicker>
-            </div>
-            <br>
-            <div class="form-group">
-                <datepicker>
-                    <input ng-model="listing.dateEnd" type="text" date-format="fullDate" class="form-control" placeholder="End" required/>
-                </datepicker>
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+					<label for="room" class="control-label">Room Type</label>
+					<select ng-model="listing.roomType" ng-options="room.name for room in roomTypes" id="room" style="width: 100%" class="col-sm-9 form-control"></select>
+				</div>
 			</div>
-			<br>
-			<div class="form-group">
-				<label for="tags" class="control-label">Type in tags separated by spaces</label>
-				<input ng-model="listing.tags" id="tags" class="form-control" placeholder="example: dancing nature sports hamburgers"/>
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<label class="control-label" style="margin-top: 20px">Upload pictures of your home</label>
 			</div>
-			<div class="form-group">
-				<button ng-click="submitForm()" class="btn btn-lg btn-orange">Submit</button>
+			<div class="col-sm-12">
+				<div class="form-group">
+					<div class="col-md-4"><img ng-src="{{roomImg}}"><input type="file"/></div>
+					<div class="col-md-4"><img ng-src="{{roomImg}}"><input type="file"/></div>
+					<div class="col-md-4"><img ng-src="{{roomImg}}"><input type="file"/></div>
+				</div>
 			</div>
-		</div>
-	</form>
-</section>
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<label class="control-label" style="margin-top: 20px">Date range for listing</label>
+			</div>
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+					<datepicker class="col-sm-5">
+            <input ng-model="listing.dateStart" type="text" date-format="fullDate" placeholder="Beginning" required/>
+          </datepicker>
+          <datepicker class="col-sm-5">
+            <input ng-model="listing.dateEnd" type="text" date-format="fullDate" placeholder="End" required/>
+          </datepicker>
+				</div>
+			</div>
+
+			<div class="col-sm-12 col-md-10 col-md-offset-1 thin-divider"></div>
+			<h4 class="col-sm-12">Activities - show off your local experience unlike anything else</h4>
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+				<!-- angular model to be modified -->
+					<label for="address" class="control-label">First activity</label>
+					<input ng-model="listing.address" id="address" class="form-control" placeholder="First exciting thing to do" style="width: 100%" required/>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+				<!-- angular model to be modified -->
+					<label for="address" class="control-label">Second activity</label>
+					<input ng-model="listing.address" id="address" class="form-control" placeholder="Second exciting thing to do" style="width: 100%" required/>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+				<!-- angular model to be modified -->
+					<label for="address" class="control-label">Third activity</label>
+					<input ng-model="listing.address" id="address" class="form-control" placeholder="Third exciting thing to do" style="width: 100%" required/>
+				</div>
+			</div>		
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+				<!-- angular model to be modified -->
+					<label for="address" class="control-label">More...</label>
+					<input ng-model="listing.address" id="address" class="form-control" placeholder="One more thing..." style="width: 100%" required/>
+				</div>
+			</div>	
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+					<label for="price" class="control-label">Price</label>
+					<input ng-model="listing.price" type="number" class="form-control" id="price" style="width: 100%" min=0 required/>
+				</div>		
+			</div>
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+					<label for="tags" class="control-label">Type in tags separated by spaces</label>
+					<input ng-model="listing.tags" id="tags" class="form-control" placeholder="example: dancing nature sports hamburgers" style="width: 100%"/>
+				</div>			
+			</div>
+			<div class="col-sm-12 col-md-10 col-md-offset-1">
+				<div class="form-group">
+					<button ng-click="submitForm()" class="btn btn-lg btn-orange">Submit</button>
+				</div>
+			</div>
+		</form>
+	</section>
 </div>

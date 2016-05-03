@@ -7,9 +7,9 @@ var express = require('express'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
-	configDB = require('./config/database.js');
-	Listing = require('./models/listing');
-
+	configDB = require('./config/database.js'),
+	Listing = require('./app/models/listing'),
+    User = require('./app/models/user');
 mongoose.connect(configDB.url); // db connection
 //debugging!
 //mongoose.set('debug', true);
@@ -47,7 +47,232 @@ app.use(passport.session());
 
 require('./app/routes.js')(app, passport);
 
-//you can put listing api calls here
+//Begin routing code
+var router = express.Router();
+app.use('/api', router);
+
+//Default route
+var home = router.route('/');
+home.get(function(req,res){
+    res.json({message: "Please use either /api/users or /api/listings"});
+});
+/*----------------------------User Route--------------------------------------*/
+var usersRoute = router.route('/users');
+var idUsersRoute = router.route('/users/:id');
+
+usersRoute.get(function(req,res){
+    var where = req.query.where;
+    var sort = req.query.sort;
+    var select = req.query.select;
+    var skip = req.query.skip;
+    var limit = req.query.limit;
+    var count = req.query.count;
+
+    if(where){
+        where = JSON.parse(where);
+    }
+    var query = User.find(where);
+    if(sort){
+        sort = JSON.parse(sort);
+        query.sort(sort);
+    }
+    if(select){
+        select = JSON.parse(select);
+        query.select(select);
+    }
+    if(skip){
+        query.skip(skip);
+    }
+    if(limit){
+        query.limit(limit);
+    }
+    if(count){
+        query.count(count);
+    }
+
+    query.exec(function(err, users){
+        if(err) return console.error(err);
+
+        res.status(200).json({message:'OK', data:users});
+    });
+//    User.find(function(err, user){
+//        if(err) return console.error(err);
+//        res.status(200).json({message:'OK', data: user});
+//    })
+});
+
+usersRoute.post(function(req,res){
+    var data = req.body;
+    if(!data.name || !data.local.email || !data.local.password){
+        return res.status(500).json({message: "Valid name and email required", data: null});
+    }
+    var d = new Date();
+    var newUser = new User({
+        name: data.name,
+        email: data.local.email,
+        password: data.local.password,
+        postedHostAds: data.postedHostAds,
+        location: data.location,
+//        matchedHosts: [],
+        matchedTravelers: [],
+        dateCreated: d.getDate(),
+		bio: data.bio
+    });
+    newUser.save(function(err){
+        if(err){
+            return res.status(500).send({'error':'internal service error', data:null});
+        }
+        res.status(201).json({message: "User created", data: newUser});
+    });
+});
+idUsersRoute.get(function(req,res){
+	User.findById(req.params.id, function(err, user){
+		if(err) return res.status(404).json({message: 'User not found'});
+
+		return res.status(200).json({message: 'OK', data: user});
+	});
+});
+idUsersRoute.put(function(req,res){
+	var data = req.body;
+//	if(!data.name || !data.local.email || !data.local.password){
+//        return res.status(500).json({message: "Valid name and email required", data: null});
+//    }
+    User.findById(req.params.id, function(err, user){
+        if(err || user === null) res.status(404).json({message:"User not found", data:null});
+
+        var d = new Date();
+        user.name = data.name;
+//can email and password be modified by standard put? Probably not?
+//        email: data.local.email;
+//        password: data.local.password;
+        user.postedHostAds= data.postedHostAds;
+        user.location= data.location;
+        user.matchedHosts= data.matchedHosts;
+        user.matchedTravelers= data.matchedTravelers;
+		user.bio = data.bio;
+
+        user.save(function(err){
+            if(err){
+				console.error(err);
+                return res.status(500).send({'error':'internal service error', data:null});
+            }
+            res.status(201).json({message: "User Updated", data: user});
+        });
+    });
+});
+idUsersRoute.delete(function(req,res){
+	User.findByIdAndRemove(req.params.id, function(err, user){
+        if(err || user === null) return res.status(404).json({message: "User not found", data:null});
+
+        return res.status(200).json({message: "User removed.", data : null});
+    });
+});
+
+/*----------------------------Listings Route----------------------*/
+
+var listingsRoute = router.route('/listings');
+var idListingsRoute = router.route('/listings/:id');
+
+listingsRoute.get(function(req,res){
+    console.log(req.query);
+    var where = req.query.where;
+    var sort = req.query.sort;
+    var select = req.query.select;
+    var skip = req.query.skip;
+    var limit = req.query.limit;
+    var count = req.query.count;
+
+    if(where){
+        where = JSON.parse(where);
+    }
+    var query = Listing.find(where);
+    if(sort){
+        sort = JSON.parse(sort);
+        query.sort(sort);
+    }
+    if(select){
+        select = JSON.parse(select);
+        query.select(select);
+    }
+    if(skip){
+        query.skip(skip);
+    }
+    if(limit){
+        query.limit(limit);
+    }
+    if(count){
+        query.count(count);
+    }
+
+    query.exec(function(err, listings){
+        if(err) return console.error(err);
+
+        res.status(200).json({message:'OK', data:listings});
+    });
+});
+listingsRoute.post(function(req,res){
+    var data = req.body;
+    if(!data.hostName || !data.address){
+        return res.status(500).json({message: "Valid host name and address required", data: null});
+    }
+    var d = new Date();
+    var newListing = new Listing({
+        hostName: data.hostName,
+		hostID: data.hostID,
+        bio: data.bio,
+		address: data.address,
+        date: data.date,
+        roomType: data.roomType,
+        currentTraveler: data.currentTraveler,
+        currentTravelerName: data.currentTravelerName,
+        price: data.price,
+        tags: data.tags
+    });
+    newListing.save(function(err){
+        if(err) return res.status(500).json({message:'internal service error sorry', data:null});
+
+        res.status(201).json({message:"Ad Created", data: newListing});
+    });
+});
+idListingsRoute.get(function(req, res){
+    Listing.findById(req.params.id, function(err, listing){
+        if(err || listing === null) return res.status(404).json({message: "Ad not found", listing:null});
+
+        return res.status(200).json({message: "OK", data:listing});
+    });
+});
+idListingsRoute.put(function(req,res){
+    var data = req.body;
+    if(!data.hostName || !data.address){
+        return res.status(500).json({message: "Valid host name and address required", data: null});
+    }
+    Listing.findById(req.params.id, function(err, listing){
+        if(err || listing === null) return res.status(404).json({message: "Ad not found", data: null});
+
+        listing.name = data.name;
+        listing.bio = data.bio;
+		listing.description = data.description;
+		listing.price = data.price;
+		listing.roomType = data.roomType;
+		listing.address = data.address;
+        listing.currentTraveler = data.currentTraveler;
+        listing.currentTravelerName = data.currentTravelerName;
+		listing.date = data.date;
+		listing.tags = data.tags;
+
+        listing.save(function(err){
+            if(err) return res.status(500).json({message: "internal service error sorry", data:null});
+            res.status(201).json({message:"Listing Updated", data:listing});
+        });
+    });
+});
+idListingsRoute.delete(function(req,res){
+	Listing.findByIdAndRemove(req.params.id, function(err, listing){
+        if(err || listing === null) return res.status(404).json({message: "Ad not found", data:null});
+
+        return res.status(200).json({message: "Ad removed.", data : null});
+    });
+});
 
 app.listen(port);
 console.log('Server running on port ' + port);

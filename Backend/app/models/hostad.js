@@ -7,6 +7,7 @@ var HostAdSchema = new mongoose.Schema({
   date: {type: Date, required: true},
   activities: [String],
   tags: [String],
+  price: float,
   dateCreated: Date
 });
 
