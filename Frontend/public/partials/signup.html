@@ -9,11 +9,11 @@
         <form>
             <div class="form-group">
                 <label>Email</label>
-                <input type="text" class="form-control" name="email" ng-model="user.email">
+                <input type="text" class="form-control" name="email" ng-model="user.email" required>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" class="form-control" name="password" ng-model="user.password">
+                <input type="password" class="form-control" name="password" ng-model="user.password" required>
             </div>
 
             <button ng-click="signup()" type="submit" class="btn btn-orange">Signup</button>

@@ -112,29 +112,29 @@
         </section>
 
         <section class="section-explore row">
-            <!--<div class="vertical-align">-->
-                <div class="col-sm-12 col-md-8">
-                    <div class="canvas-white" style="height: 500px">
-                        <h4 class="caption" style="color: white">STAYED WITH</h4>
-                        <div class="icon" >
-                            <img src="data/plane-icon.png">
-                        </div>
-                        <div style="display: flex; justify-content: center;">
-                            <img class="thumb-img" src="data/annie.png">
-                            <img class="thumb-img" src="data/caitlyn.png">
-                        </div>
-                        <h4 class="caption" style="color: white; font-weight: bold">Annie    <------>    Caitlyn</h4>
-                        <div class="middle-bar"></div>
-                        <h5 style="color: white">Caitlyn is amazing! I loved spending time with her, and her openness and caring nature was so genuine and refreshing. She took me to her favorite places in town, including the best taco restaurant I have ever been to in my life!</h5>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-4" style="padding-top: 100px">
-                    <h2 class="landing-heading">Explore the world with new friends</h2>
-                    <div class="btn-container">
-                        <a href="#landing/#services" style="text-decoration: none"><button class="btn btn-orange">Plan a trip</button></a>
-                    </div>
-                </div>
-            <!--</div>-->
+          <!--<div class="vertical-align">-->
+              <div class="col-sm-12 col-md-8">
+                  <div class="canvas-white" style="height: 500px">
+                      <h4 class="caption" style="color: white">STAYED WITH</h4>
+                      <div class="icon" >
+                          <img src="data/plane-icon.png">
+                      </div>
+                      <div style="display: flex; justify-content: center;">
+                          <img class="thumb-img" src="data/annie.png">
+                          <img class="thumb-img" src="data/caitlyn.png">
+                      </div>
+                      <h4 class="caption" style="color: white; font-weight: bold">Annie    <------>    Caitlyn</h4>
+                      <div class="middle-bar"></div>
+                      <h5 style="color: white">Caitlyn is amazing! I loved spending time with her, and her openness and caring nature was so genuine and refreshing. She took me to her favorite places in town, including the best taco restaurant I have ever been to in my life!</h5>
+                  </div>
+              </div>
+              <div class="col-sm-12 col-md-4" style="padding-top: 100px">
+                  <h2 class="landing-heading">Explore the world with new friends</h2>
+                  <div class="btn-container">
+                      <a href="#landing/#services" style="text-decoration: none"><button class="btn btn-orange">Plan a trip</button></a>
+                  </div>
+              </div>
+          <!--</div>-->
         </section>
 
         <section class="section-hot-cities row">
@@ -142,16 +142,10 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="row no-gutter">
                     <div ng-repeat="city in hotCities" class="col-lg-4 col-sm-6">
-                        <!--<a href="#" class="portfolio-box">-->
+                        <button ng-click="clickCity(city.name)">
                             <img ng-src="{{city.img}}" class="img-responsive" alt="city">
-                            <div class="portfolio-box-caption">
-                                <div class="portfolio-box-caption-content">
-                                    <div class="project-category text-faded">
-                                        <h3>{{city.name}}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        <!--</a>-->
+                            <h3>{{city.name}}</h3>
+                        </button>
                     </div>
                 </div>
             </div>
