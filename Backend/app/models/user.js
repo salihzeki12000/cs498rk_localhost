@@ -1,12 +1,18 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
-var userSchema = mongoose.Schema({
-	postedHostAds: [String] // id of ads
+var userSchema = new mongoose.Schema({
+	postedHostAds	: [String], // id of ads
 	local: {
-		email		: String,
-		password	: String
-	}
+		email		: String,  //required
+		password	: String   //required
+	},
+	name			: String,  //required
+	location		: String,
+	matchedHost		: String,  //only match with 1 host at any time
+	matchedTravelers: [String],
+	bio				: String
+
 });
 
 userSchema.methods.generateHash = function(password) {
