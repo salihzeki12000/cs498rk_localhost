@@ -54,6 +54,12 @@ h5 {
 	border-radius: 5px;
 }
 
+.thin-divider {
+	margin-top: 18px;
+	margin-bottom: 18px;
+	border-top: 1px solid $uiuc-blue;
+}
+
 .btn-orange:hover {
 	background-color: $uiuc-orange; //$transparent-uiuc-orange;
 	color: white;
@@ -406,10 +412,10 @@ header {
 }
 
 /*Create Host Ad Page*/
-#room, #price {
+/*#room, #price {
 	display: inline;
 	width: 55% !important;
-}
+}*/
 
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
