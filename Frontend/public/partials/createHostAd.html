@@ -29,13 +29,16 @@
 
 		</div>
 		<div class="col-md-6">
+			<h5>Date range for listing</h5>
 			<div class="form-group">
-				<h5>Date range for listing</h5>
 				<datepicker>
-                    <input ng-model="listing.dateStart" type="text" date-format="fullDate" placeholder="Beginning" required/>
+                    <input ng-model="listing.dateStart" type="text" date-format="fullDate" placeholder="Beginning" class="form-control" required/>
                 </datepicker>
+            </div>
+            <br>
+            <div class="form-group">
                 <datepicker>
-                    <input ng-model="listing.dateEnd" type="text" date-format="fullDate" placeholder="End" required/>
+                    <input ng-model="listing.dateEnd" type="text" date-format="fullDate" class="form-control" placeholder="End" required/>
                 </datepicker>
 			</div>
 			<br>

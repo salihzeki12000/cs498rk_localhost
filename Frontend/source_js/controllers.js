@@ -79,12 +79,25 @@ appControllers.controller('TravellerSearchController', ['$scope', '$window', 'Co
 appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData', 'Listings', function($scope, $window, CommonData, Listings) {
   $scope.city = CommonData.getCity();
   $scope.roomTypes = CommonData.getRoomTypes();
+  //$scope.roomTypes.push({name: "All", value: "All"});
   $scope.roomType = $scope.roomTypes[0];
+  $scope.dates = {dateDepart:"", dateReturn:""};
+  $scope.dateReturn = "";
+  $scope.minRating = 1;
+  $scope.priceRange = {low:0, high:200};
   $scope.ads = Listings.getSampleListings().data; 
   $scope.changeCity = function (city) {
     CommonData.setCity(city);
     console.log("city changed: " + city);
   }
+
+  $scope.filterAds = function(){
+    console.log("filter ads");
+    console.log("roomType is " + $scope.roomType.name);
+    console.log("dates are " + $scope.dates.dateDepart + " to " + $scope.dates.dateReturn);
+    console.log("minRating is " + $scope.minRating);
+    console.log("price range is " + $scope.priceRange.low + "-" + $scope.priceRange.high);
+  } 
 }]);
 
 appControllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
