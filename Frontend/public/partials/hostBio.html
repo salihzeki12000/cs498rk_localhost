@@ -1,7 +1,7 @@
 <div ng-controller='HostBioController' class="container hostBio">
 	<div class="row">
 		<div class="col-sm-12 col-md-10">
-			<h2 style="display:inline">{{user.name}}</h2>
+			<h2 style="display:inline">{{data.name}}</h2>
 		</div>
 		<div class="col-sm-12 col-md-2">
 			<button ng-click="submitForm()" class="btn btn-lg btn-orange">Request This Room</button>
@@ -10,18 +10,17 @@
 	<div class="row">
 		<div class="col-sm-12 col-md-3">
 			<img ng-src="{{img}}" class="profile-img">
-			<div><b>Address:</b> {{user.address}}</div>
-			<div><b>Room Type:</b> {{user.roomType}}</div>
-			<div><b>Dates available:</b> {{user.dates[0]}}</div>
+			<div><b>Address:</b> {{data.address}}</div>
+			<div><b>Room Type:</b> {{data.roomType}}</div>
+			<div><b>Dates available:</b> {{data.dates[0]}}</div>
 			<div class="rating">
                 ★★★★☆ (2)
             </div>
             <br>
-			<b>Tags</b>
-			<div ng-repeat="tag in user.tags"><div>{{tag}}</div></div>
+			<div ng-repeat="tag in user.tags"><span class="label label-info label-tag">{{tag}}</span></div>
 		</div>
 		<div class="col-sm-12 col-md-6">
-            <p>{{user.bio}}</p>
+            <p>{{data.bio}}</p>
             
             <div style="text-align:center">Pictures of my home</div>
 			<div class="row">

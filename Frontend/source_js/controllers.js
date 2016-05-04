@@ -161,9 +161,32 @@ appControllers.controller('MatchingController', ['$scope', '$window', function($
 
 }]);
 
-appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData){
+appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData', '$routeParams', 'User', 'Listing', function($scope, $window, CommonData, $routeParams, User, Listing){
+  var loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  $scope.data = {name: 'Sample Host', address: '123 S Main St', bio: 'My name is Sample Host. '+loremIpsum, roomType: 'Private Room', tags: ['Dancing', 'Vegetarian'], dates:['tomorrow']};
+  var hostID = $routeParams.hostID;
+  console.log(hostID);
+  User.getFromId(hostID).success(function(data){
+    //console.log(data);
+    var user = data.data;
+    $scope.listings = [];
+    var ads = user.postedHostAds;
+    for (var i=0; i<ads.length;i++){
+      Listing.getFromId(ads[i]).success(function(data){
+        //console.log(data.data);
+        $scope.listings.push(data.data);
+        $scope.data = data.data;
+        console.log($scope.listings);
+      }).error(function(err){
+        console.log(err);
+      });
+    }
+    console.log(user);
+    
+  }).error(function(err){
+    console.log(err);
+  });
+
   $scope.roomImg = CommonData.getRoomImg();
   $scope.img = CommonData.getProfileImg();
-  var loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-  $scope.user = {name: 'Sample Host', address: '123 S Main St', bio: 'My name is Sample Host. '+loremIpsum, roomType: 'Private Room', tags: ['Dancing', 'Vegetarian'], dates:['tomorrow']};
 }]);

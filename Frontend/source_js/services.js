@@ -8,11 +8,9 @@ appServices.factory('Users', function($http, $window) {
             return $http.get(baseUrl+'/profile');
         },
         postSignUp : function(user) {
-            //var baseUrl = $window.sessionStorage.baseurl;
             return $http.post(baseUrl+'/signup', user);
         },
         postLogIn: function(user) {
-            //var baseUrl = $window.sessionStorage.baseurl;
             return $http.post(baseUrl+'login', user);
         }
     }
@@ -22,19 +20,16 @@ appServices.factory('User', function($http, $window) {
     var baseUrl = $window.sessionStorage.baseurl;
     return {
         getFromId : function(userId) {
-            return $http.get(baseUrl+'/api/users/' + userId);
+            return $http.get(baseUrl+'/users/' + userId);
         },
         getFromName : function(userName) {
-            //var baseUrl = $window.sessionStorage.baseurl;
-            return $http.get(baseUrl+'/api/users' + "?where={ \"name\": \"" + userName + "\"}");
+            return $http.get(baseUrl+'/users' + "?where={ \"name\": \"" + userName + "\"}");
         },
         put : function(userId, updatedUser) {
-            //var baseUrl = $window.sessionStorage.baseurl;
-            return $http.put(baseUrl+'/api/users/' + userId, updatedUser);
+            return $http.put(baseUrl+'/users/' + userId, updatedUser);
         },
         delete : function(userId) {
-            //var baseUrl = $window.sessionStorage.baseurl;
-            return $http.delete(baseUrl+'/api/users/' + userId);
+            return $http.delete(baseUrl+'/users/' + userId);
         }
     }
 });
@@ -73,17 +68,13 @@ appServices.factory('Listing', function($http, $window){
     var baseUrl = $window.sessionStorage.baseurl;
     return {
         getFromId : function(listingId){
-            console.log("getting the listing with id " + listingId);
-            return $http.get(baseUrl+'/api/listings/' + listingId);
+            return $http.get(baseUrl+'/listings/' + listingId);
         },
         put : function(listingId, updatedListing) {
-            console.log("update " + listingId + " with: ");
-            console.log(updatedListing);
-            return $http.put(baseUrl+'/api/listings/' + listingId, updatedListing);
+            return $http.put(baseUrl+'/listings/' + listingId, updatedListing);
         },
         delete : function(listingId) {
-            console.log("deleting " + listingId);
-            return $http.delete(baseUrl+'/api/listings/' + listingId);
+            return $http.delete(baseUrl+'/listings/' + listingId);
         }
     }
 });
@@ -97,8 +88,10 @@ appServices.factory('CommonData', function(){
     var commonRoomImg = "http://i.imgur.com/tXMM9Ed.jpg";
     var mapImg = "http://i.imgur.com/ODTtRQr.png";
     var roomTypes = [{name: "Private Room", value: "Private Room"}, {name: "Shared Room", value: "Shared Room"}];
+    var cities = [{name:'Chicago', value:'Chicago'},{name:'New York', value:'New York'},{name:'Paris', value:'Paris'},  
+        {name:'Seattle', value:'Seattle'},{name:'London', value:'London'},{name:'San Francisco', value:'San Francisco'}];
     var tags = [{name:'Hiking', value:'Hiking'},{name:'Dancing', value:'Dancing'}];
-    return{
+    return {
         getUser : function(){
             return user;
         },
@@ -125,6 +118,9 @@ appServices.factory('CommonData', function(){
         },
         getTags : function() {
             return tags;
+        }, 
+        getCities : function() {
+            return cities;
         }
     }
 });
