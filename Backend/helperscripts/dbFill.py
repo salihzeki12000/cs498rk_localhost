@@ -110,8 +110,8 @@ def main(argv):
         userEmails.append(str(d['data']['local']['email']))
 
     # Open 'listings.txt' for sample listing names
-    f = open('listings.txt','r')
-    listingNames = f.read().splitlines()
+    #f = open('listings.txt','r')
+    #listingNames = f.read().splitlines()
     cityNames = open('cities.txt', 'r').read().splitlines()
     tagNames = open('tags.txt', 'r').read().splitlines()
     #print(tagNames)
@@ -132,8 +132,10 @@ def main(argv):
             roomType = "Private"
         else:
             roomType = "Shared"
-        tags = [tagNames[randint(0, len(tagNames) - 1)]]
+        tags = []
+        tags = (tagNames[randint(0, len(tagNames) - 1)])
         #print(tags)
+        print(tags)
 
         params = urllib.urlencode({'city': choice(cityNames),
                                 'address': address,
@@ -143,14 +145,14 @@ def main(argv):
                                 'description': description,
                                 'price': price,
                                 'roomType': roomType,
-                                'tags': tags,
+                                'tags': tags
                                 })
 
         # POST the listing
         conn.request("POST", "/api/listings", params, headers)
         response = conn.getresponse()
         data = response.read()
-#        print(data)
+        print(data)
         d = simplejson.loads(data)
 
         listingID = str(d['data']['_id'])
