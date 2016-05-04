@@ -1,184 +1,174 @@
-<div ng-controller='SearchAdsController' id="search-ads">
-  <div id="custom-search-input" class="search row">
-    <div class="input-group col-md-12">
+<div ng-controller='SearchAdsController' id="search-ads" class="container">
+
+  <div class="custom-search-input search row">
+      <div class="input-group">
         <input type="text" class="form-control input-lg" placeholder="{{city}}" ng-model="city" />
         <span class="input-group-btn">
-            <a href="#/searchads">
-              <button class="btn btn-info btn-lg" type="button" ng-click="changeCity(city)">
-                <i class="glyphicon glyphicon-search"></i>
-              </button>
-            </a>
+            <button class="btn btn-info btn-lg" type="button" ng-click="changeCity(city)">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
         </span>
       </div>
   </div>
 
+  <div class="row">
     <div class="col-sm-1">
       <nav class="navbar navbar-default navbar-fixed-side">
         <ul> 
-          <li><a href="#/searchads/#searchModal" data-toggle="modal"><i class="glyphicon glyphicon-search"></i></a></li> <br>
-          <li role="separator" class="divider"></li>
+          <li><a href="#/searchads/#searchModal" data-toggle="modal"><i class="glyphicon glyphicon-tags"></i></a></li> <br>
           <li><a href="#/searchads/#roomTypeModal" data-toggle="modal"><i class="glyphicon glyphicon-home"></i></a></li> <br>
-          <li role="separator" class="divider"></li>
           <li><a href="#/searchads/#dateModal" data-toggle="modal"><i class="glyphicon glyphicon-calendar"></i></a></li> <br>
-          <li role="separator" class="divider"></li>
           <li><a href="#/searchads/#ratingModal" data-toggle="modal"><i class="glyphicon glyphicon-star"></i></a></li> <br>
-          <li role="separator" class="divider"></li>
           <li><a href="#/searchads/#priceModal" data-toggle="modal"><i class="glyphicon glyphicon-usd"></i></a></li>
         </ul>
       </nav>
     </div>
 
-    <section class="row">
-      <!--<div class="container-fluid">-->
-
-      <div class="col-sm-8">
-        <div id="searchModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Location</h4>
+    <!-- Listings -->
+    <div class="col-sm-11 section">
+      <div ng-repeat="ad in ads"> 
+        <div class="row ad">
+          <div class="col-sm-10 col-md-2 col-sm-offset-1">
+            <div class="row">
+              <div class="search-img">
+                <p class="price">${{ad.price}}/day</p>
+                <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
               </div>
-              <div class="modal-body">
-                <p>Not needed if there's a search bar at the top...</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+            <div class="row">
+              <p class="room-type"><b>Room Type: </b>{{ad.roomType}}</p>
+            </div>
+          </div>
+          <div class="col-sm-11 col-md-6">
+            <div class="row">
+              <a href="#/hostbio"><h4>{{ad.hostName}}</h4></a>
+            </div>
+            <div class="row">
+              <p>{{ad.bio}}</p>
+              <div ng-repeat="tag in ad.tags">
+                <span class="label label-info label-tag">{{tag}}</span>
+                <br>
               </div>
             </div>
           </div>
-        </div>
-        <div id="roomTypeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Room Type</h4>
-              </div>
-              <div class="modal-body">
-                <label for="room" class="col-sm-3 control-label">Room Type</label>
-        				<select ng-model="roomType" ng-options="room.name for room in roomTypes" id="room" class="col-sm-10 form-control"></select>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
-              </div>
+            <div class="col-sm-11 col-md-3">
+              <img src="http://i.stack.imgur.com/yEshb.gif">
+              <br>
             </div>
-          </div>
         </div>
-        <div id="dateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Dates</h4>
-              </div>
-              <div class="modal-body">
-                <datepicker>
-                    <input ng-model="dates.dateDepart" class="form-control" type="text" date-format="fullDate" placeholder="Arrive..."/>
-                </datepicker>
-                <datepicker>
-                    <input ng-model="dates.dateReturn" class="form-control" type="text" date-format="fullDate" placeholder="Return..."/>
-                </datepicker>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="ratingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Rating</h4>
-              </div>
-              <div class="modal-body">
-                <label for="rating" class="control-label">Minimum Rating</label>
-        				<select ng-model="minRating" id="rating" class="form-control">
-        				  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-        				</select>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="priceModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Price</h4>
-              </div>
-              <div class="modal-body">
-                <div class="col-md-3 col-md-offset-2">
-                  <input ng-model="price.low" type="number" id="low" placeholder="0">
-                </div>
-                <div class="col-md-1">to</div>
-                <div class="col-md-3">
-                  <input ng-model="price.high" type="number" id="high" placeholder="200">
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      <div class="container">
-        <div ng-repeat="ad in ads"> 
-          <div class="row ad">
-            <div class="col-md-3 col-md-offset-1">
-              <div class="row">
-                <div class="col-md-12 search-img">
-                  <p class="price">${{ad.price}}/day</p>
-                  <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="room-type"><b>Room Type: </b>{{ad.roomType}}</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="row">
-                <div class="col-md-12 search-img">
-                  <a href="#/hostbio"><h4>{{ad.hostName}}</h4></a>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <p>{{ad.bio}}</p>
-                </div>
-              </div>
-            </div>
-              <div class="col-md-2">
-                <img src="http://i.stack.imgur.com/yEshb.gif">
-              </div>
-          </div>
-        </div>
-        </div>
-    
-        </div>
-      <!--</div>-->
+      </div>
     </div>
   </div>
+        
+  <!--MODAL CONTENT-->
+  <!-- Tag Modal -->
+  <div id="searchModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Search for Listings Containing Specific Tags</h4>
+        </div>
+        <div class="modal-body">
+          <select ng-model="tags" name="tag" id="tag" ng-options="tag.name for tag in tagList" class="form-control" multiple></select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Room Type Modal -->
+  <div id="roomTypeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Room Type</h4>
+        </div>
+        <div class="modal-body">
+          <label for="room" class="col-sm-3 control-label">Room Type</label>
+  				<select ng-model="roomType" ng-options="room.name for room in roomTypes" id="room" class="col-sm-10 form-control"></select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Date Modal -->
+  <div id="dateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Dates</h4>
+        </div>
+        <div class="modal-body">
+          <datepicker>
+              <input ng-model="dates.dateDepart" class="form-control" type="text" date-format="fullDate" placeholder="Arrive..."/>
+          </datepicker>
+          <datepicker>
+              <input ng-model="dates.dateReturn" class="form-control" type="text" date-format="fullDate" placeholder="Return..."/>
+          </datepicker>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rating Modal -->
+  <div id="ratingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Rating</h4>
+        </div>
+        <div class="modal-body">
+          <label for="rating" class="control-label">Minimum Rating</label>
+  				<select ng-model="minRating" id="rating" class="form-control">
+  				  <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+  				</select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Price Modal -->
+  <div id="priceModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Price</h4>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-3 col-md-offset-2">
+            <input ng-model="priceRange.low" type="number" id="low" placeholder="0">
+          </div>
+          <div class="col-md-1">to</div>
+          <div class="col-md-3">
+            <input ng-model="priceRange.high" type="number" id="high" placeholder="200">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
+  

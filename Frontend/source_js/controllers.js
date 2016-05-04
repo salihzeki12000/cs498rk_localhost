@@ -4,7 +4,7 @@ appControllers.controller('MainCtrl', ['$scope', '$window', 'Auth', 'CommonData'
   $scope.auth = Auth;
   $scope.user = CommonData.getUser();
   $scope.img = CommonData.getProfileImg();
-  $window.sessionStorage.baseurl = "localhost:4000"
+  $window.sessionStorage.baseurl = "http://localhost:4000/api"
   console.log("logged in? " + Auth.loggedIn);
 }]);
 
@@ -81,30 +81,49 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
   $scope.roomTypes = CommonData.getRoomTypes();
   //$scope.roomTypes.push({name: "All", value: "All"});
   $scope.roomType = $scope.roomTypes[0];
-  $scope.dates = {dateDepart:"", dateReturn:""};
+  $scope.dates = {dateDepart: "", dateReturn: ""};
   $scope.dateReturn = "";
   $scope.minRating = 1;
-  $scope.priceRange = {low:0, high:200};
-  $scope.ads = Listings.getSampleListings().data; 
-  Listings.getListings().success(function(data){
-    console.log(data);
-  }).error(function(err){
-    console.log(err);
-  });
+  $scope.priceRange = { low: 0, high: 500 };
+  $scope.tagList = CommonData.getTags();
+  $scope.tags = [];
+  
+  getListings($scope.city);
+
+  function getListings(city){
+      if (city === undefined || city === ""){
+        Listings.getListings().success(function(data){
+          console.log(data);
+          $scope.ads = data.data;
+        }).error(function(err){
+          console.log(err);
+        });
+      } else {
+        Listings.getListingsByCity($scope.city).success(function(data){
+          console.log(data);
+          $scope.ads = data.data;
+        }).error(function(err){
+          console.log(err);
+        });
+      }
+  }
+  
   $scope.changeCity = function (city) {
     CommonData.setCity(city);
     console.log("city changed: " + city);
+    getListings(city);
   }
 
   $scope.filterAds = function(){
-    console.log("filter ads");
-    console.log("roomType is " + $scope.roomType.name);
-    console.log("dates are " + $scope.dates.dateDepart + " to " + $scope.dates.dateReturn);
-    console.log("minRating is " + $scope.minRating);
-    console.log("price range is " + $scope.priceRange.low + "-" + $scope.priceRange.high);
-    Listings.filterListings($scope.city, $scope.roomType, $scope.dates.dateDepart, $scope.dates.dateReturn,
-      $scope.priceRange.low, $scope.priceRange.high).success(function(data){
+    var tags = [];
+    for (var i = 0; i < $scope.tags.length; i++){
+      tags.push($scope.tags[i].name);
+    }
+    console.log(tags);
+    Listings.filterListings($scope.city, $scope.roomType.name, $scope.dates.dateDepart, $scope.dates.dateReturn,
+      $scope.priceRange.low, $scope.priceRange.high, tags).success(function(data){
         console.log(data);
+        $scope.ads = data.data;
       }).error(function(err){
         console.log(err);
       });
