@@ -12,7 +12,7 @@ var express = require('express'),
     User = require('./app/models/user');
 mongoose.connect(configDB.url); // db connection
 //debugging!
-//mongoose.set('debug', true);
+mongoose.set('debug', true);
 
 require('./config/passport')(passport);
 
@@ -21,7 +21,7 @@ var allowCrossDomain = function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header("Access-Control-Allow-Headers", "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
-	res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Credentials', true);
   next();
 };
 
@@ -221,6 +221,7 @@ listingsRoute.post(function(req,res){
 		hostID: data.hostID,
         bio: data.bio,
 		address: data.address,
+        city: data.city,
         date: data.date,
         roomType: data.roomType,
         currentTraveler: data.currentTraveler,
@@ -255,6 +256,7 @@ idListingsRoute.put(function(req,res){
 		listing.price = data.price;
 		listing.roomType = data.roomType;
 		listing.address = data.address;
+        listing.city = data.city;
         listing.currentTraveler = data.currentTraveler;
         listing.currentTravelerName = data.currentTravelerName;
 		listing.date = data.date;
