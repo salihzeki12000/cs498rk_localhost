@@ -79,6 +79,7 @@ appControllers.controller('TravellerSearchController', ['$scope', '$window', 'Co
 appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData', 'Listings', function($scope, $window, CommonData, Listings) {
   $scope.city = CommonData.getCity();
   $scope.roomTypes = CommonData.getRoomTypes();
+  //$scope.roomTypes.push({name: "All", value: "All"});
   $scope.roomType = $scope.roomTypes[0];
   $scope.dates = {dateDepart: "", dateReturn: ""};
   $scope.dateReturn = "";
