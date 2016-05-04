@@ -40,6 +40,30 @@ h5 {
 	text-align: center;
 }
 
+.no-blank-space {
+	margin: 0;
+	padding: 0;
+}
+
+.verified-text {
+	font-size: 22px;
+	padding: 8px 0px 8px 12px;
+	max-width: 300px;
+	color: $light-green;
+	border-bottom: 2px solid $lt-gray;
+}
+
+.green-banner {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	max-width: 300px;
+	font-size: 30px;
+	font-family: $fubuntu;
+	padding-top: 5px;
+	color: white;
+	background-color: $light-green;
+}
+
 .btn-orange {
 	padding: 0 20px;
 	margin: 4px;
@@ -104,6 +128,12 @@ h5 {
 			height: 27px;
 		}
 	}
+}
+
+.user-portrait {
+	max-width: 300px;
+	max-height: 300px;
+	border-radius: 150px;
 }
 
 .nav-btn-top {
