@@ -11,7 +11,10 @@ var userSchema = new mongoose.Schema({
 	location		: String,
 	matchedHost		: String,  //only match with 1 host at any time
 	matchedTravelers: [String],
-	bio				: String
+	bio				: String,
+	gender: String,
+	occupation: String,
+	age: String
 
 });
 

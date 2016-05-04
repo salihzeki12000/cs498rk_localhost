@@ -10,6 +10,7 @@ var listingSchema = new mongoose.Schema({
 	price				: Number,
 	roomType			: String,
 	date				: String,
+	activities			: [String], // trip itinerary
 	tags				: [String],
 	currentTraveler		: String,
 	currentTravelerName	: String

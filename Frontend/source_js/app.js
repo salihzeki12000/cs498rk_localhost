@@ -46,6 +46,10 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/searchAds.html',
     controller: 'SearchAdsController'
   }).
+  when('/listingdetails/:_id', {
+    templateUrl: 'partials/listingDetails.html',
+    controller: 'ListingDetailsController'
+  }).
   when('/matched', {
       templateUrl: 'partials/matched.html',
       controller: 'MatchingController'
