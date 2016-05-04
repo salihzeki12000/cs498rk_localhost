@@ -1,5 +1,5 @@
 <div ng-controller='SearchAdsController' id="search-ads">
-  <div id="custom-search-input" class="search">
+  <div id="custom-search-input" class="search row">
     <div class="input-group col-md-12">
         <input type="text" class="form-control input-lg" placeholder="{{city}}" ng-model="city" />
         <span class="input-group-btn">
@@ -11,15 +11,15 @@
         </span>
       </div>
   </div>
-    <div class="col-sm-2 col-md-2 col-lg-2">
+
+    <div class="col-sm-1">
       <nav class="navbar navbar-default navbar-fixed-side">
-        <ul class="text-center">
+        <ul> 
           <li><a href="#/searchads/#searchModal" data-toggle="modal"><i class="glyphicon glyphicon-search"></i></a></li> <br>
           <li role="separator" class="divider"></li>
           <li><a href="#/searchads/#roomTypeModal" data-toggle="modal"><i class="glyphicon glyphicon-home"></i></a></li> <br>
           <li role="separator" class="divider"></li>
           <li><a href="#/searchads/#dateModal" data-toggle="modal"><i class="glyphicon glyphicon-calendar"></i></a></li> <br>
-
           <li role="separator" class="divider"></li>
           <li><a href="#/searchads/#ratingModal" data-toggle="modal"><i class="glyphicon glyphicon-star"></i></a></li> <br>
           <li role="separator" class="divider"></li>
@@ -27,10 +27,11 @@
         </ul>
       </nav>
     </div>
-    <section class="row">
-      <div class="container-fluid">
 
-      <div class="col-sm-10">
+    <section class="row">
+      <!--<div class="container-fluid">-->
+
+      <div class="col-sm-8">
         <div id="searchModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog">
 
@@ -41,7 +42,7 @@
                 <h4 class="modal-title">Location</h4>
               </div>
               <div class="modal-body">
-                <p>Some text in the modal.</p>
+                <p>Not needed if there's a search bar at the top...</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-search"></i></button>
@@ -63,7 +64,7 @@
         				<select ng-model="roomType" ng-options="room.name for room in roomTypes" id="room" class="col-sm-10 form-control"></select>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-search"></i></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
               </div>
             </div>
           </div>
@@ -79,14 +80,14 @@
               </div>
               <div class="modal-body">
                 <datepicker>
-                    <input ng-model="dateDepart" type="text" date-format="fullDate" placeholder="Arrive..."/>
+                    <input ng-model="dates.dateDepart" class="form-control" type="text" date-format="fullDate" placeholder="Arrive..."/>
                 </datepicker>
                 <datepicker>
-                    <input ng-model="dateReturn" type="text" date-format="fullDate" placeholder="Return..."/>
+                    <input ng-model="dates.dateReturn" class="form-control" type="text" date-format="fullDate" placeholder="Return..."/>
                 </datepicker>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-search"></i></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
               </div>
             </div>
           </div>
@@ -101,8 +102,8 @@
                 <h4 class="modal-title">Rating</h4>
               </div>
               <div class="modal-body">
-                <label for="rating" class="col-sm-3 control-label">Minimum Rating</label>
-        				<select ng-model="rating" id="room" class="col-sm-10 form-control">
+                <label for="rating" class="control-label">Minimum Rating</label>
+        				<select ng-model="minRating" id="rating" class="form-control">
         				  <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -111,7 +112,7 @@
         				</select>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-search"></i></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
               </div>
             </div>
           </div>
@@ -126,18 +127,21 @@
                 <h4 class="modal-title">Price</h4>
               </div>
               <div class="modal-body">
-              <label for="low">Low</label>
-              <input ng-model="priceLow" type="number" id="low" placeholder="low">
-              <label for="high">High</label>
-              <input ng-model="priceHigh" type="number" id="high" placeholder="high">
+                <div class="col-md-3 col-md-offset-2">
+                  <input ng-model="price.low" type="number" id="low" placeholder="0">
+                </div>
+                <div class="col-md-1">to</div>
+                <div class="col-md-3">
+                  <input ng-model="price.high" type="number" id="high" placeholder="200">
+                </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-search"></i></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
               </div>
             </div>
           </div>
         </div>
-
+      <div class="container">
         <div ng-repeat="ad in ads"> 
           <div class="row ad">
             <div class="col-md-3 col-md-offset-1">
@@ -154,7 +158,7 @@
               </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-4">
               <div class="row">
                 <div class="col-md-12 search-img">
                   <a href="#/hostbio"><h4>{{ad.hostName}}</h4></a>
@@ -162,179 +166,19 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <h6>Bio</h6>
                   <p>{{ad.bio}}</p>
                 </div>
               </div>
             </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <img src="http://i.stack.imgur.com/yEshb.gif">
               </div>
           </div>
         </div>
-        
-        <!--<div class="row ad">
-          <div class="col-md-3 col-md-offset-1">
-            <div class="row">
-              <div class="col-md-12 search-img">
-                <p class="price">$50/day </p>
-                <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <p class="room-type"><b>Room Type: </b>Private Room</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-5">
-            <div class="row">
-              <div class="col-md-12 search-img">
-                <a href="#/hostbio"><h4>Name</h4></a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <h6>Bio</h6>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,...</p>
-              </div>
-            </div>
-          </div>
-            <div class="col-md-3">
-              <img src="http://i.stack.imgur.com/yEshb.gif">
-            </div>
         </div>
-        <div class="row ad">
-          <div class="col-md-3 col-md-offset-1">
-            <div class="row">
-              <div class="col-md-12 search-img">
-                <p class="price">$50/day </p>
-                <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <p class="room-type"><b>Room Type: </b>Private Room</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-5">
-            <div class="row">
-              <div class="col-md-12 search-img">
-                <a href="#/hostbio"><h4>Name</h4></a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <h6>Bio</h6>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,...</p>
-              </div>
-            </div>
-          </div>
-            <div class="col-md-3">
-              <img src="http://i.stack.imgur.com/yEshb.gif">
-            </div>
+    
         </div>
-        <div class="row ad">
-          <div class="col-md-3 col-md-offset-1">
-            <div class="row">
-              <div class="col-md-12 search-img">
-                <p class="price">$50/day </p>
-                <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <p class="room-type"><b>Room Type: </b>Private Room</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-5">
-            <div class="row">
-              <div class="col-md-12 search-img">
-                <a href="#/hostbio"><h4>Name</h4></a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <h6>Bio</h6>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,...</p>
-              </div>
-            </div>
-          </div>
-            <div class="col-md-3">
-              <img src="http://i.stack.imgur.com/yEshb.gif">
-            </div>
-        </div>
-        <div class="row ad">
-          <div class="col-md-3 col-md-offset-1">
-            <div class="row">
-              <div class="col-md-12 search-img">
-                <p class="price">$50/day </p>
-                <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <p class="room-type"><b>Room Type: </b>Private Room</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-5">
-            <div class="row">
-              <div class="col-md-12 search-img">
-                <a href="#/hostbio"><h4>Name</h4></a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <h6>Bio</h6>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,...</p>
-              </div>
-            </div>
-          </div>
-            <div class="col-md-3">
-              <img src="http://i.stack.imgur.com/yEshb.gif">
-            </div>
-        </div>
-        <div class="row ad">
-          <div class="col-md-3 col-md-offset-1">
-            <div class="row">
-              <div class="col-md-12 search-img">
-                <p class="price">$50/day </p>
-                <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <p class="room-type"><b>Room Type: </b>Private Room</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-5">
-            <div class="row">
-              <div class="col-md-12 search-img">
-                <a href="#/hostbio"><h4>Name</h4></a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <h6>Bio</h6>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,...</p>
-              </div>
-            </div>
-          </div>
-            <div class="col-md-3">
-              <img src="http://i.stack.imgur.com/yEshb.gif">
-            </div>
-        </div>-->
-        </div>
-      </div>
+      <!--</div>-->
     </div>
   </div>
 </div>

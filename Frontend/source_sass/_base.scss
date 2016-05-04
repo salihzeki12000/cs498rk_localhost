@@ -376,14 +376,24 @@ header {
 		}
 	}
 	.navbar-fixed-side {
-		margin-top: 20px;
+		/*margin-top: 20px;*/
 		width: 40px;
 		position: fixed;
 		ul {
 			margin: 20px 0;
+			margin-left: -27px;
 			text-decoration: none;
 			list-style-type: none;
 		}
+	}
+}
+
+#priceModal {
+	input {
+		width: 75%;
+	}
+	#low {
+		float: right;
 	}
 }
 
@@ -416,6 +426,18 @@ header {
 	display: inline;
 	width: 55% !important;
 }*/
+
+/*Host bio page*/
+.hostBio {
+	img {
+		height: 150px;
+		width: 170px;
+	}
+	.profile-img {
+		height: 200px;
+		width: 250px;
+	}
+}
 
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {

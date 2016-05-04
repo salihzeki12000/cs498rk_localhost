@@ -79,12 +79,36 @@ appControllers.controller('TravellerSearchController', ['$scope', '$window', 'Co
 appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData', 'Listings', function($scope, $window, CommonData, Listings) {
   $scope.city = CommonData.getCity();
   $scope.roomTypes = CommonData.getRoomTypes();
+  //$scope.roomTypes.push({name: "All", value: "All"});
   $scope.roomType = $scope.roomTypes[0];
+  $scope.dates = {dateDepart:"", dateReturn:""};
+  $scope.dateReturn = "";
+  $scope.minRating = 1;
+  $scope.priceRange = {low:0, high:200};
   $scope.ads = Listings.getSampleListings().data; 
+  Listings.getListings().success(function(data){
+    console.log(data);
+  }).error(function(err){
+    console.log(err);
+  });
   $scope.changeCity = function (city) {
     CommonData.setCity(city);
     console.log("city changed: " + city);
   }
+
+  $scope.filterAds = function(){
+    console.log("filter ads");
+    console.log("roomType is " + $scope.roomType.name);
+    console.log("dates are " + $scope.dates.dateDepart + " to " + $scope.dates.dateReturn);
+    console.log("minRating is " + $scope.minRating);
+    console.log("price range is " + $scope.priceRange.low + "-" + $scope.priceRange.high);
+    Listings.filterListings($scope.city, $scope.roomType, $scope.dates.dateDepart, $scope.dates.dateReturn,
+      $scope.priceRange.low, $scope.priceRange.high).success(function(data){
+        console.log(data);
+      }).error(function(err){
+        console.log(err);
+      });
+  } 
 }]);
 
 appControllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
@@ -103,14 +127,15 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.roomTypes = CommonData.getRoomTypes();
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();
-  $scope.listing = {address: "", bio: "", roomType: $scope.roomTypes[0], price: 0, dateStart: "", dateEnd: "", tags: []};
+  $scope.listing = {address: "", city: "", bio: "", roomType: $scope.roomTypes[0], price: 0, dateStart: "", dateEnd: "", tags: []};
   $scope.submitForm = function(){
     console.log("create host ad");
-    /*Listings.postListing($scope.listing).success(function(data){
+    Listings.postListing($scope.listing).success(function(data){
       console.log(data);
-    });*/
+    }).error(function(err){
+      console.log(err);
+    });
   }
-
 }]);
 
 appControllers.controller('MatchingController', ['$scope', '$window', function($scope, $window){

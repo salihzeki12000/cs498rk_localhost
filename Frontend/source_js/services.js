@@ -40,10 +40,13 @@ appServices.factory('User', function($http, $window) {
 });
 
 appServices.factory('Listings', function($http, $window){
-    var baseUrl = $window.sessionStorage.baseurl;
+    var baseUrl = $window.sessionStorage.baseurl + '/api';
     return {
         postListing : function(listing){
             return $http.post(baseUrl+'/listings', listing);
+        },
+        getListings : function(){
+            return $http.get(baseUrl+'/listings');
         },
         getListingsByCity : function(city){
             return $http.get(baseUrl+'/listings?where={"city":"'+city+'"}');

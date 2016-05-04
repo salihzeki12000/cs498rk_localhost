@@ -1,52 +1,51 @@
-<div ng-controller='HostBioController' class="container">
-	<section>
-		<div class="row">
-			<div class="col-sm-12 col-md-10">
-				<h2 style="display:inline">{{user.name}}</h2>
-			</div>
-			<div class="col-sm-12 col-md-2">
-				<button ng-click="submitForm()" class="btn btn-lg btn-orange">Request This Room</button>
-			</div>
+<div ng-controller='HostBioController' class="container hostBio">
+	<div class="row">
+		<div class="col-sm-12 col-md-10">
+			<h2 style="display:inline">{{user.name}}</h2>
 		</div>
-		<div class="row">
-			<div class="col-sm-12 col-md-3">
-				<img ng-src="{{img}}" class="profile-img">
-				<div><b>Address:</b> {{user.address}}</div>
-				<div><b>Room Type:</b> {{user.roomType}}</div>
-				<div><b>Dates available:</b> {{user.dates[0]}}</div>
-				<div class="rating">
-	                ★★★★☆ (2)
-	            </div>
-	            <br>
-				<b>Tags</b>
-				<div ng-repeat="tag in user.tags"><div>{{tag}}</div></div>
-			</div>
-			<div class="col-sm-12 col-md-6">
-	            <p>{{user.bio}}</p>
-	            
-	            <div style="text-align:center">Pictures of my home</div>
-				<div class="form-group row">
-					<div class="col-md-4"><img ng-src="{{roomImg}}">
-					</div>
-					<div class="col-md-4"><img ng-src="{{roomImg}}"></div>
-					<div class="col-md-4"><img ng-src="{{roomImg}}"></div>
-					<button class="btn-link">See more images..</button>
+		<div class="col-sm-12 col-md-2">
+			<button ng-click="submitForm()" class="btn btn-lg btn-orange">Request This Room</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12 col-md-3">
+			<img ng-src="{{img}}" class="profile-img">
+			<div><b>Address:</b> {{user.address}}</div>
+			<div><b>Room Type:</b> {{user.roomType}}</div>
+			<div><b>Dates available:</b> {{user.dates[0]}}</div>
+			<div class="rating">
+                ★★★★☆ (2)
+            </div>
+            <br>
+			<b>Tags</b>
+			<div ng-repeat="tag in user.tags"><div>{{tag}}</div></div>
+		</div>
+		<div class="col-sm-12 col-md-6">
+            <p>{{user.bio}}</p>
+            
+            <div style="text-align:center">Pictures of my home</div>
+			<div class="row">
+				<div class="col-md-4"><img ng-src="{{roomImg}}">
 				</div>
-			</div>
-			<div class="col-sm-12 col-md-3">
-				<div id="map" style="width: 300px; height:300px; border: 1px solid black"></div>
+				<div class="col-md-4"><img ng-src="{{roomImg}}"></div>
+				<div class="col-md-4"><img ng-src="{{roomImg}}"></div>
+				<button class="btn-link">See more images..</button>
 			</div>
 		</div>
-      <script>
-        function initMap() {
-          var mapDiv = document.getElementById('map');
-          var map = new google.maps.Map(mapDiv, {
-            center: {lat: 44.540, lng: -78.546},
-            zoom: 8
-          });
-        }
-      </script>
-      <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
-          async defer></script>
-	</section>
+		<div class="col-sm-12 col-md-3">
+			<div id="map" style="width: 300px; height:300px; border: 1px solid black"></div>
+		</div>
+	</div>
+  <script>
+    function initMap() {
+      var mapDiv = document.getElementById('map');
+      var map = new google.maps.Map(mapDiv, {
+        center: {lat: 44.540, lng: -78.546},
+        zoom: 8
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+      async defer></script>
+
 </div>

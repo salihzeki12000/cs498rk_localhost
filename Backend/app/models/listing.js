@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var listingSchema = new mongoose.Schema({
 	address				: String,  //required
+	city				: String,  //required
 	hostName			: String,  //required
 	hostID				: String,
 	bio 				: String,  //shouldn't this be for the user?
@@ -12,7 +13,6 @@ var listingSchema = new mongoose.Schema({
 	tags				: [String],
 	currentTraveler		: String,
 	currentTravelerName	: String
-
 
 });
 
