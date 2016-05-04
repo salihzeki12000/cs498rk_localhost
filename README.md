@@ -14,3 +14,10 @@ You can leave this command running in the background while development for liver
 ```bash
 grunt
 ```
+
+## Run these in the Backend folder to run the server
+```
+`npm install` and `nodemon server.js`
+```
+
+Use `nodemon server.js -L` to run server with automatic restarting

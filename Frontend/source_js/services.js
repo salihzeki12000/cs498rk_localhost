@@ -40,7 +40,7 @@ appServices.factory('User', function($http, $window) {
 });
 
 appServices.factory('Listings', function($http, $window){
-    var baseUrl = $window.sessionStorage.baseurl + '/api';
+    var baseUrl = $window.sessionStorage.baseurl;
     return {
         postListing : function(listing){
             return $http.post(baseUrl+'/listings', listing);
@@ -49,30 +49,23 @@ appServices.factory('Listings', function($http, $window){
             return $http.get(baseUrl+'/listings');
         },
         getListingsByCity : function(city){
+            console.log(city);
             return $http.get(baseUrl+'/listings?where={"city":"'+city+'"}');
         },
-        filterListings : function(city, roomType, dateBegin, dateEnd, priceLow, priceHigh){
-            var cityQ = '"city":"'+city+'"';
-            var roomQ = '"roomType":"'+roomType+'"';
-            var dateQ = '"date": {"$gte":'+dateBegin+'}, "price": {"$lte":'+dateEnd+'}';
-            var priceQ = '"price": {"$gte":'+priceLow+'}, "price": {"$lte":'+priceHigh+'}';
-            var query = '/listings?where={'+cityQ+','+roomQ+','+dateQ+','+priceQ+'}';
+        filterListings : function(city, roomType, dateBegin, dateEnd, priceLow, priceHigh, tags){
+            var query = '/listings?where={';
+            if (city !== "")
+                query += '"city":"'+city+'", ';
+            query += '"roomType":"'+roomType+'"';
+            if (dateBegin !== "")
+                query += ', "date": {"$gte":'+dateBegin+'}, "date": {"$lte":'+dateEnd+'}';
+            query += ', "price": {"$gte":'+priceLow+'}, "price": {"$lte":'+priceHigh+'}';
+            if (tags.length > 0)
+                query += ', "tags":{"$in":"'+tags+'"}'
+            query += '}';
             console.log(query);
             return $http.get(baseUrl+query);
         },
-        //fake data, generate this better with a script once we can add stuff in 
-        getSampleListings : function(){
-            return {message: "OK",
-                    data: [{id: 1, Address: '123 Green St.', hostName: 'Sarah', bio: 'This is the most fun adventure you will ever have',
-                    price: 60, roomType: 'Private Room', date: 'tomorrow', tags: ['Rock Climbing', 'Nature']},
-                    {id: 2, 'Address': '123 Springfield St.', hostName: 'Margie', bio: 'I will take you to the best restaurants ever',
-                    price: 50, roomType: 'Shared Room', date: 'the day after tomorrow', tags: ['Food', 'Vegetarian']},
-                    {id: 3, Address: '123 Armory St.', hostName: 'Chuanhao', bio: 'Let me show you my town!',
-                    price: 30, roomType: 'Private Room', date: 'tomorrow', tags: ['Architecture', 'Nature']},
-                    {id: 1, Address: '124 Green St.', hostName: 'Murray', bio: 'We will eat the best burger ever',
-                    price: 60, roomType: 'Shared Room', date: 'tomorrow', tags: ['Hamburgers', 'Food']}
-                    ]};
-        }
     }
 });
 
@@ -104,6 +97,7 @@ appServices.factory('CommonData', function(){
     var commonRoomImg = "http://i.imgur.com/tXMM9Ed.jpg";
     var mapImg = "http://i.imgur.com/ODTtRQr.png";
     var roomTypes = [{name: "Private Room", value: "Private Room"}, {name: "Shared Room", value: "Shared Room"}];
+    var tags = [{name:'Hiking', value:'Hiking'},{name:'Dancing', value:'Dancing'}];
     return{
         getUser : function(){
             return user;
@@ -128,6 +122,9 @@ appServices.factory('CommonData', function(){
         },
         getRoomTypes: function() {
             return roomTypes;
+        },
+        getTags : function() {
+            return tags;
         }
     }
 });
