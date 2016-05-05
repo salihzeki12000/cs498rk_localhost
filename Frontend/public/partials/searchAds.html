@@ -1,7 +1,7 @@
 <div ng-controller='SearchAdsController' id="search-ads" class="container">
 
   <div class="row search">
-    <div class="col-md-8 col-md-offset-2 city-search">
+    <div class="col-sm-12 col-md-8 col-md-offset-2 city-search">
       <select class="form-control input-lg" ng-model="city" ng-options="city.name for city in cities" ng-change="changeCity(city.name)"></select>
     </div>
   </div>
@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-sm-1">
       <nav class="navbar navbar-default navbar-fixed-side">
-        <ul> 
+        <ul>
           <li><a href="#/searchads/#searchModal" data-toggle="modal"><i class="glyphicon glyphicon-tags"></i></a></li> <br>
           <li><a href="#/searchads/#roomTypeModal" data-toggle="modal"><i class="glyphicon glyphicon-home"></i></a></li> <br>
           <li><a href="#/searchads/#dateModal" data-toggle="modal"><i class="glyphicon glyphicon-calendar"></i></a></li> <br>
@@ -20,9 +20,9 @@
     </div>
 
     <!-- Listings -->
-    <div class="col-sm-11 section">
-      <div ng-repeat="ad in ads"> 
-        <div class="row ad">
+    <div class="col-sm-11 section" id="slide-up">
+      <div ng-repeat="ad in ads">
+        <div class="row ad text-center">
           <div class="col-sm-10 col-md-2 col-sm-offset-1">
             <div class="row">
               <div class="search-img">
@@ -38,23 +38,23 @@
             <div class="row">
               <a ng-href="#/hostbio/{{ad.hostID}}"><h4>{{ad.hostName}}</h4></a>
             </div>
-            <div class="row">
+            <div class="row text-center">
               <p>{{ad.bio}}</p>
-              <div ng-repeat="tag in ad.tags">
-                <span class="label label-info label-tag">{{tag}}</span>
                 <br>
               </div>
             </div>
+          <div class="col-sm-11 col-md-3 text-center">
+            <p class="tags"><b>Tags: </b> </p>
+            <div ng-repeat="tag in ad.tags">
+              <span class="label label-info label-tag">{{tag}}</span>
+            <br>
           </div>
-            <div class="col-sm-11 col-md-3">
-              <img src="http://i.stack.imgur.com/yEshb.gif">
-              <br>
-            </div>
+        </div>
         </div>
       </div>
     </div>
   </div>
-        
+
   <!--MODAL CONTENT-->
   <!-- Tag Modal -->
   <div id="searchModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -166,4 +166,3 @@
   </div>
 
 </div>
-  

@@ -160,6 +160,7 @@ idUsersRoute.put(function(req,res){
 //        password: data.local.password;
 		user.local.email = user.local.email;
 		user.local.password = user.local.password;
+
         user.postedHostAds= data.postedHostAds;
         user.location= data.location;
         user.matchedHosts= data.matchedHosts;
@@ -229,6 +230,10 @@ listingsRoute.get(function(req,res){
 });
 listingsRoute.post(function(req,res){
     var data = req.body;
+	data.tags = data.tags.replace(/\'/g, "\"");
+	console.log(JSON.parse(data.tags));
+	data.tags=JSON.parse(data.tags);
+	console.log("______________");
 	console.log(data);
     if(!data.hostName || !data.address){
         return res.status(500).json({message: "Valid host name and address required", data: null});

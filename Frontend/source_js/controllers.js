@@ -17,8 +17,9 @@ appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', '
   console.log("logged in? " + $window.localStorage.getItem('loggedIn'));
 
   $scope.logout = function() {
-    $window.localStorage.setItem('user', "");
-    $window.localStorage.setItem('loggedIn', 'false');
+    Auth.logout();
+    /*$window.localStorage.setItem('user', "");
+    $window.localStorage.setItem('loggedIn', 'false');*/
     $scope.user = null;
     $scope.loggedIn = false;
     $route.reload();
@@ -57,8 +58,9 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
   $scope.login = function() {
     console.log($scope.user);
     Users.postLogIn($scope.user).success(function (data) {
-      $window.localStorage.setItem('user', JSON.stringify(data.data));
-      $window.localStorage.setItem('loggedIn', 'true');
+      Auth.login(data.data);
+      /*$window.localStorage.setItem('user', JSON.stringify(data.data));
+      $window.localStorage.setItem('loggedIn', 'true');*/
       $window.location.href = '#/profile';
     }).error(function (data) {
       console.log("error");
@@ -71,8 +73,9 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
   $scope.newUser = "";
   $scope.signup = function() {
     Users.postSignUp($scope.newUser).success(function (data) {
-      $window.localStorage.setItem('user', JSON.stringify(data.data));
-      $window.localStorage.setItem('loggedIn', 'true');
+      Auth.login(data.data);
+      /*$window.localStorage.setItem('user', JSON.stringify(data.data));
+      $window.localStorage.setItem('loggedIn', 'true');*/
       $window.location.href = '#/travellerhost';
       $route.reload();
     });
@@ -218,7 +221,7 @@ appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData
   $scope.img = CommonData.getProfileImg();
 }]);
 
-appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User', 
+appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User',
                           function($scope, $window, $routeParams, Listing, User) {
   console.log('listing detail controller created');
   $scope.requestSent = true;
@@ -245,7 +248,7 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
     $scope.user.matchedTravelers.push(listingID);
     User.put(userID, $scope.user).success(function(data) {
       console.log("request book:", data.message);
-      
+
       if($scope.user.gender == "female") {
         genderPro = "she";
       }
@@ -263,11 +266,11 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 }]);
 
 
-appControllers.controller('EditProfileController', ['$scope', '$routeParams', 'CommonData', 'User', function($scope, 
-                          $routeParams, CommonData, User) {
+appControllers.controller('EditProfileController', ['$scope', '$window', '$routeParams', 'CommonData', 'User', function($scope,
+                          $window, $routeParams, CommonData, User) {
   // $scope.user = {};
   // test local user
-  $scope.user = {name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: {name:"male"}, bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
+  $scope.user = JSON.parse($window.localStorage.getItem('user'));
   $scope.cities = CommonData.getCities();
   $scope.genders = [{name: "male"}, {name: "female"}, {name: "other"}];
   var userID = $routeParams._id;
