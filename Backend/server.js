@@ -9,7 +9,7 @@ var express = require('express'),
 	session = require('express-session'),
 	configDB = require('./config/database.js'),
 	Listing = require('./app/models/listing'),
-    User = require('./app/models/user');
+  User = require('./app/models/user');
 mongoose.connect(configDB.url); // db connection
 //debugging!
 mongoose.set('debug', true);

@@ -1,7 +1,7 @@
 var appServices = angular.module('appServices', []);
 
 appServices.factory('Users', function($http, $window) {
-    var baseUrl = $window.sessionStorage.baseurl;
+    var baseUrl = 'http://localhost:4000';
     //console.log("baseurl: "+ baseUrl);
     return {
         get : function() {
@@ -13,7 +13,7 @@ appServices.factory('Users', function($http, $window) {
         },
         postLogIn: function(user) {
             //var baseUrl = $window.sessionStorage.baseurl;
-            return $http.post(baseUrl+'login', user);
+            return $http.post(baseUrl+'/login', user);
         }
     }
 });
@@ -129,17 +129,19 @@ appServices.factory('CommonData', function(){
     }
 });
 
-appServices.service('Auth', function() {
+appServices.service('Auth', function($rootScope) {
   var auth = {};
+    //$rootScope.loggedIn = false;
+    //$rootScope.user = null;
 
-  auth.loggedIn = true;//false;
-
-  auth.login = function() {
-    auth.loggedIn = true;
+  auth.login = function(user) {
+    $rootScope.user = user;
+    $rootScope.loggedIn = true;
   };
 
   auth.logout = function() {
-    auth.loggedIn = false;
+    $rootScope.user = null;
+    $rootScope.loggedIn = false;
   };
 
   return auth;
