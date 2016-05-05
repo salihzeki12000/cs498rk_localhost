@@ -9,7 +9,8 @@ var listingSchema = new mongoose.Schema({
 	description			: String, //description might work better than bio
 	price				: Number,
 	roomType			: String,
-	date				: String,
+	dateStart			: String,
+	dateEnd				: String,
 	activities			: [String], // trip itinerary
 	tags				: [String],
 	currentTraveler		: String,

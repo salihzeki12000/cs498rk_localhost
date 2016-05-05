@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "homepage": "https://github.com/zhuge2/cs498rk_localhost",
   "authors": [
-    "biplabdeka <biplab.deka@gmail.com>",
-    "sskhandek <sskhandek@gmail.com>"
+    "margiechubin <margiechubin@gmail.com>",
+    "sghelm2",
+    "zhuge2",
+    "mchen14"
   ],
   "ignore": [
     "**/.*",

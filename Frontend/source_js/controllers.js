@@ -4,7 +4,7 @@ appControllers.controller('MainCtrl', ['$scope', '$window', 'Auth', 'CommonData'
   $scope.auth = Auth;
   $scope.user = CommonData.getUser();
   $scope.img = CommonData.getProfileImg();
-  $window.sessionStorage.baseurl = "http://localhost:4000/api"
+  $window.sessionStorage.baseurl = "http://localhost:4000"
   console.log("logged in? " + Auth.loggedIn);
 }]);
 
@@ -14,9 +14,10 @@ appControllers.controller('LandingPageController', ['$scope', '$window', 'Common
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();
   var imagePath = './data/';
-  $scope.hotCities = [{name: 'Chicago', img: imagePath+'chicago.jpg'},{name: 'New York', img: imagePath+'newYork.jpg'},
-  {name: 'London', img: imagePath+'london.jpeg'}, {name: 'San Francisco', img: imagePath+'sanFran.jpg'},
-  {name: 'Seattle', img: imagePath+'seattle.jpg'}, {name: 'Paris', img: imagePath+'paris.jpg'}];
+  $scope.cities = CommonData.getCities();
+  $scope.hotCities = [{name: 'Singapore, Singapore', img: imagePath+'singapore.jpg'},{name: 'Prague, Czech Republic', img: imagePath+'prague.jpg'},
+  {name: 'Marrakech, Morocco', img: imagePath+'Marrakech.jpg'}, {name: 'San Francisco, USA', img: imagePath+'sanFran.jpg'},
+  {name: 'Quito, Ecuador', img: imagePath+'quito.jpg'}, {name: 'Brisbane, Australia', img: imagePath+'brisbane.jpg'}];
 
   $scope.clickCity = function(city){
     CommonData.setCity(city);
@@ -67,6 +68,7 @@ appControllers.controller('hostOrTravellerController', ['$scope', '$window', 'Co
 }]);
 
 appControllers.controller('TravellerSearchController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData) {
+  $scope.cities = CommonData.getCities();
   $scope.city = "";
 
   $scope.chooseCity = function (city) {
@@ -77,18 +79,18 @@ appControllers.controller('TravellerSearchController', ['$scope', '$window', 'Co
 }]);
 
 appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonData', 'Listings', function($scope, $window, CommonData, Listings) {
-  $scope.city = CommonData.getCity();
+  $scope.cities = CommonData.getCities();
+  $scope.city = {name: CommonData.getCity(), value: CommonData.getCity()};
   $scope.roomTypes = CommonData.getRoomTypes();
-  //$scope.roomTypes.push({name: "All", value: "All"});
   $scope.roomType = $scope.roomTypes[0];
-  $scope.dates = {dateDepart: "", dateReturn: ""};
+  $scope.dates = {dateStart: "", dateReturn: ""};
   $scope.dateReturn = "";
   $scope.minRating = 1;
   $scope.priceRange = { low: 0, high: 500 };
   $scope.tagList = CommonData.getTags();
   $scope.tags = [];
   
-  getListings($scope.city);
+  getListings($scope.city.name);
 
   function getListings(city){
       if (city === undefined || city === ""){
@@ -99,7 +101,7 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
           console.log(err);
         });
       } else {
-        Listings.getListingsByCity($scope.city).success(function(data){
+        Listings.getListingsByCity(city).success(function(data){
           console.log(data);
           $scope.ads = data.data;
         }).error(function(err){
@@ -110,6 +112,7 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
   
   $scope.changeCity = function (city) {
     CommonData.setCity(city);
+    $scope.city = {name: city, value: city};
     console.log("city changed: " + city);
     getListings(city);
   }
@@ -120,7 +123,7 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
       tags.push($scope.tags[i].name);
     }
     console.log(tags);
-    Listings.filterListings($scope.city, $scope.roomType.name, $scope.dates.dateDepart, $scope.dates.dateReturn,
+    Listings.filterListings($scope.city.name, $scope.roomType.value, $scope.dates.dateStart, $scope.dates.dateReturn,
       $scope.priceRange.low, $scope.priceRange.high, tags).success(function(data){
         console.log(data);
         $scope.ads = data.data;
@@ -146,7 +149,12 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.roomTypes = CommonData.getRoomTypes();
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();
+  $scope.cities = CommonData.getCities();
+  $scope.tagList = CommonData.getTags();
+
   $scope.listing = {address: "", city: "", bio: "", roomType: $scope.roomTypes[0], price: 0, dateStart: "", dateEnd: "", tags: []};
+  $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
+
   $scope.submitForm = function(){
     console.log("create host ad");
     Listings.postListing($scope.listing).success(function(data){
@@ -161,11 +169,34 @@ appControllers.controller('MatchingController', ['$scope', '$window', function($
 
 }]);
 
-appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData){
+appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData', '$routeParams', 'User', 'Listing', function($scope, $window, CommonData, $routeParams, User, Listing){
+  var loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  $scope.data = {name: 'Sample Host', address: '123 S Main St', bio: 'My name is Sample Host. '+loremIpsum, roomType: 'Private Room', tags: ['Dancing', 'Vegetarian'], dates:['tomorrow']};
+  var hostID = $routeParams.hostID;
+  console.log(hostID);
+  User.getFromId(hostID).success(function(data){
+    //console.log(data);
+    var user = data.data;
+    $scope.listings = [];
+    var ads = user.postedHostAds;
+    for (var i=0; i<ads.length;i++){
+      Listing.getFromId(ads[i]).success(function(data){
+        //console.log(data.data);
+        $scope.listings.push(data.data);
+        $scope.data = data.data;
+        console.log($scope.listings);
+      }).error(function(err){
+        console.log(err);
+      });
+    }
+    console.log(user);
+    
+  }).error(function(err){
+    console.log(err);
+  });
+
   $scope.roomImg = CommonData.getRoomImg();
   $scope.img = CommonData.getProfileImg();
-  var loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-  $scope.user = {name: 'Sample Host', address: '123 S Main St', bio: 'My name is Sample Host. '+loremIpsum, roomType: 'Private Room', tags: ['Dancing', 'Vegetarian'], dates:['tomorrow']};
 }]);
 
 appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', function($scope,

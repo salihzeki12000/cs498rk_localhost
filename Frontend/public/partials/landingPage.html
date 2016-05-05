@@ -30,22 +30,9 @@
                 <h1 class="title">LocalHost</h1>
                 <h2 class="sub-title">Stay with Locals and Meet Travelers</h2>
                 <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <div class="input-group">
-                          <div id="custom-search-input">
-                            <div class="input-group col-md-12">
-                                <input type="text" class="form-control input-lg" placeholder="Choose a City..." ng-model="city"/>
-                                <span class="input-group-btn">
-                                    <a href="#/searchads">
-                                      <button class="btn btn-info btn-lg" type="button" ng-click="chooseCity(city)">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                      </button>
-                                    </a>
-                                </span>
-                              </div>
-                          </div>
-                        </div>
-                    </div>
+                  <div class="col-sm-8 col-sm-offset-2 city-search">
+                    <select class="form-control input-lg" ng-model="city" ng-options="city.name for city in cities" ng-change="clickCity(city.name)"></select>          
+                  </div>
                 </div>
             </div>
         </header>
@@ -150,5 +137,6 @@
                 </div>
             </div>
         </section>
+        <br>
     </div>
 </div>
