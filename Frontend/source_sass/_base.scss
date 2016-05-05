@@ -182,8 +182,8 @@ h5 {
 	width:100%;
 	.navbar-brand {
 		@include transition(0.3s);
-		font-family: $flobster;
-		font-size: 2rem;
+		font-family: $fpaci;
+		font-size: 2.4rem;
 	}
 	.nav {
 		.nav-button {
@@ -254,6 +254,13 @@ header {
 .canvas-stripe {
 	background-image: url("../data/tile-stripe.png");
 }
+
+/*.canvas_white::before {
+	-webkit-filter: url('#blur');
+	filter: url('#blur');
+	-webkit-filter: blur(5px);
+	filter: blur(5px);
+}*/
 
 .canvas-white {
 	position: relative;
@@ -393,6 +400,7 @@ header {
 	width: 100%;
 	/*min-width: 1200px;*/
 	top: 120px;
+
 	position: absolute;
 }
 
@@ -402,6 +410,7 @@ header {
 	color: white;
 	text-align: center;
 	font-family: $flobster;
+	font-weight: bold;
 	text-shadow: 0px 0px 30px $uiuc-orange;
 }
 
@@ -441,6 +450,7 @@ header {
 }
 
 .city-search {
+	margin-top: 6px;
 	width: 75%;
 }
 
