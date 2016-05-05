@@ -14,7 +14,8 @@ var listingSchema = new mongoose.Schema({
 	activities			: [String], // trip itinerary
 	tags				: [String],
 	currentTraveler		: String,
-	currentTravelerName	: String
+	currentTravelerName	: String,
+
 
 });
 
