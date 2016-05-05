@@ -420,6 +420,9 @@ header {
 /* SEARCH ADS */
 #search-ads {
 
+	.modal-dialog {
+		margin: 30px;
+	}
 	.modal-footer {
 		border: none;
 	}
@@ -429,7 +432,7 @@ header {
 	}
 
 	.ad {
-		padding-top: 20px;
+		padding: 20px 0 10px;
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		background-color: white;
 		box-shadow: .5px .5px 0px rgba(0, 0, 0, 0.1);
@@ -448,7 +451,9 @@ header {
 		position: relative;
 		.price {
 			position: absolute;
+			box-shadow: 1px 1px 1px rgba(0,0,0,.8);
 			top: 80%;
+			left: 50%;
 			background-color: rgba(256,256,256,.9);
 			padding-right: 3px;
 			padding-left: 3px;
@@ -460,6 +465,7 @@ header {
 	}
 	.navbar-fixed-side {
 		/*margin-top: 20px;*/
+		background-color:white;
 		width: 40px;
 		position: fixed;
 		left: 5px;
@@ -489,7 +495,6 @@ header {
 
 .label-tag {
 	font-size: 1.2em;
-	float: right;
 	display: inline-block;
 	background-color: $uiuc-blue;
 	margin-left: 5px;
