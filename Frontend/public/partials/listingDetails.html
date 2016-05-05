@@ -48,7 +48,14 @@
 				</section>
 			</div>
 			<button ng-click="requestToBook()" class="btn btn-lg btn-orange" style="margin-top: 20px">Request to Book</button>
+	    <div class="col-sm-12" ng-show="requestSent">
+	      <div class="green-box">{{requestSentText}}</div>
+	    </div>
+	    <div class="col-sm-12" ng-show="requestSentError">
+	      <div class="red-box">{{requestSentText}}</div>
+	    </div>
 		</div>
+
 	</div>
 
 </div>
