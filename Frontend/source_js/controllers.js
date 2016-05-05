@@ -12,6 +12,7 @@ appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', '
     $scope.user = null;
   }
   $scope.img = CommonData.getProfileImg();
+
   $window.localStorage.setItem('baseurl', 'http://localhost:4000');
   console.log("logged in? " + $window.localStorage.getItem('loggedIn'));
 
@@ -206,7 +207,6 @@ appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData
       });
     }
     console.log(user);
-
   }).error(function(err){
     console.log(err);
   });
