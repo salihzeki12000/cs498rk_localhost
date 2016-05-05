@@ -1,11 +1,29 @@
 var appControllers = angular.module('appControllers', ['720kb.datepicker']);
 
-appControllers.controller('MainCtrl', ['$scope', '$window', 'Auth', 'CommonData', function($scope, $window, Auth, CommonData) {
-  $scope.auth = Auth;
-  $scope.user = CommonData.getUser();
+appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', 'Auth', 'CommonData', function($scope, Users, $window, $route, Auth, CommonData) {
+  if ($window.localStorage.getItem('loggedIn') !== null) {
+    $scope.loggedIn = ($window.localStorage.getItem('loggedIn') === 'true');
+  } else {
+    $scope.loggedIn = false;
+  }
+  if($scope.loggedIn) {
+    $scope.user = JSON.parse($window.localStorage.getItem('user'));
+  } else {
+    $scope.user = null;
+  }
   $scope.img = CommonData.getProfileImg();
-  $window.sessionStorage.baseurl = "http://localhost:4000"
-  console.log("logged in? " + Auth.loggedIn);
+
+  $window.localStorage.setItem('baseurl', 'http://localhost:4000');
+  console.log("logged in? " + $window.localStorage.getItem('loggedIn'));
+
+  $scope.logout = function() {
+    $window.localStorage.setItem('user', "");
+    $window.localStorage.setItem('loggedIn', 'false');
+    $scope.user = null;
+    $scope.loggedIn = false;
+    $route.reload();
+  }
+
 }]);
 
 appControllers.controller('LandingPageController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData) {
@@ -25,39 +43,37 @@ appControllers.controller('LandingPageController', ['$scope', '$window', 'Common
   }
 }]);
 
-appControllers.controller('ProfileController', ['$scope', '$http', 'Users', function($scope, $http, Users) {
-   $scope.profile = false;
-   Users.get().success(function(data) {
-    console.log("frontend profile" + JSON.stringify(data));
-		if(!data.error) {
-			$scope.profile = true;
-			$scope.user = data.data.user;
-		}
-   });
+appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'Users', function($scope, $window, $http, Users) {
+   $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
+   console.log("user in profile " + $window.localStorage.getItem('user'));
+	 $scope.user = JSON.parse($window.localStorage.getItem('user'));
  }]);
 
-appControllers.controller('LoginController', ['$scope', '$window', 'Users', function($scope, $window, Users) {
+appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Auth', 'Users', function($scope, $window, $route, Auth, Users) {
   $scope.data = "";
-  $scope.displayText = ""
+  $scope.displayText = "";
 
   $scope.login = function() {
     console.log($scope.user);
     Users.postLogIn($scope.user).success(function (data) {
-      console.log("success");
+      $window.localStorage.setItem('user', JSON.stringify(data.data));
+      $window.localStorage.setItem('loggedIn', 'true');
       $window.location.href = '#/profile';
+    }).error(function (data) {
+      console.log("error");
     });
   };
 
 }]);
 
-appControllers.controller('SignupController', ['$scope', '$window', 'Users', function($scope, $window, Users) {
-  $scope.data = "";
-
+appControllers.controller('SignupController', ['$scope', '$window', '$route', 'Auth', 'Users', function($scope, $window, $route, Auth, Users) {
+  $scope.newUser = "";
   $scope.signup = function() {
-    console.log($scope.user);
-    Users.postSignUp($scope.user).success(function (data) {
-      console.log("data: " + JSON.stringify(data));
-      $window.location.href = '#/profile';
+    Users.postSignUp($scope.newUser).success(function (data) {
+      $window.localStorage.setItem('user', JSON.stringify(data.data));
+      $window.localStorage.setItem('loggedIn', 'true');
+      $window.location.href = '#/travellerhost';
+      $route.reload();
     });
   }
 
@@ -90,7 +106,7 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
   $scope.priceRange = { low: 0, high: 500 };
   $scope.tagList = CommonData.getTags();
   $scope.tags = [];
-  
+
   getListings($scope.city.name);
 
   function getListings(city){
@@ -110,7 +126,7 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
         });
       }
   }
-  
+
   $scope.changeCity = function (city) {
     CommonData.setCity(city);
     $scope.city = {name: city, value: city};
@@ -131,15 +147,15 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
       }).error(function(err){
         console.log(err);
       });
-  } 
+  }
 }]);
 
 appControllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
-  $scope.url = $window.sessionStorage.baseurl;
+  $scope.url = $window.localStorage.baseurl;
 
   $scope.setUrl = function(){
     console.log("base url: " +$scope.url);
-    $window.sessionStorage.baseurl = $scope.url;
+    $window.localStorage.baseurl = $scope.url;
     $scope.displayText = "URL set";
   };
 
@@ -191,7 +207,6 @@ appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData
       });
     }
     console.log(user);
-    
   }).error(function(err){
     console.log(err);
   });
