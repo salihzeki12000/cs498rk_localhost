@@ -40,11 +40,36 @@ h5 {
 	text-align: center;
 }
 
+.edit-profile-label {
+	display: inline;
+	text-align: left;
+}
+
+.edit-profile-font {
+	font-family: $fubuntu;
+	color: $dark-blue;
+	font-size: 18px;
+}
+
+.edit-profile-box {
+	height: 40px;
+}
+
 .ad-box {
 	margin-top: 20px;
 	padding: 10px;
 	border: 2px solid $uiuc-orange;
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+}
+
+.listing-img {
+	max-width: 400px;
+	max-height: 300px;
+}
+
+.listing-img-sm {
+	max-width: 240px;
+	max-height: 240px;
 }
 
 .no-blank-space {
@@ -58,6 +83,12 @@ h5 {
 	max-width: 300px;
 	color: $light-green;
 	border-bottom: 2px solid $lt-gray;
+}
+
+.green-box {
+	margin-top: 20px;
+	padding: 10px;
+	border: 2px solid $light-green;	
 }
 
 .green-banner {

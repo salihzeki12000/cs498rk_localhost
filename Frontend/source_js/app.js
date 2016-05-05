@@ -50,6 +50,10 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/listingDetails.html',
     controller: 'ListingDetailsController'
   }).
+  when('/edituserprofile/:_id', {
+    templateUrl: 'partials/editUserProfile.html',
+    controller: 'EditProfileController'
+  }).
   when('/matched', {
       templateUrl: 'partials/matched.html',
       controller: 'MatchingController'
