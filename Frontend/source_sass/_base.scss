@@ -1,6 +1,7 @@
 body {
 	font-family: $font;
 	padding-top: 57px;
+	background-color: $background;
 }
 
 * {
@@ -426,9 +427,13 @@ header {
 	.room-type {
 		margin-top: .5rem;
 	}
+
 	.ad {
 		padding-top: 20px;
-		border-bottom: 1px solid rgba(0,0,0,.1);
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		background-color: white;
+		box-shadow: .5px .5px 0px rgba(0, 0, 0, 0.1);
+		margin: 10px;
 	}
 	.search {
 		margin-top: 50px;
