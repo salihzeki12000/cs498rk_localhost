@@ -18,7 +18,7 @@ appServices.factory('Users', function($http, $window) {
 });
 
 appServices.factory('User', function($http, $window) {
-    var baseUrl = $window.sessionStorage.baseurl+'/api';
+    var baseUrl = 'http://localhost:4000' +'/api';
     return {
         getFromId : function(userId) {
             return $http.get(baseUrl+'/users/' + userId);
@@ -36,7 +36,7 @@ appServices.factory('User', function($http, $window) {
 });
 
 appServices.factory('Listings', function($http, $window){
-    var baseUrl = $window.sessionStorage.baseurl+'/api';
+    var baseUrl = 'http://localhost:4000'+'/api';
     return {
         postListing : function(listing){
             return $http.post(baseUrl+'/listings', listing);
@@ -66,7 +66,7 @@ appServices.factory('Listings', function($http, $window){
 });
 
 appServices.factory('Listing', function($http, $window){
-    var baseUrl = $window.sessionStorage.baseurl+'/api';
+    var baseUrl = 'http://localhost:4000'+'/api';
     return {
         getFromId : function(listingId){
             return $http.get(baseUrl+'/listings/' + listingId);
