@@ -9,8 +9,8 @@ var express = require('express'),
 	session = require('express-session'),
 	configDB = require('./config/database.js'),
 	Listing = require('./app/models/listing'),
-    User = require('./app/models/user');
-var LocalStrategy = require('passport-local').Strategy;
+    User = require('./app/models/user'),
+		LocalStrategy = require('passport-local').Strategy;
 
 mongoose.connect(configDB.url); // db connection
 //debugging!

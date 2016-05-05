@@ -1,7 +1,8 @@
 var appServices = angular.module('appServices', []);
 
 appServices.factory('Users', function($http, $window) {
-    var baseUrl = $window.sessionStorage.baseurl;
+    var baseUrl = 'http://localhost:4000';
+    //console.log("baseurl: "+ baseUrl);
     return {
         get : function() {
             return $http.get(baseUrl+'/profile');
@@ -10,7 +11,8 @@ appServices.factory('Users', function($http, $window) {
             return $http.post(baseUrl+'/signup', user);
         },
         postLogIn: function(user) {
-            return $http.post(baseUrl+'login', user);
+            //var baseUrl = $window.sessionStorage.baseurl;
+            return $http.post(baseUrl+'/login', user);
         }
     }
 });
@@ -87,7 +89,7 @@ appServices.factory('CommonData', function(){
     var commonRoomImg = "http://i.imgur.com/tXMM9Ed.jpg";
     var mapImg = "http://i.imgur.com/ODTtRQr.png";
     var roomTypes = [{name: "Private Room", value: "Private"}, {name: "Shared Room", value: "Shared"}];
-    var cities = [{name:'San Francisco, USA', value:'San Francisco, USA'},{name:'Singapore, Singapore', value:'Singapore, Singapore'},{name:'Prague, Czech Republic', value:'Prague, Czech Republic'},  
+    var cities = [{name:'San Francisco, USA', value:'San Francisco, USA'},{name:'Singapore, Singapore', value:'Singapore, Singapore'},{name:'Prague, Czech Republic', value:'Prague, Czech Republic'},
         {name:'Marrakech, Morocco', value:'Marrakech, Morocco'},{name:'Quito, Ecuador', value:'Quito, Ecuador'},{name:'Brisbane, Australia', value:'Brisbane, Australia'}];
     var tags = [{name:'Nature', value:'Nature'}, {name:'Dancing', value:'Dancing'},{name:'Vegetarian', value:'Vegetarian'},{name:'Hiking', value:'Hiking'},{name:'City', value:'City'},
                 {name:'Sports', value:'Sports'}, {name:'Water', value:'Water'},{name:'Animals', value:'Animals'},{name:'Architecture', value:'Architecture'},
@@ -119,24 +121,26 @@ appServices.factory('CommonData', function(){
         },
         getTags : function() {
             return tags;
-        }, 
+        },
         getCities : function() {
             return cities;
         }
     }
 });
 
-appServices.service('Auth', function() {
+appServices.service('Auth', function($rootScope) {
   var auth = {};
+    //$rootScope.loggedIn = false;
+    //$rootScope.user = null;
 
-  auth.loggedIn = true;//false;
-
-  auth.login = function() {
-    auth.loggedIn = true;
+  auth.login = function(user) {
+    $rootScope.user = user;
+    $rootScope.loggedIn = true;
   };
 
   auth.logout = function() {
-    auth.loggedIn = false;
+    $rootScope.user = null;
+    $rootScope.loggedIn = false;
   };
 
   return auth;

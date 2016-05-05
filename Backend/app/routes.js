@@ -1,21 +1,23 @@
 module.exports = function(app, passport) {
 	app.post('/signup', passport.authenticate('local-signup'), function(req, res) {
 		console.log('endpoint hit - signing up!');
-		console.log("new user from server: " + JSON.stringify(req.user));
 		res.json({
 			data : req.user
-		})
+		});
 	});
 
 	app.post('/login', passport.authenticate('local-login'), function(req, res) {
-		res.redirect('#/profile.html');
+		console.log("logging in!" + JSON.stringify(req.user));
+		res.json({
+			data : req.user
+		});
 	});
 
-	app.get('/profile', function(req, res) {
-		console.log("profile pg user: " + req.user);
+	app.get('/profile', isLoggedIn, function(req, res) {
 		if (!req.user) {
 			return res.status(404).json({message: "There was an error retrieving this user"});
 		}
+		console.log("profile pg user: " + req.user);
 		res.json({
 			data: req.user
 		});
@@ -29,9 +31,9 @@ module.exports = function(app, passport) {
 	});
 
 	function isLoggedIn(req, res, next) {
+		console.log(req.isAuthenticated());
 		if(req.isAuthenticated())
 			return next();
-		console.log(JSON.stringify(req));
 		res.json({
 			error: "User not logged in"
 		});

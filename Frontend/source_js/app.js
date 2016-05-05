@@ -1,5 +1,19 @@
 var app = angular.module('mp4', ['ngRoute', 'appControllers', 'appServices']);
 
+/*app.run(function ($rootScope, $location, $route, AuthService) {
+  $rootScope.$on('$routeChangeStart',
+    function (event, next, current) {
+      AuthService.getUserStatus()
+      .then(function(){
+        if (next.access.restricted && !AuthService.isLoggedIn()){
+          $location.path('/login');
+          $route.reload();
+        }
+      });
+  });
+});*/
+
+
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
     when('/signup', {
