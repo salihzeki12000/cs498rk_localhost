@@ -2,7 +2,6 @@ var appServices = angular.module('appServices', []);
 
 appServices.factory('Users', function($http, $window) {
     var baseUrl = $window.sessionStorage.baseurl;
-    //console.log("baseurl: "+ baseUrl);
     return {
         get : function() {
             return $http.get(baseUrl+'/profile');
@@ -17,7 +16,7 @@ appServices.factory('Users', function($http, $window) {
 });
 
 appServices.factory('User', function($http, $window) {
-    var baseUrl = $window.sessionStorage.baseurl;
+    var baseUrl = $window.sessionStorage.baseurl+'/api';
     return {
         getFromId : function(userId) {
             return $http.get(baseUrl+'/users/' + userId);
@@ -35,7 +34,7 @@ appServices.factory('User', function($http, $window) {
 });
 
 appServices.factory('Listings', function($http, $window){
-    var baseUrl = $window.sessionStorage.baseurl;
+    var baseUrl = $window.sessionStorage.baseurl+'/api';
     return {
         postListing : function(listing){
             return $http.post(baseUrl+'/listings', listing);
@@ -47,13 +46,13 @@ appServices.factory('Listings', function($http, $window){
             console.log(city);
             return $http.get(baseUrl+'/listings?where={"city":"'+city+'"}');
         },
-        filterListings : function(city, roomType, dateBegin, dateEnd, priceLow, priceHigh, tags){
+        filterListings : function(city, roomType, dateStart, dateEnd, priceLow, priceHigh, tags){
             var query = '/listings?where={';
             if (city !== "")
                 query += '"city":"'+city+'", ';
             query += '"roomType":"'+roomType+'"';
-            if (dateBegin !== "")
-                query += ', "date": {"$gte":'+dateBegin+'}, "date": {"$lte":'+dateEnd+'}';
+            if (dateStart !== "")
+                query += ', "date": {"$gte":'+dateStart+'}, "date": {"$lte":'+dateEnd+'}';
             query += ', "price": {"$gte":'+priceLow+'}, "price": {"$lte":'+priceHigh+'}';
             if (tags.length > 0)
                 query += ', "tags":{"$in":"'+tags+'"}'
@@ -65,7 +64,7 @@ appServices.factory('Listings', function($http, $window){
 });
 
 appServices.factory('Listing', function($http, $window){
-    var baseUrl = $window.sessionStorage.baseurl;
+    var baseUrl = $window.sessionStorage.baseurl+'/api';
     return {
         getFromId : function(listingId){
             return $http.get(baseUrl+'/listings/' + listingId);
@@ -87,10 +86,12 @@ appServices.factory('CommonData', function(){
     var commonProfileImg = "http://i.imgur.com/a7emodJ.jpg";
     var commonRoomImg = "http://i.imgur.com/tXMM9Ed.jpg";
     var mapImg = "http://i.imgur.com/ODTtRQr.png";
-    var roomTypes = [{name: "Private Room", value: "Private Room"}, {name: "Shared Room", value: "Shared Room"}];
-    var cities = [{name:'Chicago', value:'Chicago'},{name:'New York', value:'New York'},{name:'Paris', value:'Paris'},  
-        {name:'Seattle', value:'Seattle'},{name:'London', value:'London'},{name:'San Francisco', value:'San Francisco'}];
-    var tags = [{name:'Hiking', value:'Hiking'},{name:'Dancing', value:'Dancing'}];
+    var roomTypes = [{name: "Private Room", value: "Private"}, {name: "Shared Room", value: "Shared"}];
+    var cities = [{name:'San Francisco, USA', value:'San Francisco, USA'},{name:'Singapore, Singapore', value:'Singapore, Singapore'},{name:'Prague, Czech Republic', value:'Prague, Czech Republic'},  
+        {name:'Marrakech, Morocco', value:'Marrakech, Morocco'},{name:'Quito, Ecuador', value:'Quito, Ecuador'},{name:'Brisbane, Australia', value:'Brisbane, Australia'}];
+    var tags = [{name:'Nature', value:'Nature'}, {name:'Dancing', value:'Dancing'},{name:'Vegetarian', value:'Vegetarian'},{name:'Hiking', value:'Hiking'},{name:'City', value:'City'},
+                {name:'Sports', value:'Sports'}, {name:'Water', value:'Water'},{name:'Animals', value:'Animals'},{name:'Architecture', value:'Architecture'},
+                {name:'Gourmet', value:'Gourmet'}];
     return {
         getUser : function(){
             return user;

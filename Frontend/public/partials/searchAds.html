@@ -1,14 +1,9 @@
 <div ng-controller='SearchAdsController' id="search-ads" class="container">
 
-  <div class="custom-search-input search row">
-      <div class="input-group">
-        <input type="text" class="form-control input-lg" placeholder="{{city}}" ng-model="city" />
-        <span class="input-group-btn">
-            <button class="btn btn-info btn-lg" type="button" ng-click="changeCity(city)">
-              <i class="glyphicon glyphicon-search"></i>
-            </button>
-        </span>
-      </div>
+  <div class="row search">
+    <div class="col-md-8 col-md-offset-2 city-search">
+      <select class="form-control input-lg" ng-model="city" ng-options="city.name for city in cities" ng-change="changeCity(city.name)"></select>
+    </div>
   </div>
 
   <div class="row">

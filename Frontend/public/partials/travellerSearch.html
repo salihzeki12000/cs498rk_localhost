@@ -6,17 +6,8 @@
             <h1>Ready for your next adventure?</h1>
             <hr>
             <p>Stay with locals and explore new cities off the beaten path</p>
-            <div class="custom-search-input">
-              <div class="input-group col-md-12">
-                  <input type="text" class="form-control input-lg" placeholder="Choose a City..." ng-model="city"/>
-                  <span class="input-group-btn">
-                      <a href="#/searchads">
-                        <button class="btn btn-info btn-lg" type="button" ng-click="chooseCity(city)">
-                          <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                      </a>
-                  </span>
-                </div>
+            <div class="col-md-8 col-md-offset-2 city-search">
+              <select class="form-control input-lg" ng-model="city" ng-options="city.name for city in cities" ng-change="chooseCity(city.name)"></select>
             </div>
         </div>
     </div>

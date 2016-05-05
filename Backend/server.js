@@ -222,7 +222,8 @@ listingsRoute.post(function(req,res){
         bio: data.bio,
 		address: data.address,
         city: data.city,
-        date: data.date,
+        dateStart: data.dateStart,
+        dateEnd: data.dateEnd,
         roomType: data.roomType,
         currentTraveler: data.currentTraveler,
         currentTravelerName: data.currentTravelerName,
@@ -259,7 +260,8 @@ idListingsRoute.put(function(req,res){
         listing.city = data.city;
         listing.currentTraveler = data.currentTraveler;
         listing.currentTravelerName = data.currentTravelerName;
-		listing.date = data.date;
+		listing.dateStart = data.dateStart;
+        listing.dateEnd = data.dateEnd;
 		listing.tags = data.tags;
 
         listing.save(function(err){
