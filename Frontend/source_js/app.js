@@ -48,7 +48,7 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/travellerSearch.html',
     controller: 'TravellerSearchController'
   }).
-  when('/:hostID/hostbio', {
+  when('/hostbio/:hostID/', {
     templateUrl: 'partials/hostBio.html',
     controller: 'HostBioController'
   }).

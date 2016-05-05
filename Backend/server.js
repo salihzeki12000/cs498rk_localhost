@@ -9,7 +9,9 @@ var express = require('express'),
 	session = require('express-session'),
 	configDB = require('./config/database.js'),
 	Listing = require('./app/models/listing'),
-  User = require('./app/models/user');
+    User = require('./app/models/user'),
+		LocalStrategy = require('passport-local').Strategy;
+
 mongoose.connect(configDB.url); // db connection
 //debugging!
 mongoose.set('debug', true);
@@ -102,22 +104,31 @@ usersRoute.get(function(req,res){
 });
 
 usersRoute.post(function(req,res){
-    var data = req.body;
-    if(!data.name || !data.local.email || !data.local.password){
+    var data = (req.body);
+	data.local = data.local.replace(/\'/g, "\"");
+	var datLocal = JSON.parse(data.local);
+	console.log((data.local));
+	console.log(datLocal);
+	console.log(datLocal.password);
+	console.log(datLocal.email);
+	//console.log(data.local.email);
+	console.log(data);
+    if(!data.name || !datLocal.email || !datLocal.password){
         return res.status(500).json({message: "Valid name and email required", data: null});
     }
     var d = new Date();
     var newUser = new User({
         name: data.name,
-        email: data.local.email,
-        password: data.local.password,
         postedHostAds: data.postedHostAds,
         location: data.location,
 //        matchedHosts: [],
         matchedTravelers: [],
         dateCreated: d.getDate(),
-		bio: data.bio
+		bio: data.bio,
+		age: data.age
     });
+	newUser.local.email = datLocal.email;
+	newUser.local.password = newUser.generateHash(datLocal.password);
     newUser.save(function(err){
         if(err){
             return res.status(500).send({'error':'internal service error', data:null});
@@ -145,6 +156,8 @@ idUsersRoute.put(function(req,res){
 //can email and password be modified by standard put? Probably not?
 //        email: data.local.email;
 //        password: data.local.password;
+		user.local.email = user.local.email;
+		user.local.password = user.local.password;
         user.postedHostAds= data.postedHostAds;
         user.location= data.location;
         user.matchedHosts= data.matchedHosts;
@@ -212,6 +225,7 @@ listingsRoute.get(function(req,res){
 });
 listingsRoute.post(function(req,res){
     var data = req.body;
+	console.log(data);
     if(!data.hostName || !data.address){
         return res.status(500).json({message: "Valid host name and address required", data: null});
     }
@@ -222,7 +236,8 @@ listingsRoute.post(function(req,res){
         bio: data.bio,
 		address: data.address,
         city: data.city,
-        date: data.date,
+        dateStart: data.dateStart,
+        dateEnd: data.dateEnd,
         roomType: data.roomType,
         currentTraveler: data.currentTraveler,
         currentTravelerName: data.currentTravelerName,
@@ -259,7 +274,8 @@ idListingsRoute.put(function(req,res){
         listing.city = data.city;
         listing.currentTraveler = data.currentTraveler;
         listing.currentTravelerName = data.currentTravelerName;
-		listing.date = data.date;
+		listing.dateStart = data.dateStart;
+        listing.dateEnd = data.dateEnd;
 		listing.tags = data.tags;
 
         listing.save(function(err){

@@ -16,7 +16,7 @@
 				</div>
 				<div class="form-group">
 					<label for="city" class="control-label">City</label>
-					<input ng-model="listing.city" id="city" class="form-control" placeholder="New York" style="width: 100%" required/>
+					<select class="form-control" ng-model="listing.city" ng-options="city.name for city in cities" id="city" style="width: 100%" required></select>
 				</div>
 			</div>
 
@@ -42,42 +42,42 @@
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 					<datepicker class="col-sm-5">
-            <input ng-model="listing.dateStart" type="text" date-format="fullDate" placeholder="Beginning" required/>
+            <input ng-model="listing.dateStart" class="form-control" type="text" date-format="fullDate" placeholder="Beginning" required/>
           </datepicker>
           <datepicker class="col-sm-5">
-            <input ng-model="listing.dateEnd" type="text" date-format="fullDate" placeholder="End" required/>
+            <input ng-model="listing.dateEnd" class="form-control" type="text" date-format="fullDate" placeholder="End" required/>
           </datepicker>
 				</div>
 			</div>
 
 			<div class="col-sm-12 col-md-10 col-md-offset-1 thin-divider"></div>
-			<h4 class="col-sm-12">Activities - show off your local experience unlike anything else</h4>
+			<h4 class="col-sm-12">Activities - show off your unique local experiences</h4>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 				<!-- angular model to be modified -->
-					<label for="address" class="control-label">First activity</label>
-					<input ng-model="listing.address" id="address" class="form-control" placeholder="First exciting thing to do" style="width: 100%" required/>
+					<label for="first" class="control-label">First activity</label>
+					<input ng-model="thingsToDo.first" id="first" class="form-control" placeholder="First exciting thing to do" style="width: 100%" required/>
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 				<!-- angular model to be modified -->
-					<label for="address" class="control-label">Second activity</label>
-					<input ng-model="listing.address" id="address" class="form-control" placeholder="Second exciting thing to do" style="width: 100%" required/>
+					<label for="second" class="control-label">Second activity</label>
+					<input ng-model="thingsToDo.second" id="second" class="form-control" placeholder="Second exciting thing to do" style="width: 100%" required/>
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 				<!-- angular model to be modified -->
-					<label for="address" class="control-label">Third activity</label>
-					<input ng-model="listing.address" id="address" class="form-control" placeholder="Third exciting thing to do" style="width: 100%" required/>
+					<label for="third" class="control-label">Third activity</label>
+					<input ng-model="thingsToDo.third" id="third" class="form-control" placeholder="Third exciting thing to do" style="width: 100%" required/>
 				</div>
 			</div>		
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 				<!-- angular model to be modified -->
-					<label for="address" class="control-label">More...</label>
-					<input ng-model="listing.address" id="address" class="form-control" placeholder="One more thing..." style="width: 100%" required/>
+					<label for="fourth" class="control-label">More...</label>
+					<input ng-model="thingsToDo.fourth" id="fourth" class="form-control" placeholder="One more thing..." style="width: 100%" required/>
 				</div>
 			</div>	
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -88,8 +88,8 @@
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
-					<label for="tags" class="control-label">Type in tags separated by spaces</label>
-					<input ng-model="listing.tags" id="tags" class="form-control" placeholder="example: dancing nature sports hamburgers" style="width: 100%"/>
+					<label for="tags" class="control-label">Select Tags</label>
+					<select id="tags" class="form-control" ng-options="tag.name for tag in tagList" ng-model="listing.tags" style="width: 100%" multiple></select>
 				</div>			
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">

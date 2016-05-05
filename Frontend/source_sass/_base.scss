@@ -117,6 +117,20 @@ h5 {
 	max-width: none;
 }
 
+.footer {
+	position: relative;
+	bottom: 0;
+	margin-top: 10px;
+	width: 100%;
+	min-height: 35px;
+	h4 {
+		font-size: 14px;
+		padding-top: 10px;
+		color: white;
+		margin-bottom: 0;
+	}
+}
+
 /* CREATE AD PG */
 .form-control {
 	width: 85%;
@@ -394,6 +408,10 @@ header {
 	}
 }
 
+.city-search {
+	width: 75%;
+}
+
 .landing-heading {
 	color: white;
 }
@@ -469,6 +487,7 @@ header {
 	float: right;
 	display: inline-block;
 	background-color: $uiuc-blue;
+	margin-left: 5px;
 }
 
 /*profile page*/
