@@ -10,7 +10,9 @@ var express = require('express'),
 	configDB = require('./config/database.js'),
 	Listing = require('./app/models/listing'),
     User = require('./app/models/user'),
-		LocalStrategy = require('passport-local').Strategy;
+	LocalStrategy = require('passport-local').Strategy,
+    path = require('path'),
+    fs = require('fs');
 
 mongoose.connect(configDB.url); // db connection
 //debugging!
@@ -289,6 +291,22 @@ idListingsRoute.delete(function(req,res){
         if(err || listing === null) return res.status(404).json({message: "Ad not found", data:null});
 
         return res.status(200).json({message: "Ad removed.", data : null});
+    });
+});
+
+/***********UPLOAD**************/
+var uploadRoute = router.route('/upload');
+uploadRoute.post('/upload', function(req, res) {
+    var image =  req.files.image;
+    var newImageLocation = path.join(__dirname, '../Frontend/public/data', image.name);
+    
+    fs.readFile(image.path, function(err, data) {
+        fs.writeFile(newImageLocation, data, function(err) {
+            res.json(200, { 
+                src: 'images/' + image.name,
+                size: image.size
+            });
+        });
     });
 });
 

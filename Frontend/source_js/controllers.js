@@ -47,6 +47,21 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'U
    $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
    console.log("user in profile " + $window.localStorage.getItem('user'));
 	 $scope.user = JSON.parse($window.localStorage.getItem('user'));
+
+   $scope.upload = function(image){
+    var formData = new FormData();
+    formData.append('image', image, image.name);
+    var otherData = {
+        headers: { 'Content-Type': false },
+        transformRequest: angular.identity
+    };
+    User.uploadImage(formData, headers, otherData)
+      .success(function(result) {
+        $scope.uploadedImgSrc = result.src;
+        $scope.sizeInBytes = result.size;
+    });
+   }
+
  }]);
 
 appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Auth', 'Users', function($scope, $window, $route, Auth, Users) {

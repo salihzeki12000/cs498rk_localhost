@@ -19,7 +19,16 @@
                 <a href="#/login" class="btn btn-orange">Login</a>
                 <a href="#/signup" class="btn btn-orange">Signup</a>
             </div>
+    </div>
 
+    <form>
+      <div class="form-group row">
+          <input type="file" accept="image/*" image="image"/>
+          <button type="submit" ng-click="upload(image)">upload?</button>
+          <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}"/> 
+          <!--<button ng-click="upload()" type="submit" class="btn btn-lg btn-orange">Upload</button>-->
+      </div>
+    </form>
 </div>
 
 
