@@ -62,7 +62,7 @@
                 <li><a href="#/profile">Profile</a></li>
                 <li><a href="#/settings">Settings</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#/logout" ng-click="logout()">Log out</a></li>
+                <li><a href="#/logout" ng-click="auth.logout()">Log out</a></li>
               </ul>
             </li>
           </ul>
@@ -73,8 +73,10 @@
 
   <div ng-view></div>
 
-  <footer class="footer canvas-stripe">
-    <h4>CS 498RK Spring 2016 copyright &copy; Team localhost</h4>
+  <footer class="canvas-stripe">
+      <div class="row">
+        <h4 style="font-size: 14px; margin-top: 8px; color: white;">CS 498RK Spring 2016 copyright &copy; Team localhost</h4>
+      </div>
   </footer>
 
   <!-- Scripts -->

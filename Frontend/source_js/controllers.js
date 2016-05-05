@@ -104,6 +104,7 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
   $scope.priceRange = { low: 0, high: 500 };
   $scope.tagList = CommonData.getTags();
   $scope.tags = [];
+
   getListings($scope.city.name);
 
   function getListings(city){
