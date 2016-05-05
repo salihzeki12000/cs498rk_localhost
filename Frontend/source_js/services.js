@@ -2,7 +2,6 @@ var appServices = angular.module('appServices', []);
 
 appServices.factory('Users', function($http, $window) {
     var baseUrl = 'http://localhost:4000';
-    //console.log("baseurl: "+ baseUrl);
     return {
         get : function() {
             return $http.get(baseUrl+'/profile');
@@ -57,7 +56,7 @@ appServices.factory('Listings', function($http, $window){
                 query += ', "date": {"$gte":'+dateStart+'}, "date": {"$lte":'+dateEnd+'}';
             query += ', "price": {"$gte":'+priceLow+'}, "price": {"$lte":'+priceHigh+'}';
             if (tags.length > 0)
-                query += ', "tags":{"$in":"'+tags+'"}'
+                query += ', "tags":{"$in":["'+tags+'"]}';
             query += '}';
             console.log(query);
             return $http.get(baseUrl+query);
