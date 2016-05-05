@@ -1,6 +1,7 @@
 body {
 	font-family: $font;
 	padding-top: 57px;
+	background-color: $background;
 }
 
 * {
@@ -285,14 +286,14 @@ header {
 
 .section-meet-people {
 	@extend .landing-section;
-	background-image: url("../data/meet-people.png");
+	background-image: url("../data/DSC_0526_edited1.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 }
 
 .section-explore {
 	@extend .landing-section;
-	background-image: url("../data/explore.png");
+	background-image: url("../data/2015-02-21 38_edited.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -457,9 +458,13 @@ header {
 	.room-type {
 		margin-top: .5rem;
 	}
+
 	.ad {
 		padding-top: 20px;
-		border-bottom: 1px solid rgba(0,0,0,.1);
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		background-color: white;
+		box-shadow: .5px .5px 0px rgba(0, 0, 0, 0.1);
+		margin: 10px;
 	}
 	.search {
 		margin-top: 50px;
@@ -586,4 +591,11 @@ header {
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
 
+}
+
+/* Traveller Search Page */
+
+#traveller-search {
+	background-image: url("../data/2015-02-21 15.42.29.jpg");
+	background-size: 100% 100%;
 }

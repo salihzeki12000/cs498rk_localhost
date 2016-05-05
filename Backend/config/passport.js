@@ -26,8 +26,8 @@ module.exports = function(passport) {
 			} else {
 				var newUser = new User();
 				console.log("reached here");
-				newUser.local.email = email; //changed from just email
-				newUser.local.password = newUser.generateHash(password); //changed from just password
+				newUser.local.email = email;
+				newUser.local.password = newUser.generateHash(password);
 				console.log("new user" + JSON.stringify(newUser));
 				newUser.save(function(err) {
 					if(err)
@@ -46,12 +46,19 @@ module.exports = function(passport) {
 	},
 	function(email, password, done) {
 		User.findOne({'local.email': email}, function(err, user) {
-			if(err)
+			if(err) {
+				console.log("error" + err);
 				return done(err);
-			if(!user)
+			}
+			if(!user) {
+				console.log("this user doesn't exist");
 				return done(null, false);
-			if(!user.validPassword(password))
+			}
+			if(!user.validPassword(password)) {
+				console.log("invalid password");
 				return done(null, false);
+			}
+			console.log("reached here, done is next");
 			return done(null, user);
 
 		});

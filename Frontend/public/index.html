@@ -9,13 +9,13 @@
     <link href="./lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type='text/css'>
     <link rel="stylesheet" href="./css/styles.css">
-  
+
     <!-- Custom Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Lobster+Two:400,700,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500,400italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
-    
+
     <!-- Angular Scripts -->
     <!-- NOTE: removing the ".min." can help debugging in the console-->
     <script src="https://use.fonticons.com/383a4556.js"></script>
@@ -39,7 +39,7 @@
         </button>
         <a class="navbar-brand" href="#/landing" style="color: #F26322;">LocalHost</a>
       </div>
-      <div ng-switch="auth.loggedIn">
+      <div ng-switch="loggedIn">
         <!-- SHOW BEFORE LOGGED IN -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-switch-when="false">
             <ul class="nav navbar-nav navbar-right">

@@ -1,30 +1,27 @@
-<div class="list" ng-controller='SignupController'>
-  <div class="row">
-
-    <div class="column">
-
-        <!--<h1><i class="fa fa-sign-in" aria-hidden="true"></i> Signup</h1>-->
-        <h1><i class="glyphicon glyphicon-user"></i> Signup</h1>
-        <!-- LOGIN FORM -->
-        <form>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" name="email" ng-model="user.email" required>
+<div ng-controller='SignupController' class="container">
+    <div class="row">
+        <div class="jumbotron col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3">
+            <h2><i class="glyphicon glyphicon-user"></i> Sign up</h2>
+            <!-- Signup FORM -->
+            <form>
+                <div class="form-group row">
+                    <!--<label class="control-label"><h3>Email</h3></label>-->
+                    <input type="text" class="form-control input-lg" name="email" ng-model="newUser.email" style="width:100%" placeholder="Email" required>
+                </div>
+                <div class="form-group row">
+                    <!--<label class="control-label"><h3>Email</h3></label>-->
+                    <input type="password" class="form-control input-lg" name="password" ng-model="newUser.password" style="width:100%" placeholder="Password" required>
+                </div>
+                <div class="row">
+                    <button ng-click="signup()" type="submit" class="btn btn-lg btn-orange pull-left">Sign up</button>
+                </div>
+            </form>
+            <hr>
+            <div class="text-center">
+                <p>Already have an account? <a href="#/login">Login</a></p>
+                <p>Or go <a href="#/">home</a>.</p>
             </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password" ng-model="user.password" required>
-            </div>
-
-            <button ng-click="signup()" type="submit" class="btn btn-orange">Signup</button>
-        </form>
-
-        <hr>
-
-        <p>Already have an account? <a href="#/login">Login</a></p>
-        <p>Or go <a href="#/">home</a>.</p>
-
+        </div>
     </div>
 
-  </div>
 </div>
