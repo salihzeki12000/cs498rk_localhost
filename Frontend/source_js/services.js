@@ -55,7 +55,7 @@ appServices.factory('Listings', function($http, $window){
                 query += ', "date": {"$gte":'+dateStart+'}, "date": {"$lte":'+dateEnd+'}';
             query += ', "price": {"$gte":'+priceLow+'}, "price": {"$lte":'+priceHigh+'}';
             if (tags.length > 0)
-                query += ', "tags":{"$in":"'+tags+'"}'
+                query += ', "tags":{"$in":["'+tags+'"]}';
             query += '}';
             console.log(query);
             return $http.get(baseUrl+query);
@@ -129,7 +129,7 @@ appServices.factory('CommonData', function(){
 appServices.service('Auth', function() {
   var auth = {};
 
-  auth.loggedIn = true;//false;
+  auth.loggedIn = false;
 
   auth.login = function() {
     auth.loggedIn = true;

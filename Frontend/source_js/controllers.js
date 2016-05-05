@@ -74,6 +74,7 @@ appControllers.controller('TravellerSearchController', ['$scope', '$window', 'Co
   $scope.chooseCity = function (city) {
     console.log("city chosen: " + city);
     CommonData.setCity(city);
+    $window.location.href = '#/searchads';
   }
 
 }]);
