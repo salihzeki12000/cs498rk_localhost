@@ -133,9 +133,15 @@ def main(argv):
         else:
             roomType = "Shared"
         tags = []
-        tags = (tagNames[randint(0, len(tagNames) - 1)])
+        a = randint(0, len(tagNames) - 1)
+        b = randint(0, len(tagNames) - 1)
+        if(a != b):
+            tags.append(tagNames[a])
+            tags.append(tagNames[b])
+        else:
+            tags.append(tagNames[a])
         #print(tags)
-        print(tags)
+        #print(tags)
 
         params = urllib.urlencode({'city': choice(cityNames),
                                 'address': address,
@@ -152,7 +158,7 @@ def main(argv):
         conn.request("POST", "/api/listings", params, headers)
         response = conn.getresponse()
         data = response.read()
-        print(data)
+        #print(data)
         d = simplejson.loads(data)
 
         listingID = str(d['data']['_id'])
