@@ -165,7 +165,9 @@ idUsersRoute.put(function(req,res){
         user.matchedHosts= data.matchedHosts;
         user.matchedTravelers= data.matchedTravelers;
 		user.bio = data.bio;
-
+        user.gender = data.gender;
+        user.age = data.age;
+        user.occupation = data.occupation;
         user.save(function(err){
             if(err){
 				console.error(err);

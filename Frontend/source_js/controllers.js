@@ -190,6 +190,8 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.submitForm = function(){
     console.log("create host ad");
     Listings.postListing($scope.listing).success(function(data){
+      // add the listing id to user
+
       console.log(data);
     }).error(function(err){
       console.log(err);
@@ -230,9 +232,69 @@ appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData
   $scope.img = CommonData.getProfileImg();
 }]);
 
-appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', function($scope,
-                          $window, $routeParams) {
+appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User', 
+                          function($scope, $window, $routeParams, Listing, User) {
   console.log('listing detail controller created');
+  $scope.requestSent = true;
+  $scope.requestSentError = false;
+  $scope.requestSentText = 'Request';
+  var genderPro = "he";
   $scope.user = {name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
   $scope.listing = {description: "Interaction with Guests We want to meet interesting people so we are open to interact with the guests, if they want to, but the garden house is separate, so they can decide! The Neighborhood It's in the center of the Silicon Valley. It's closed to University Avenue, where all the restaurants and stores like the Palo Alto Apple Store are located. So it's the best place to start a journey through the Valley. Getting Around Palo Alto Public Transportation is great! You can get to many places in the Bay Area with the CalTrain or Uber. Other Things to Note There is no kitchen in the garden house, just a sink, but if you are here, you want to eat out and go to events anyway ;-)"}
+  // get listing and host data, uncommnet when hook up to database
+  // $scope.user = {};
+  // $scope.listings = {};
+  // var listingID = $routeParams._id;
+  // Listings.getFromId(listingID).success(function(data) {
+  //   $scope.listing = data.data;
+  //   var hostID = $scope.listing.hostID;
+  //   User.getFromId(hostID).success(function(data) {
+  //     $scope.user = data.data;
+  //   });
+  // })
+
+  $scope.requestToBook = function() {
+    console.log("request to book button pressed!");
+    var userID = $scope.user._id;
+    $scope.user.matchedTravelers.push(listingID);
+    User.put(userID, $scope.user).success(function(data) {
+      console.log("request book:", data.message);
+      
+      if($scope.user.gender == "female") {
+        genderPro = "she";
+      }
+      $scope.requestSentText += ' sent to ' + $scope.user.name + ", " + genderPro + "will reply you in a moment!";
+      $scope.requestSent = true;
+      $scope.requestSentError = false;
+    }).error(function(err) {
+      console.log("request to book:", err);
+      $scope.requestSentText += ' error!';
+      $scope.requestSent = false;
+      $scope.requestSentError = true;
+    });
+  }
+
+}]);
+
+
+appControllers.controller('EditProfileController', ['$scope', '$routeParams', 'CommonData', 'User', function($scope, 
+                          $routeParams, CommonData, User) {
+  // $scope.user = {};
+  // test local user
+  $scope.user = {name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
+  $scope.cities = CommonData.getCities();
+  $scope.genders = [{name: "male"}, {name: "female"}, {name: "others"}];
+  var userID = $routeParams._id;
+  User.getFromId(userID).success(function(data) {
+    $scope.user = data.data;
+  }).error(function(err) {
+    console.log(err);
+  });
+
+  $scope.submitChange = function() {
+    User.put(userID, $scope.user).success(function(data) {
+      console.log("Edit user:", data.message);
+      $window.location.href = '#/landing';
+    })
+  }
 }]);
