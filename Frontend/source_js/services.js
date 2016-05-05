@@ -31,8 +31,11 @@ appServices.factory('User', function($http, $window) {
             return $http.delete(baseUrl+'/users/' + userId);
         },
         //upload
-        uploadImage : function(image, formData, data) {
-            return $http.post(baseUrl+'/upload/', formData, data);
+        uploadImage : function(formData) {
+            return $http.post(baseUrl+'/upload/', formData, {
+                        headers: { 'Content-Type': false },
+                        transformRequest: angular.identity
+                    });
         }
     }
 });

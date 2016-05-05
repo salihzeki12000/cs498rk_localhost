@@ -1,4 +1,4 @@
-var appControllers = angular.module('appControllers', ['720kb.datepicker']);
+var appControllers = angular.module('appControllers', ['720kb.datepicker', 'imageupload']);
 
 appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', 'Auth', 'CommonData', function($scope, Users, $window, $route, Auth, CommonData) {
   if ($window.localStorage.getItem('loggedIn') !== null) {
@@ -47,20 +47,6 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'U
    $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
    console.log("user in profile " + $window.localStorage.getItem('user'));
 	 $scope.user = JSON.parse($window.localStorage.getItem('user'));
-
-   $scope.upload = function(image){
-    var formData = new FormData();
-    formData.append('image', image, image.name);
-    var otherData = {
-        headers: { 'Content-Type': false },
-        transformRequest: angular.identity
-    };
-    User.uploadImage(formData, headers, otherData)
-      .success(function(result) {
-        $scope.uploadedImgSrc = result.src;
-        $scope.sizeInBytes = result.size;
-    });
-   }
 
  }]);
 
@@ -281,9 +267,9 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', 'C
                           $routeParams, CommonData, User) {
   // $scope.user = {};
   // test local user
-  $scope.user = {name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
+  $scope.user = {name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: {name:"male"}, bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
   $scope.cities = CommonData.getCities();
-  $scope.genders = [{name: "male"}, {name: "female"}, {name: "others"}];
+  $scope.genders = [{name: "male"}, {name: "female"}, {name: "other"}];
   var userID = $routeParams._id;
   User.getFromId(userID).success(function(data) {
     $scope.user = data.data;
@@ -297,4 +283,21 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', 'C
       $window.location.href = '#/landing';
     })
   }
+
+  $scope.upload = function(image){
+    console.log("UPLOAD");
+    console.log(image);
+    var formData = new FormData();
+    formData.append('image', image, image.file.name);
+    console.log(formData);
+    User.uploadImage(formData)
+      .success(function(result) {
+        console.log(result);
+        $scope.uploadedImgSrc = result.src;
+        $scope.sizeInBytes = result.size;
+    }).error(function(err){
+      console.log(err);
+    });
+   }
+
 }]);

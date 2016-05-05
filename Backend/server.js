@@ -298,18 +298,24 @@ idListingsRoute.delete(function(req,res){
 
 /***********UPLOAD**************/
 var uploadRoute = router.route('/upload');
-uploadRoute.post('/upload', function(req, res) {
+uploadRoute.post(function(req, res) {
+    console.log("POST");
     var image =  req.files.image;
     var newImageLocation = path.join(__dirname, '../Frontend/public/data', image.name);
     
     fs.readFile(image.path, function(err, data) {
         fs.writeFile(newImageLocation, data, function(err) {
-            res.json(200, { 
+            if (err){
+                return res.status(404).json({message: "Something went wrong", data: null});
+            }
+            return res.status(200).json({ 
                 src: 'images/' + image.name,
                 size: image.size
             });
         });
+        console.log("POSTED!!");
     });
+    
 });
 
 app.listen(port);
