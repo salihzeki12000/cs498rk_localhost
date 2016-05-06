@@ -107,15 +107,18 @@ usersRoute.get(function(req,res){
 
 usersRoute.post(function(req,res){
     var data = (req.body);
-	data.local = data.local.replace(/\'/g, "\"");
-	var datLocal = JSON.parse(data.local);
-	console.log((data.local));
-	console.log(datLocal);
-	console.log(datLocal.password);
-	console.log(datLocal.email);
+	if(typeof data.local === 'string'){
+		data.local = data.local.replace(/\'/g, "\"");
+		data.local = JSON.parse(data.local);
+	}
+
+	// console.log((data.local));
+	// console.log(datLocal);
+	// console.log(datLocal.password);
+	// console.log(datLocal.email);
 	//console.log(data.local.email);
 	console.log(data);
-    if(!data.name || !datLocal.email || !datLocal.password){
+    if(!data.name || !data.local.email || !data.local.password){
         return res.status(500).json({message: "Valid name and email required", data: null});
     }
     var d = new Date();
@@ -129,8 +132,8 @@ usersRoute.post(function(req,res){
 		bio: data.bio,
 		age: data.age
     });
-	newUser.local.email = datLocal.email;
-	newUser.local.password = newUser.generateHash(datLocal.password);
+	newUser.local.email = data.local.email;
+	newUser.local.password = newUser.generateHash(data.local.password);
     newUser.save(function(err){
         if(err){
             return res.status(500).send({'error':'internal service error', data:null});
@@ -230,11 +233,13 @@ listingsRoute.get(function(req,res){
 });
 listingsRoute.post(function(req,res){
     var data = req.body;
-	data.tags = data.tags.replace(/\'/g, "\"");
-	console.log(JSON.parse(data.tags));
-	data.tags=JSON.parse(data.tags);
-	console.log("______________");
-	console.log(data);
+	if(typeof data.tags === 'string'){
+		data.tags = data.tags.replace(/\'/g, "\"");
+	//	console.log(JSON.parse(data.tags));
+		data.tags=JSON.parse(data.tags);
+	}
+//	console.log("______________");
+//	console.log(data);
     if(!data.hostName || !data.address){
         return res.status(500).json({message: "Valid host name and address required", data: null});
     }
