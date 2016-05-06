@@ -13,6 +13,7 @@ var listingSchema = new mongoose.Schema({
 	dateEnd				: String,
 	activities			: [String], // trip itinerary
 	tags				: [String],
+	pendingTravelers	: [String], //list of IDs
 	currentTraveler		: String,
 	currentTravelerName	: String,
 
