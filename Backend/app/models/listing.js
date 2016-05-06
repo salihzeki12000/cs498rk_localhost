@@ -5,9 +5,9 @@ var listingSchema = new mongoose.Schema({
 	city				: String,  //required
 	hostName			: String,  //required
 	hostID				: String,
-	bio 				: String,  //shouldn't this be for the user?
+	// bio 				: String,  //shouldn't this be for the user?
 	description			: String, //description might work better than bio
-	price				: Number,
+	price				: String,
 	roomType			: String,
 	dateStart			: String,
 	dateEnd				: String,
