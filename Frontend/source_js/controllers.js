@@ -1,6 +1,7 @@
 var appControllers = angular.module('appControllers', ['720kb.datepicker', 'imageupload']);
 
 appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'Auth', 'CommonData', function($scope, User, $window, $route, Auth, CommonData) {
+  $("#request-modal").modal({ show : false });
   if ($window.localStorage.getItem('loggedIn') !== null) {
     $scope.loggedIn = ($window.localStorage.getItem('loggedIn') === 'true');
   } else {
@@ -12,6 +13,7 @@ appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'A
       var newUser = data.data;
       if (newUser.flag) {
         console.log("update me!");
+        $("#request-modal").modal({ show : true });
       }
     });
   } else {

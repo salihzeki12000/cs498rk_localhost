@@ -13,7 +13,6 @@
           <li><a href="#/searchads/#searchModal" data-toggle="modal"><i class="glyphicon glyphicon-tags"></i></a></li> <br>
           <li><a href="#/searchads/#roomTypeModal" data-toggle="modal"><i class="glyphicon glyphicon-home"></i></a></li> <br>
           <li><a href="#/searchads/#dateModal" data-toggle="modal"><i class="glyphicon glyphicon-calendar"></i></a></li> <br>
-          <li><a href="#/searchads/#ratingModal" data-toggle="modal"><i class="glyphicon glyphicon-star"></i></a></li> <br>
           <li><a href="#/searchads/#priceModal" data-toggle="modal"><i class="glyphicon glyphicon-usd"></i></a></li>
         </ul>
       </nav>
@@ -111,31 +110,6 @@
           <datepicker>
               <input ng-model="dates.dateReturn" class="form-control" type="text" date-format="fullDate" placeholder="Return..."/>
           </datepicker>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Rating Modal -->
-  <div id="ratingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Rating</h4>
-        </div>
-        <div class="modal-body">
-          <label for="rating" class="control-label">Minimum Rating</label>
-  				<select ng-model="minRating" id="rating" class="form-control">
-  				  <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-  				</select>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
