@@ -1,4 +1,4 @@
-var appControllers = angular.module('appControllers', ['720kb.datepicker', 'imageupload']);
+var appControllers = angular.module('appControllers', ['720kb.datepicker','lr.upload', 'ngResource']);
 
 appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'Auth', 'CommonData', function($scope, User, $window, $route, Auth, CommonData) {
   $("#request-modal").modal({ show : false });
@@ -132,8 +132,10 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
 appControllers.controller('SignupController', ['$scope', '$window', '$route', 'Auth', 'Users', 'User', function($scope, $window, $route, Auth, Users, User) {
   $scope.newUser = "";
   $('.alert').hide();
+  $scope.errorMsg = "";
   $scope.name ="";
   $scope.signup = function() {
+
         console.log($scope.newUser);
     //if email is correct type!
     if($scope.name !== undefined && $scope.newUser.email !== undefined && $scope.newUser.password !== undefined) {
@@ -249,23 +251,23 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.tagList = CommonData.getTags();
   $scope.user = $window.localStorage.getItem('user');
   var user = JSON.parse($scope.user);
-  console.log($scope.tagList);
+  //console.log($scope.tagList);
 
   $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
 
-  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomType.name, price: 0, dateStart: "", dateEnd: "", tags: [], activities: $scope.thingsToDo};
+  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: "", price: 0, dateStart: "", dateEnd: "", tags: [], activities: $scope.thingsToDo};
   $scope.listing.images = [];
-
+  $('.alert').hide();
+  $scope.displayErr = "";
   $scope.submitForm = function(){
 //      console.log($scope.Image1.dataURL);
 //      console.log($scope.Image2);
-    $scope.listing.city = $scope.listing.city.name;
+   /* $scope.listing.city = $scope.listing.city.name;
     $scope.listing.roomType = $scope.listing.roomType.name;
     console.log($scope.listing);
     console.log($scope.listing.city);
-    console.log("create host ad");
+    console.log("create host ad");*/
     console.log($scope.listing);
-
 
     // $http.post("http://localhost:4000/api/images", $scope.Image1.dataURL).success(function(data){
     //     console.log("wut");
@@ -275,17 +277,25 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 //    $scope.listing.images.push($scope.Image2.dataURL);
 //    $scope.listing.images.push($scope.Image3.dataURL);
 //    $window.localStorage.setItem('exampleImage', $scope.Image1.dataURL);
-
-    Listings.postListing($scope.listing).success(function(data){
-      // add the listing id to user
-      user.postedHostAds.push(data.data._id);
-      User.put(user._id, user);
-      console.log(data);
-    }).error(function(err){
-      console.log(err);
-    });
-
-    $window.location.href= "#/profile";
+    if ($scope.listing.description !== "" && $scope.listing.address !== "" && $scope.listing.city !== undefined
+      && $scope.listing.dateStart !== "" && $scope.listing.dateEnd !== "" && $scope.listing.roomType !== undefined
+      && $scope.listing.price !== 0 && $scope.listing.dateStart < $scope.listing.dateEnd){
+      $scope.listing.city = $scope.listing.city.name;
+      $scope.listing.roomType = $scope.listing.roomType.name;
+      Listings.postListing($scope.listing).success(function(data){
+        // add the listing id to user
+        user.postedHostAds.push(data.data._id);
+        User.put(user._id, user);
+        console.log(data);
+        $window.location.href= "#/profile";
+      }).error(function(err){
+        console.log(err);
+      });
+    } else {
+      $scope.displayErr = "You must fill out the required fields";
+      $('.alert').show();
+    }
+    
   }
 }]);
 
@@ -394,9 +404,8 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 }]);
 
 
-
-appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$window', 'CommonData', 'User', function($scope, $routeParams,
-                          $window, CommonData, User) {
+appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$window', 'CommonData', 'User', 'upload', function($scope, $routeParams,
+                          $window, CommonData, User, upload) {
   // $scope.user = {};
   // test local user
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
@@ -405,26 +414,80 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
   $scope.gender = "";
   $scope.location="";
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
-
+  $('.alert').hide();
   console.log($scope.user);
   $scope.submitChange = function() {
       $scope.user.gender = $scope.gender.name;
-      $scope.user.location=$scope.location.name;
-      User.put($scope.user._id, $scope.user).success(function(data) {
-      console.log("Edit user:", data.message + JSON.stringify(data.data));
-      $window.location.href = '#/profile';
-    });
+      $scope.user.location = $scope.location.name;
+      if ($scope.user.name !== "" && $scope.user.name !== undefined
+        && $scope.user.gender !== "" && $scope.user.gender !== undefined
+        && $scope.user.location !== "" && $scope.user.location !== undefined
+        && $scope.user.occupation !== "" && $scope.user.occupation !== undefined
+        && $scope.user.age !== "" && $scope.user.age !== undefined
+        && $scope.user.bio !== "" && $scope.user.bio !== undefined) {
+        User.put($scope.user._id, $scope.user).success(function(data) {
+          console.log("Edit user:", data.message + JSON.stringify(data.data));
+          $window.location.href = '#/profile';
+        });
+      } else {
+        $scope.displayErr = "You must fill out every field";
+        $('.alert').show();
+      }
+  }
+  /*$scope.acceptTypes = 'image/*';
+  $scope.imageSrc = "";
+
+  $scope.onLoad = function(files){
+    fileReader.readAsDataUrl(files[0], $scope)
+      .then(function(result) {
+          $scope.profile_picture = result;
+          $scope.imageSrc = result;
+          console.log($scope.imageSrc);
+      });
+  }
+  
+  $scope.formData = {
+      image: $scope.imageSrc,
+      message: "hello"
+  };
+
+   $scope.callback = function(response){
+    console.log($scope.formData);
+    console.log(response);
+   }
+   */
+    $scope.myFile = "";
+   $scope.doUpload = function (image) {
+    console.log(image);
+    console.log("Upload");
+    //console.log($scope.myFile);
+    /*fileReader.readAsDataUrl($scope.file, $scope)
+      .then(function(result) {
+          $scope.profile_picture = result;
+          $scope.imageSrc = result;
+          console.log($scope.imageSrc);
+      });*/
+    upload({
+      url: 'http://localhost:4000/api/upload',
+      method: 'POST',
+      data: {
+        //image: $scope.imageSrc,
+        File: image//$scope.myFile // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
+      }
+    }).then(
+      function (response) {
+        console.log(response.data); // will output whatever you choose to return from the server on a successful upload
+      },
+      function (response) {
+          console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
+      }
+    );
   }
 
-  $scope.upload = function(image){
-    console.log("UPLOAD");
-    console.log(image);
-    var formData = new FormData();
-    formData = {image: image};
-    //formData.append('image', image, image.file.name);
-    //formData.set('image', image, image.file.name);
-    //console.log(formData);
-    User.uploadImage(formData)
+
+
+
+     /* User.uploadImage(image)
       .success(function(result) {
         console.log(result);
         $scope.uploadedImgSrc = result.src;
@@ -432,6 +495,89 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
     }).error(function(err){
       console.log(err);
     });
-   }
+   }*/
+ 
 
-}]);
+
+
+    /**COPYING CODE**/
+   
+      /*$http
+      .post('api/user',{
+        user: $scope.user,
+        community: {
+          name: $scope.community,
+          privacy: false
+        },
+        profile_picture: $scope.profile_picture
+      })
+      .success(function(data, status, headers, config) {
+        console.log(data);
+        $window.sessionStorage.token = data.token;
+      })
+      .error(function(data, status, headers, config) {
+        console.log(data);
+        delete $window.sessionStorage.token;
+      });*/
+
+    /*$scope.doUpload = function () {
+      console.log("UPLOAD");
+        upload({
+          url: 'http://localhost:4000/api/upload',
+          method: 'POST',
+          data: {
+            anint: 123,
+            aBlob: Blob([1,2,3]), // Only works in newer browsers
+            aFile: $scope.file, // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
+          }
+        }).then(
+          function (response) {
+            console.log(response.data); // will output whatever you choose to return from the server on a successful upload
+          },
+          function (response) {
+              console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
+          }
+        );
+     };*/
+
+    $scope.submit = function() {
+      User.addPic($scope.profile_picture).success(function(data){
+        console.log(data);
+      }).error(function(err){
+        console.log(err);
+      })
+    };
+  
+
+     $scope.getFile = function (){
+        console.log("GET FILE");
+          //$scope.progress = 0;
+        fileReader.readAsDataUrl($scope.file, $scope)
+              .then(function(result) {
+                  $scope.profile_picture = result;
+                  $scope.imageSrc = result;
+                  console.log($scope.imageSrc);
+                  $scope.doUpload();
+              });
+      };
+   
+   /*   $scope.$on("fileProgress", function(e, progress) {
+          $scope.progress = progress.loaded / progress.total;
+      });*/
+    }])
+      .directive("ngFileSelect",function(){
+        return {
+            link: function($scope,el){
+              el.bind("change", function(e){
+                $scope.file = (e.srcElement || e.target).files[0];
+                $scope.getFile();
+              })
+              
+            }
+        }
+    });
+
+      /****************/
+
+
+ //}]); //end edit controller

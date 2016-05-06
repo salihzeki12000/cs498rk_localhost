@@ -12,7 +12,8 @@ var express = require('express'),
   User = require('./app/models/user'),
 	LocalStrategy = require('passport-local').Strategy,
     path = require('path'),
-    fs = require('fs');
+    fs = require('fs'),
+    AWS = require('aws-sdk');
 
 mongoose.connect(configDB.url); // db connection
 //debugging!
@@ -326,33 +327,102 @@ idListingsRoute.delete(function(req,res){
 });
 
 /***********UPLOAD**************/
-var uploadRoute = router.route('/upload');
-uploadRoute.post(function(req, res) {
+
+/*uploadRoute.post(function(req, res) {
     console.log("POST");
+    //console.log(req);
     console.log(req.json);
     if (req.json === undefined){
-        return res.status(404).json({message: "Something went wrong", data: null});
+        return res.status(404).json({message: "Can't find the file!", data: null});
     }
-    var image = req.json.image;
+    var data = req.json;
+    var image = data.image;
     //var image =  req.files.image;
     var filename = image.file.name;
     var path = '../Frontend/public/data/';
     var newImageLocation = path.join(__dirname, path, filename);
+    console.log(newImageLocation);
+    console.log(image.path);
 
     fs.readFile(image.path, function(err, data) {
+        if (err){
+            return res.status(404).json({message: "Something went wrong", data: null});
+        } 
+        console.log(data);
         fs.writeFile(newImageLocation, data, function(err) {
             if (err){
-                return res.status(404).json({message: "Something went wrong, can't find the file", data: null});
+                return res.status(404).json({message: "Something went wrong", data: null});
             }
             return res.status(200).json({
                 src: path + filename,
-                size: image.size
+                size: image.file.size
             });
         });
         console.log("POSTED!!");
     });
+    return res.status(404).json({message: "Something went wrong", data: null});
+});*/
+var uploadRoute = router.route('/upload');
 
+/***********AWS bucket**************/
+AWS.config.update({accessKeyId: 'AKIAJGBBJX3JDBLQHFJA', secretAccessKey: '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', region: 'us-west-2'});
+var s3Bucket = new AWS.S3( { params: {Bucket: 'localhostimages'} } );
+
+uploadRoute.post(function(req, res) {
+    console.log("SUP BACKEND");
+    console.log(req.json);
+    console.log(req.body);
+    console.log(req.files);
+    //console.log(req.body);
+    var binaryImage = "";
+    var userID = 1
+    //var img = new Buffer(binaryImage.replace(/^data:image\/\w+;base64,/, ""),'base64');
+    var img = "";
+    var params = {
+        Key: "userID33",
+        Body: "body23",
+        ContentEncoding: 'base64',
+        ContentType: 'image/*',
+        ACL: 'public-read'
+    };
+    s3Bucket.upload(params, function(err, data) {
+        if (err) {
+          console.log("Error uploading data: ", err);
+          return res.status(404).json({message:"upload failed", data: []});
+        } else {
+          console.log("Successfully uploaded data to my bucket");
+          console.log(data);
+          var url = data.Location;
+          return res.status(200).json({ message:"success", data: {url: url} });
+        }
+      });
 });
+
+/**
+FROM SARAH'S PROJECT
+function uploadImageToAWS(user, binaryImage, callback) {
+    var userId = user._id;
+    buf = new Buffer(binaryImage.replace(/^data:image\/\w+;base64,/, ""),'base64');
+    var params = {
+        Key: userId.toString(), 
+        Body: buf,
+        ContentEncoding: 'base64',
+        ContentType: 'image/jpeg',
+        ACL: 'public-read'
+    };
+    s3Bucket.upload(params, function(err, data) {
+        if (err) {
+          console.log("Error uploading profile picture: ", err);
+        } else {
+          console.log("Successfully uploaded image to AWS");
+          user.profile_picture_url = data.Location;
+        }
+        callback();
+    });
+};
+
+**/
+
 
 app.listen(port);
 console.log('Server running on port ' + port);
