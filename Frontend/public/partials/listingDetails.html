@@ -1,7 +1,7 @@
 <div ng-controller='ListingDetailsController' class="container">
 	<div class="row" style="margin-top: 10px; margin-bottom: 10px">
 		<div class="col-sm-12 col-md-4">
-			<img src="../data/isaac.jpg" class="host-portrait">
+			<img src="{{profileImg}}" class="host-portrait">
 			<div class="col-sm-12 green-banner">
 				<p>VERIFIED HOST</p>
 			</div>
@@ -35,10 +35,9 @@
                     <p class="col-sm-3" style="font-size: 16px"><span style="font-weight: bold"> Room Type: </span> {{listing.roomType}} </p>
 					<p class="col-sm-12" style="font-size: 16px"><span style="font-weight: bold"></span>{{listing.description}}</p>
 					<p class="col-sm-12" style="font-size: 16px; font-weight: bold">Pictures:</p>
-					<img class="col-sm-6 col-sm-offset-4 col-md-5 listing-img-sm" src="http://placehold.it/180x180" style="margin: 4px">
-					<img class="col-sm-6 col-sm-offset-4 col-md-5 listing-img-sm" src="http://placehold.it/180x180" style="margin: 4px">
-					<img class="col-sm-6 col-sm-offset-4 col-md-5 listing-img-sm" src="http://placehold.it/180x180" style="margin: 4px">
-					<img class="col-sm-6 col-sm-offset-4 col-md-5 listing-img-sm" src="http://placehold.it/180x180" style="margin: 4px">
+					<img class="col-sm-6 col-sm-offset-4 col-md-5 listing-img-sm" src="{{img1}}" style="margin: 4px">
+					<img class="col-sm-6 col-sm-offset-4 col-md-5 listing-img-sm" src="{{img2}}" style="margin: 4px">
+					<img class="col-sm-6 col-sm-offset-4 col-md-5 listing-img-sm" src="{{img3}}" style="margin: 4px">
 				</section>
 				<section class="col-sm-12 ad-box">
 					<h4 style="text-align: left">Live the local life</h4>
