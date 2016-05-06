@@ -264,6 +264,9 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
       if (city === undefined || city === ""){
         Listings.getListings().success(function(data){
           console.log(data);
+          for (var i = 0; i < data.data.length; i++){
+            data.data[i].img = CommonData.getRandomRoom();
+          }
           $scope.ads = data.data;
         }).error(function(err){
           console.log(err);
@@ -271,6 +274,9 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
       } else {
         Listings.getListingsByCity(city).success(function(data){
           console.log(data);
+          for (var i = 0; i < data.data.length; i++){
+            data.data[i].img = CommonData.getRandomRoom();
+          }
           $scope.ads = data.data;
         }).error(function(err){
           console.log(err);
@@ -294,6 +300,9 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
     Listings.filterListings($scope.city.name, $scope.roomType.value, $scope.dates.dateStart, $scope.dates.dateReturn,
       $scope.priceRange.low, $scope.priceRange.high, tags).success(function(data){
         console.log(data);
+        for (var i = 0; i < data.data.length; i++){
+            data.data[i].img = CommonData.getRandomRoom();
+          }
         $scope.ads = data.data;
       }).error(function(err){
         console.log(err);
