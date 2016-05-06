@@ -291,8 +291,10 @@ appControllers.controller('EditProfileController', ['$scope', '$window', '$route
     console.log("UPLOAD");
     console.log(image);
     var formData = new FormData();
-    formData.append('image', image, image.file.name);
-    console.log(formData);
+    formData = {image: image};
+    //formData.append('image', image, image.file.name);
+    //formData.set('image', image, image.file.name);
+    //console.log(formData);
     User.uploadImage(formData)
       .success(function(result) {
         console.log(result);

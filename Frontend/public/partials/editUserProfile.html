@@ -4,10 +4,9 @@
 			<img src="../data/profile-placeholder.png" class="user-portrait">
 			<br><br>
 			<div class="form-group row">
-	          <input type="file" accept="image/*" image="image"/>
+	          <input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.6"/>
 	          <button type="submit" ng-click="upload(image)">upload?</button>
 	          <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}"/> 
-	          <!--<button ng-click="upload()" type="submit" class="btn btn-lg btn-orange">Upload</button>-->
       		</div>
 			<div class="col-sm-12 green-box" style="max-width: 300px">
 				<h4 style="color: #41b866">OVERVIEW</h4>

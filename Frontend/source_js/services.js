@@ -32,8 +32,9 @@ appServices.factory('User', function($http, $window) {
         },
         //upload
         uploadImage : function(formData) {
-            return $http.post(baseUrl+'/upload/', formData, {
-                        headers: { 'Content-Type': false },
+            console.log(formData);
+            return $http.post(baseUrl+'/upload', formData,
+                       { headers: { 'Content-Type': "application/x-www-form-urlencoded; charset=utf-8" },
                         transformRequest: angular.identity
                     });
         }
