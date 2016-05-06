@@ -6,7 +6,7 @@
 			<div class="form-group row">
 	          <input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.6"/>
 	          <button type="submit" ng-click="upload(image)">upload?</button>
-	          <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}"/> 
+	          <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}"/>
       		</div>
 			<div class="col-sm-12 green-box" style="max-width: 300px">
 				<h4 style="color: #41b866">OVERVIEW</h4>
@@ -28,14 +28,14 @@
 					<div class="form-group edit-profile-box" style="margin-top: 4px">
 						<p for="gender" class="col-md-3 edit-profile-font">Your gender:</p>
 						<div class="col-md-9">
-							<select ng-model="user.gender" ng-options="gender.name for gender in genders" class="form-control" ></select>
+							<select ng-model="gender" ng-options="gender.name for gender in genders" class="form-control" ></select>
 						</div>
 					</div>
 
 					<div class="form-group edit-profile-box">
 						<p for="location" class="col-md-3 edit-profile-font">Your location:</p>
 						<div class="col-md-9">
-							<select ng-model="user.location" class="form-control" ng-options="city.name for city in cities" ng-change="clickCity(city.name)"></select>
+							<select ng-model="location" class="form-control" ng-options="city.name for city in cities" ng-change="clickCity(city.name)"></select>
 						</div>
 					</div>
 

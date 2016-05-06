@@ -62,11 +62,11 @@ app.config(['$routeProvider', function($routeProvider) {
   }).
   when('/listingdetails/:_id', {
     templateUrl: 'partials/listingDetails.html',
-    // controller: 'ListingDetailsController'
+    controller: 'ListingDetailsController'
   }).
-  when('/edituserprofile/:_id', {
+  when('/edituserprofile', {
     templateUrl: 'partials/editUserProfile.html',
-    // controller: 'EditProfileController'
+    controller: 'EditProfileController'
   }).
   when('/matched', {
       templateUrl: 'partials/matched.html',

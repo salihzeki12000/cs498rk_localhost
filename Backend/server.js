@@ -25,7 +25,7 @@ var allowCrossDomain = function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header("Access-Control-Allow-Headers", "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
-    res.header('Access-Control-Allow-Credentials', true);
+	res.header('Access-Control-Allow-Credentials', true);
   next();
 };
 
@@ -250,6 +250,7 @@ listingsRoute.post(function(req,res){
         bio: data.bio,
 		address: data.address,
         city: data.city,
+		description: data.description,
         dateStart: data.dateStart,
         dateEnd: data.dateEnd,
         roomType: data.roomType,
@@ -319,20 +320,20 @@ uploadRoute.post(function(req, res) {
     var filename = image.file.name;
     var path = '../Frontend/public/data/';
     var newImageLocation = path.join(__dirname, path, filename);
-    
+
     fs.readFile(image.path, function(err, data) {
         fs.writeFile(newImageLocation, data, function(err) {
             if (err){
                 return res.status(404).json({message: "Something went wrong, can't find the file", data: null});
             }
-            return res.status(200).json({ 
+            return res.status(200).json({
                 src: path + filename,
                 size: image.size
             });
         });
         console.log("POSTED!!");
     });
-    
+
 });
 
 app.listen(port);

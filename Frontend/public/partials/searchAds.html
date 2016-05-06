@@ -22,6 +22,7 @@
     <!-- Listings -->
     <div class="col-sm-11 section" id="slide-up">
       <div ng-repeat="ad in ads">
+
         <div class="row ad text-center">
           <div class="col-sm-12 col-md-2 col-md-offset-1">
             <div class="row">
@@ -30,13 +31,14 @@
                 <img ng-src="http://i.imgur.com/MYCsJyAb.jpg">
               </div>
             </div>
+
             <div class="row">
               <p class="room-type"><b>Room Type: </b>{{ad.roomType}}</p>
             </div>
           </div>
           <div class="col-sm-12 col-md-6">
             <div class="row">
-              <a ng-href="#/hostbio/{{ad.hostID}}"><h4>{{ad.hostName}}</h4></a>
+              <a ng-href="#/listingdetails/{{ad._id}}"><h4>{{ad.hostName}}</h4></a>
             </div>
             <div class="row text-center">
               <p>{{ad.bio}}</p>
@@ -48,8 +50,9 @@
             <div ng-repeat="tag in ad.tags">
               <span class="label label-info label-tag">{{tag}}</span>
             <br>
+
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
