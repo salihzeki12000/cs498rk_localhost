@@ -56,6 +56,7 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'U
 appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Auth', 'Users', function($scope, $window, $route, Auth, Users) {
   $scope.data = "";
   $scope.displayText = "";
+  $('.alert').hide();
 
   $scope.login = function() {
     console.log($scope.user);
@@ -65,7 +66,7 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
       $window.localStorage.setItem('loggedIn', 'true');*/
       $window.location.href = '#/profile';
     }).error(function (data) {
-      console.log("error");
+      $('.alert').show();
     });
   };
 
@@ -73,6 +74,7 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
 
 appControllers.controller('SignupController', ['$scope', '$window', '$route', 'Auth', 'Users', 'User', function($scope, $window, $route, Auth, Users, User) {
   $scope.newUser = "";
+  $('.alert').hide();
   $scope.name ="";
   $scope.signup = function() {
     Users.postSignUp($scope.newUser).success(function (data) {
@@ -85,6 +87,8 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
         $window.localStorage.setItem('loggedIn', 'true');*/
         $window.location.href = '#/travellerhost';
         $route.reload();
+    }).error(function(data) {
+      $('.alert').show();
     });
   }
 
