@@ -225,6 +225,10 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.roomTypes = CommonData.getRoomTypes();
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();
+  $scope.Image1 = null;
+  $scope.Image2 = null;
+  $scope.Image3 = null;
+  
   $scope.cities = CommonData.getCities();
   $scope.tagList = CommonData.getTags();
   $scope.user = $window.localStorage.getItem('user');
@@ -234,9 +238,11 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
 
   $scope.submitForm = function(){
+      console.log($scope.Image1);
+      console.log($scope.Image2);
     console.log("create host ad");
     console.log($scope.listing);
-    Listings.postListing($scope.listing).success(function(data){
+/*    Listings.postListing($scope.listing).success(function(data){
       // add the listing id to user
       user.postedHostAds.push(data.data._id);
       User.put(user._id, user);
@@ -244,7 +250,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
     }).error(function(err){
       console.log(err);
     });
-  }
+ */ }
 }]);
 
 appControllers.controller('MatchedController', ['$scope', '$window', function($scope, $window){
