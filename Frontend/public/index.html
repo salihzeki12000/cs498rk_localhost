@@ -95,7 +95,7 @@
           </div>
           <div class="modal-body">
             <div class="col-md-3 col-md-offset-2" ng-repeat="traveller in requests">
-              <p>{{traveller.name}}</p>
+              <p>{{traveller.name}}</p> <input type="radio" name="accept" ng-click="accept(traveller)" value="accept">accept <input type="radio" g-click="reject(traveller)" name="accept" value="reject"> reject
             </div>
           </div>
           <div class="modal-footer">

@@ -13,13 +13,18 @@ appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'A
     User.getFromId($scope.user._id).success(function(data) {
       var newUser = data.data;
       if (newUser.flag) {
-        for(var i = 0; i < newUser.pendingTravelers.length; i++) {
-          User.getFromId(newUser.pendingTravelers[i]).success(function (data) {
-            $scope.requests.push(data.data);
-          });
-        };
-        console.log("update me!");
-        $("#request-modal").modal({ show : true });
+        console.log(newUser.pendingTravelers);
+        if (newUser.pendingTravelers.length > 0) {
+          for(var i = 0; i < newUser.pendingTravelers.length; i++) {
+            User.getFromId(newUser.pendingTravelers[i]).success(function (data) {
+              $scope.requests.push(data.data);
+            });
+          };
+          $("#request-modal").modal({ show : true });
+        }
+        if (newUser.matchedHost !== undefined) {
+
+        }
       }
     });
   } else {
@@ -37,6 +42,35 @@ appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'A
     $scope.user = null;
     $scope.loggedIn = false;
     $route.reload();
+  }
+
+  $scope.accept = function(user) {
+    User.getFromId(user._id).success(function (data) {
+      var updateUser = data.data;
+      console.log("updated " + JSON.stringify(updateUser));
+      updateUser.matchedHost = $scope.user._id;
+      updateUser.flag = false;
+      User.put(updateUser._id, updateUser).success(function(data) {
+        console.log("success");
+        $window.location.href="#/matched";
+      });
+    });
+
+    User.getFromId($scope.user._id).success(function (data) {
+      var updateUser = data.data;
+      console.log("updated " + JSON.stringify(updateUser));
+      updateUser.matchedTravelers.push($scope.user._id);
+      updateUser.flag = true;
+      User.put(updateUser._id, updateUser).success(function(data) {
+        console.log("success");
+        $window.location.href="#/matched";
+      });
+    });
+    //add to matched hosts
+  }
+
+  $scope.reject = function(user) {
+    //
   }
 
 }]);
@@ -167,10 +201,19 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
       Users.postSignUp($scope.newUser).success(function (data) {
           var user = data.data;
           user.name = $scope.name;
-          user.flag = false;
-          User.put(user._id, user);
           Auth.login(data.data);
+          user.postedHostAds = [];
+          user.location = "";
+          user.matchedHost = "";
+          user.matchedTravelers= [];
+          user.bio = "";
+          user.gender = "";
+          user.age = "";
+          user.occupation = "";
+          user.pendingTravelers = [];
+          user.flag = false;
 
+          User.put(user._id, user);
           $window.location.href = '#/travellerhost';
       }).error(function(data) {
         $('.alert').show();
@@ -302,9 +345,10 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 //    $scope.listing.images.push($scope.Image2.dataURL);
 //    $scope.listing.images.push($scope.Image3.dataURL);
 //    $window.localStorage.setItem('exampleImage', $scope.Image1.dataURL);
-    if ($scope.listing.description !== "" && $scope.listing.address !== "" && $scope.listing.city !== undefined
+    /*if ($scope.listing.description !== "" && $scope.listing.address !== "" && $scope.listing.city !== undefined
       && $scope.listing.dateStart !== "" && $scope.listing.dateEnd !== "" && $scope.listing.roomType !== undefined
-      && $scope.listing.price !== 0 && $scope.listing.dateStart < $scope.listing.dateEnd) {
+      && $scope.listing.price !== 0 && $scope.listing.dateStart < $scope.listing.dateEnd){*/
+
       $scope.listing.city = $scope.listing.city.name;
       $scope.listing.roomType = $scope.listing.roomType.name;
       Listings.postListing($scope.listing).success(function(data){
@@ -316,15 +360,15 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
       }).error(function(err){
         console.log(err);
       });
-    } else {
+    /*} else {
       $scope.displayErr = "You must fill out the required fields";
       $('.alert').show();
-    }
+    }*/
 
   }
 }]);
 
-appControllers.controller('MatchingController', ['$scope', '$window', function($scope, $window){
+appControllers.controller('MatchedController', ['$scope', '$window', function($scope, $window){
 
 }]);
 
