@@ -9,7 +9,7 @@
     </div>
     <div class="col-sm-12 col-md-8">
       <div class="row">
-        <h2 class="col-sm-12" style="text-align: left">User Profile</h2>
+        <h2 class="col-sm-12" style="text-align: left">My Profile</h2>
         <section class="col-sm-12 ad-box">
 
           <div class="form-group edit-profile-box" style="margin-top: 4px">
@@ -55,7 +55,45 @@
           </div>
 
         </section>
-      <a href="#/edituserprofile/{{user._id}}"><button ng-click="edit()" class="btn btn-lg btn-orange" style="margin-top: 20px">Edit Profile</button></a>
+
+        <h2 class="col-sm-12" style="text-align: left">My Listings</h2>
+        <section class="col-sm-12 ad-box">
+
+          <div class="form-group edit-profile-box">
+            <p for="location" class="col-md-3 edit-profile-font">Trip description:</p>
+            <div class="col-md-9">
+            <!-- to be updated here -->
+              <p class="profile-text">{{listing.description}}</p>
+            </div>
+          </div>
+
+          <p class="col-xs-12 edit-profile-font">Pictures:</p>
+          <div class="row">
+            <img class="col-sm-6 col-sm-offset-4 col-md-5 listing-img-sm" src="http://placehold.it/180x180" style="margin: 4px">
+            <img class="col-sm-6 col-sm-offset-4 col-md-5 listing-img-sm" src="http://placehold.it/180x180" style="margin: 4px">
+            <img class="col-sm-6 col-sm-offset-4 col-md-5 listing-img-sm" src="http://placehold.it/180x180" style="margin: 4px">
+          </div>
+
+          <div ng-repeat="activity in listing.activities">
+            <div class="form-group edit-profile-box">
+              <p class="col-md-3 edit-profile-font">Activity:</p>
+              <div class="col-md-9">
+                <p class="profile-text">{{activity}}</p>
+                <img class="col-sm-12 listing-img" src="http://placehold.it/400x300" style="margin: 4px">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group edit-profile-box">
+            <p for="location" class="col-md-3 edit-profile-font">Pending Travelers:</p>
+            <div class="col-md-9">
+              <p class="profile-text">{{pendingTravelersText}}</p>
+            </div>
+          </div>
+
+
+        </section>
+      <a href="#/edituserprofile"><button ng-click="edit()" class="btn btn-lg btn-orange" style="margin-top: 20px">Edit Profile</button></a>
     </div>
   </div>
 </div>

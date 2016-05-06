@@ -135,7 +135,10 @@ usersRoute.post(function(req,res){
         matchedTravelers: [],
         dateCreated: d.getDate(),
 		bio: data.bio,
-		age: data.age
+		age: data.age,
+		gender: data.gender,
+		occupation: data.occupation,
+
     });
 	newUser.local.email = data.local.email;
 	newUser.local.password = newUser.generateHash(data.local.password);
@@ -164,8 +167,7 @@ idUsersRoute.put(function(req,res){
         var d = new Date();
         user.name = data.name;
 //can email and password be modified by standard put? Probably not?
-//        email: data.local.email;
-//        password: data.local.password;
+
 		user.local.email = user.local.email;
 		user.local.password = user.local.password;
 
@@ -243,6 +245,11 @@ listingsRoute.post(function(req,res){
 	//	console.log(JSON.parse(data.tags));
 		data.tags=JSON.parse(data.tags);
 	}
+	console.log(data);
+	if(typeof data.activities === 'string'){
+		data.activities = data.activities.replace(/\'/g, "\"");
+		data.activities = JSON.parse(data.activities);
+	}
 //	console.log("______________");
 //	console.log(data);
     if(!data.hostName || !data.address){
@@ -262,7 +269,8 @@ listingsRoute.post(function(req,res){
         currentTraveler: data.currentTraveler,
         currentTravelerName: data.currentTravelerName,
         price: data.price,
-        tags: data.tags
+        tags: data.tags,
+		activities: data.activities
     });
     newListing.save(function(err){
         if(err) return res.status(500).json({message:'internal service error sorry', data:null});
