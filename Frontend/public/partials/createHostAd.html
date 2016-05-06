@@ -67,28 +67,28 @@
 				<div class="form-group">
 				<!-- angular model to be modified -->
 					<label for="first" class="control-label">First activity</label>
-					<input ng-model="thingsToDo.first" id="first" class="form-control" placeholder="First exciting thing to do" style="width: 100%" required/>
+					<input ng-model="thingsToDo.first" id="first" class="form-control" placeholder="First exciting thing to do" style="width: 100%"/>
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 				<!-- angular model to be modified -->
 					<label for="second" class="control-label">Second activity</label>
-					<input ng-model="thingsToDo.second" id="second" class="form-control" placeholder="Second exciting thing to do" style="width: 100%" required/>
+					<input ng-model="thingsToDo.second" id="second" class="form-control" placeholder="Second exciting thing to do" style="width: 100%" />
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 				<!-- angular model to be modified -->
 					<label for="third" class="control-label">Third activity</label>
-					<input ng-model="thingsToDo.third" id="third" class="form-control" placeholder="Third exciting thing to do" style="width: 100%" required/>
+					<input ng-model="thingsToDo.third" id="third" class="form-control" placeholder="Third exciting thing to do" style="width: 100%" />
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 				<!-- angular model to be modified -->
 					<label for="fourth" class="control-label">More...</label>
-					<input ng-model="thingsToDo.fourth" id="fourth" class="form-control" placeholder="One more thing..." style="width: 100%" required/>
+					<input ng-model="thingsToDo.fourth" id="fourth" class="form-control" placeholder="One more thing..." style="width: 100%" />
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -105,8 +105,11 @@
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
-					<button ng-click="submitForm()" class="btn btn-lg btn-orange">Submit</button>
+					<button type="submit" ng-click="submitForm()" class="btn btn-lg btn-orange">Submit</button>
 				</div>
+				<div class="alert alert-danger col-sm-12" style="text-align: left; margin-top: 8px">
+	              {{displayErr}}
+	         	</div>
 			</div>
 		</form>
 	</section>

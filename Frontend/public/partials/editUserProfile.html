@@ -3,65 +3,93 @@
 		<div class="col-sm-12 col-md-4">
 			<img src="../data/profile-placeholder.png" class="user-portrait">
 			<br><br>
-			<div class="form-group row">
-	          <input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.6"/>
-	          <button type="submit" ng-click="upload(image)">upload?</button>
-	          <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}"/>
-      		</div>
+			<form class="form-group row" id="imgForm">
+	          <input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.6" name="image" id="image"/>
+	          <button type="submit" ng-click="doUpload(image)">upload?</button>
+
+	          <!--NEW CODE-->
+	          <!--<input type="file" ng-file-select="onFileSelect($files)" >
+			   <span ng-show="imageSrc">
+			   		Preview:<br />
+			   		<img class="img-thumbnail" ng-src="{{imageSrc}}" /><br/>
+			   </span>
+	          <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}"/> 
+				<button type="submit">upload?</button>-->
+				<!--end new code-->
+				<!--<input type="file" name="myFile"/>
+				<button ng-click="doUpload()" type="submit">upload</button>-->
+				<!--angular-upload-->
+				<!--<div
+				  class="btn btn-primary btn-upload"
+				  upload-button
+				  accept="acceptTypes"
+				  data="formData"
+				  url="http://localhost:4000/api/upload"
+				  on-success="callback(response)"
+				  on-upload="onLoad(files)"
+				>Upload!!</div>-->
+
+
+      		</form>
+
 			<div class="col-sm-12 green-box" style="max-width: 300px">
 				<h4 style="color: #41b866">OVERVIEW</h4>
 				<p style="text-align: left; font-size: 20px;">{{user.name}}<br>{{user.age}}, {{user.gender.name}}</p>
 			</div>
 		</div>
 		<div class="col-sm-12 col-md-8">
-			<div class="row">
+			<form class="row">
 				<h2 class="col-sm-12" style="text-align: left">User Profile Settings</h2>
 				<section class="col-sm-12 ad-box">
 
 					<div class="form-group edit-profile-box" style="margin-top: 4px">
 						<p for="name" class="col-md-3 edit-profile-font">Your name:</p>
 						<div class="col-md-9">
-							<input ng-model="user.name" id="name" class="form-control" ></input>
+							<input ng-model="user.name" id="name" class="form-control" required></input>
 						</div>
 					</div>
 
 					<div class="form-group edit-profile-box" style="margin-top: 4px">
 						<p for="gender" class="col-md-3 edit-profile-font">Your gender:</p>
 						<div class="col-md-9">
-							<select ng-model="gender" ng-options="gender.name for gender in genders" class="form-control" ></select>
+							<select ng-model="gender" ng-options="gender.name for gender in genders" class="form-control" required></select>
 						</div>
 					</div>
 
 					<div class="form-group edit-profile-box">
 						<p for="location" class="col-md-3 edit-profile-font">Your location:</p>
 						<div class="col-md-9">
-							<select ng-model="location" class="form-control" ng-options="city.name for city in cities" ng-change="clickCity(city.name)"></select>
+							<select ng-model="location" class="form-control" ng-options="city.name for city in cities" required></select>
 						</div>
 					</div>
 
 					<div class="form-group edit-profile-box">
-						<p for="location" class="col-md-3 edit-profile-font">Your occupation:</p>
+						<p for="occupation" class="col-md-3 edit-profile-font">Your occupation:</p>
 						<div class="col-md-9">
-							<input ng-model="user.occupation" id="occupation" class="form-control" ></input>
+							<input ng-model="user.occupation" id="occupation" class="form-control" required></input>
 						</div>
 					</div>
 
 					<div class="form-group edit-profile-box">
-						<p for="location" class="col-md-3 edit-profile-font">Your age:</p>
+						<p for="age" class="col-md-3 edit-profile-font">Your age:</p>
 						<div class="col-md-9">
-							<input ng-model="user.age" id="age" class="form-control" ></input>
+							<input type="number" ng-model="user.age" id="age" class="form-control" min=1 required></input>
 						</div>
 					</div>
 
 					<div class="form-group edit-profile-box">
-						<p for="location" class="col-md-3 edit-profile-font">Brief Introduction:</p>
+						<p for="bio" class="col-md-3 edit-profile-font">Brief Introduction:</p>
 						<div class="col-md-9">
-							<textarea ng-model="user.bio" id="occupation" class="form-control" style="height: 120px"></textarea>
+							<textarea ng-model="user.bio" id="bio" class="form-control" style="height: 120px" required></textarea>
 						</div>
 					</div>
 
 				</section>
-			<button ng-click="submitChange()" class="btn btn-lg btn-orange" style="margin-top: 20px">Submit Change</button>
-		</div>
+				
+			<div class="alert alert-danger col-sm-12" style="text-align: left; margin-top: 8px">
+	              {{displayErr}}
+	         </div>
+			<button type="submit" ng-click="submitChange()" class="btn btn-lg btn-orange" style="margin-top: 5px">Submit Change</button>
+		</form>
 	</div>
 </div>
