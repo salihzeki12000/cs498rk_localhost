@@ -95,6 +95,7 @@ appServices.factory('CommonData', function(){
     var commonProfileImg = "http://i.imgur.com/a7emodJ.jpg";
     var commonRoomImg = "http://i.imgur.com/tXMM9Ed.jpg";
     var mapImg = "http://i.imgur.com/ODTtRQr.png";
+    var roomImgs = ["room1.jpg", "room2.jpeg", "room3.jpg", "room4.jpg", "room5.jpg"];
     var roomTypes = [{name: "Private Room", value: "Private"}, {name: "Shared Room", value: "Shared"}];
     var cities = [{name:'San Francisco, USA', value:'San Francisco, USA'},{name:'Singapore, Singapore', value:'Singapore, Singapore'},{name:'Prague, Czech Republic', value:'Prague, Czech Republic'},
         {name:'Marrakech, Morocco', value:'Marrakech, Morocco'},{name:'Quito, Ecuador', value:'Quito, Ecuador'},{name:'Brisbane, Australia', value:'Brisbane, Australia'}];
@@ -131,6 +132,11 @@ appServices.factory('CommonData', function(){
         },
         getCities : function() {
             return cities;
+        },
+        getRandomRoom : function(){
+            var rand = Math.floor(Math.random()*5);
+            var path = "./data/"
+            return path + roomImgs[rand];
         }
     }
 });

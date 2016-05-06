@@ -273,6 +273,9 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
       if (city === undefined || city === ""){
         Listings.getListings().success(function(data){
           console.log(data);
+          for (var i = 0; i < data.data.length; i++){
+            data.data[i].img = CommonData.getRandomRoom();
+          }
           $scope.ads = data.data;
         }).error(function(err){
           console.log(err);
@@ -280,6 +283,9 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
       } else {
         Listings.getListingsByCity(city).success(function(data){
           console.log(data);
+          for (var i = 0; i < data.data.length; i++){
+            data.data[i].img = CommonData.getRandomRoom();
+          }
           $scope.ads = data.data;
         }).error(function(err){
           console.log(err);
@@ -303,22 +309,14 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
     Listings.filterListings($scope.city.name, $scope.roomType.value, $scope.dates.dateStart, $scope.dates.dateReturn,
       $scope.priceRange.low, $scope.priceRange.high, tags).success(function(data){
         console.log(data);
+        for (var i = 0; i < data.data.length; i++){
+            data.data[i].img = CommonData.getRandomRoom();
+        }
         $scope.ads = data.data;
       }).error(function(err){
         console.log(err);
       });
   }
-}]);
-
-appControllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
-  $scope.url = $window.localStorage.baseurl;
-
-  $scope.setUrl = function(){
-    console.log("base url: " +$scope.url);
-    $window.localStorage.baseurl = $scope.url;
-    $scope.displayText = "URL set";
-  };
-
 }]);
 
 
@@ -388,8 +386,29 @@ act = [];
 
 
 
-      $scope.listing.city = $scope.listing.city.name;
+
 //      $scope.listing.roomType = $scope.listing.roomType.name;
+
+    // $http.post("http://localhost:4000/api/images", $scope.Image1.dataURL).success(function(data){
+    //     console.log("wut");
+    // }).error(function(err){
+    //     console.log(err);
+    // })
+//    $scope.listing.images.push($scope.Image2.dataURL);
+//    $scope.listing.images.push($scope.Image3.dataURL);
+//    $window.localStorage.setItem('exampleImage', $scope.Image1.dataURL);
+    if ($scope.listing.address !== "" && $scope.listing.price > 0 && $scope.listing.dateStart < $scope.listing.dateEnd){
+
+      $scope.listing.city = $scope.listing.city.name;
+      $scope.listing.roomType = $scope.listing.roomType.name;
+
+      var tags = [];
+      for (var i = 0; i < $scope.listing.tags.length; i++){
+        tags.push($scope.tags[i].name);
+      }
+
+      $scope.listing.tags = tags;
+
       Listings.postListing($scope.listing).success(function(data){
         // add the listing id to user
         user.postedHostAds.push(data.data._id);
