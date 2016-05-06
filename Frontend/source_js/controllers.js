@@ -18,7 +18,14 @@ appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'A
   } else {
     $scope.user = null;
   }
-  $scope.img = CommonData.getProfileImg();
+  if(!$scope.loggedIn){
+      $scope.img = null;
+  }
+  else if($scope.user._id === $window.localStorage.getItem('user')){
+      $scope.img = $window.localStorage.getItem('profileImage');
+  } else {
+      $scope.img = $window.localStorage.getItem('profileImage2');
+  }
 
   $window.localStorage.setItem('baseurl', 'http://localhost:4000');
   console.log("logged in? " + $window.localStorage.getItem('loggedIn'));
@@ -55,10 +62,11 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'L
   $scope.hasListings = false;
   $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
 
-  $scope.exampleImg = $window.localStorage.getItem('exampleImage');
+  $scope.profileImg = $window.localStorage.getItem('profileImage');
   //console.log($scope.exampleImg);
-
-
+  $scope.img1 = $window.localStorage.getItem('example1');
+  $scope.img2 = $window.localStorage.getItem('example2');
+  $scope.img3 = $window.localStorage.getItem('example3');
   if($scope.profile) {
       var user = JSON.parse($window.localStorage.getItem('user'));
       User.getFromId(user._id).success(function(data) {
@@ -67,6 +75,9 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'L
         Listings.getListingsByUser($scope.user._id).success(function(data) {
           $scope.listings = data.data;
           if ($scope.listings.length > 0) {
+
+    //          console.log($scope.ex);
+        //      console.log($scope.images.length);
             $scope.hasListings = true;
           }
         }).error (function() {
@@ -75,6 +86,7 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'L
       }).error(function() {
         console.log("error");
     });
+//      console.log($scope.images.length);
   }
 
   // these are dummy listings
@@ -244,28 +256,49 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 
   $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
 
-  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomType.name, price: 0, dateStart: "", dateEnd: "", tags: [], activities: $scope.thingsToDo};
-  $scope.listing.images = [];
+act = [];
+  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomType.name, price: 0, dateStart: "", dateEnd: "", tags: [], activities: act};
 
   $scope.submitForm = function(){
+      var act = [];
+    if($scope.thingsToDo.first)
+        act.push($scope.thingsToDo.first);
+    if($scope.thingsToDo.second)
+        act.push($scope.thingsToDo.second);
+    if($scope.thingsToDo.third)
+        act.push($scope.thingsToDo.third);
+    if($scope.thingsToDo.fourth)
+        act.push($scope.thingsToDo.fourth);
+
+    var listingTags = [];
+    for(var i = 0; i < tags.length; i++){
+        listingTags.push(tags[i]);
+    }
 //      console.log($scope.Image1.dataURL);
 //      console.log($scope.Image2);
+    var hostImagesArr = [];
+    if($scope.Image1) hostImagesArr.push(String($scope.Image1.dataURL));
+    if($scope.Image2) hostImagesArr.push(String($scope.Image2.dataURL));
+    if($scope.Image3) hostImagesArr.push(String($scope.Image3.dataURL));
+    if($scope.user._id === $window.localStorage.getItem('user')._id){
+        $window.localStorage.setItem('example1', $scope.Image1.dataURL);
+        $window.localStorage.setItem('example2', $scope.Image2.dataURL);
+        $window.localStorage.setItem('example3', $scope.Image3.dataURL);
+    } else {
+        $window.localStorage.setItem('2example1', $scope.Image1.dataURL);
+        $window.localStorage.setItem('2example2', $scope.Image2.dataURL);
+        $window.localStorage.setItem('2example3', $scope.Image3.dataURL);
+    }
+
+    $scope.listing.activities = act;
     $scope.listing.city = $scope.listing.city.name;
     $scope.listing.roomType = $scope.listing.roomType.name;
+    $scope.listing.tags = listingTags;
+
     console.log($scope.listing);
     console.log($scope.listing.city);
     console.log("create host ad");
     console.log($scope.listing);
-
-
-    // $http.post("http://localhost:4000/api/images", $scope.Image1.dataURL).success(function(data){
-    //     console.log("wut");
-    // }).error(function(err){
-    //     console.log(err);
-    // })
-//    $scope.listing.images.push($scope.Image2.dataURL);
-//    $scope.listing.images.push($scope.Image3.dataURL);
-//    $window.localStorage.setItem('exampleImage', $scope.Image1.dataURL);
 
     Listings.postListing($scope.listing).success(function(data){
       // add the listing id to user
@@ -319,6 +352,9 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
   $scope.requestSent = false;
   $scope.requestSentError = false;
   $scope.requestSentText = 'Request';
+  $scope.img1 = $window.localStorage.getItem('example1');
+  $scope.img2 = $window.localStorage.getItem('example2');
+  $scope.img3 = $window.localStorage.getItem('example3');
   console.log($routeParams._id);
   $scope.listing= {};
   $scope.host = {};
@@ -396,10 +432,12 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
   $scope.gender = "";
   $scope.location="";
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
-
+  $scope.image = null;
   console.log($scope.user);
   $scope.submitChange = function() {
       $scope.user.gender = $scope.gender.name;
+      if($scope.image)
+        $window.localStorage.setItem('profileImage', $scope.image.dataURL);
       $scope.user.location=$scope.location.name;
       User.put($scope.user._id, $scope.user).success(function(data) {
       console.log("Edit user:", data.message + JSON.stringify(data.data));
