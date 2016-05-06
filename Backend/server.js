@@ -348,8 +348,11 @@ var uploadRoute = router.route('/upload/');
     });
     return res.status(404).json({message: "Something went wrong", data: null});
 });*/
+
 uploadRoute.post(function(req, res) {
-    var binaryImage = req.body.img;
+    console.log("HI BACKEND");
+    console.log(req.body);
+    //var binaryImage = req.body.img;
     var userID = 1
     var img = new Buffer(binaryImage.replace(/^data:image\/\w+;base64,/, ""),'base64');
     var params = {

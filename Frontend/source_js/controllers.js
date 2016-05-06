@@ -1,4 +1,4 @@
-var appControllers = angular.module('appControllers', ['720kb.datepicker', 'imageupload']);
+var appControllers = angular.module('appControllers', ['720kb.datepicker', 'lr.upload', 'ngResource']);
 
 appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', 'Auth', 'CommonData', function($scope, Users, $window, $route, Auth, CommonData) {
   if ($window.localStorage.getItem('loggedIn') !== null) {
@@ -319,8 +319,8 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 
 
 
-appControllers.controller('EditProfileController', ['$scope', '$window', 'CommonData', 'User', function($scope,
-                          $window, CommonData, User) {
+appControllers.controller('EditProfileController', ['$scope', '$window', 'CommonData', 'User', 'fileReader', function($scope,
+                          $window, CommonData, User, fileReader) {
   // $scope.user = {};
   // test local user
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
@@ -343,19 +343,71 @@ appControllers.controller('EditProfileController', ['$scope', '$window', 'Common
   }
 
   $scope.upload = function(image){
-    console.log("UPLOAD");
-    //console.log(image);
-    //var form = document.getElementById('imgForm');
-    //var fd = new FormData(form);
-    //var formData = {image: image};
-    //fd.append('image', image, image.file.name);
-    //fd.set('image', image);
-    //console.log(fd);
-    //formData.set('image', image, image.file.name);
-   // console.log(formData);
-   // var data = { headers: { 'Content-Type': undefined },
-                        //transformRequest: angular.identity };
-    User.uploadImage(image)
+    console.log(image);
+  };
+    /**COPYING CODE**/
+    $scope.submit = function() {
+      console.log("HI");
+    };
+  
+      /*$http
+      .post('api/user',{
+        user: $scope.user,
+        community: {
+          name: $scope.community,
+          privacy: false
+        },
+        profile_picture: $scope.profile_picture
+      })
+      .success(function(data, status, headers, config) {
+        console.log(data);
+        $window.sessionStorage.token = data.token;
+      })
+      .error(function(data, status, headers, config) {
+        console.log(data);
+        delete $window.sessionStorage.token;
+      });*/
+
+    $scope.doUpload = function () {
+      console.log("UPLOAD");
+        upload({
+          url: 'http://localhost:4000/api/upload',
+          method: 'POST',
+          data: {
+            anint: 123,
+            aBlob: Blob([1,2,3]), // Only works in newer browsers
+            aFile: $scope.file, // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
+          }
+        }).then(
+          function (response) {
+            console.log(response.data); // will output whatever you choose to return from the server on a successful upload
+          },
+          function (response) {
+              console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
+          }
+        );
+     };
+
+     $scope.getFile = function (){
+      console.log("GET FILE");
+          //$scope.progress = 0;
+          fileReader.readAsDataUrl($scope.file, $scope)
+                .then(function(result) {
+                    $scope.profile_picture = result;
+                    $scope.imageSrc = result;
+                    console.log($scope.imageSrc);
+                    $scope.doUpload();
+                });
+      };
+   
+      /*$scope.$on("fileProgress", function(e, progress) {
+          $scope.progress = progress.loaded / progress.total;
+      });*/
+
+  
+    /****************/
+    
+   /* User.uploadImage(image)
       .success(function(result) {
         console.log(result);
         $scope.uploadedImgSrc = result.src;
@@ -363,6 +415,17 @@ appControllers.controller('EditProfileController', ['$scope', '$window', 'Common
     }).error(function(err){
       console.log(err);
     });
-   }
+   }*/
 
-}]);
+}])
+  .directive("ngFileSelect",function(){
+    return {
+        link: function($scope,el){
+          el.bind("change", function(e){
+            $scope.file = (e.srcElement || e.target).files[0];
+            $scope.getFile();
+          })
+          
+        }
+    }
+});

@@ -3,10 +3,19 @@
 		<div class="col-sm-12 col-md-4">
 			<img src="../data/profile-placeholder.png" class="user-portrait">
 			<br><br>
-			<form class="form-group row" id="imgForm">
-	          <input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.6" name="image" id="image"/>
-	          <button type="submit" ng-click="upload(image)">upload?</button>
+			<form class="form-group row" id="imgForm" ng-submit="submit()">
+	          <!--<input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.6" name="image" id="image"/>
+	          <button type="submit" ng-click="upload(image)">upload?</button>-->
+
+	          <!--NEW CODE-->
+	          <input type="file" ng-file-select="onFileSelect($files)" >
+			   <span ng-show="imageSrc">
+			   		Preview:<br />
+			   		<img class="img-thumbnail" ng-src="{{imageSrc}}" /><br/>
+			   </span>
 	          <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}"/> 
+				<button type="submit">upload?</button>
+
       		</form>
 
 			<div class="col-sm-12 green-box" style="max-width: 300px">
