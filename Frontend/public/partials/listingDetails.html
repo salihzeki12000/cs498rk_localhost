@@ -17,7 +17,8 @@
 		</div>
 		<div class="col-sm-12 col-md-8">
 			<div class="row">
-				<h2 class="col-sm-12" style="text-align: left">{{user.name}}</h2>
+				<h2 class="col-sm-6" style="text-align: left">{{user.name}}</h2>
+                <h5 class="col-sm-6" style="text-align: right">{{user.local.email}}</h5>
 				<h3 class="col-sm-12 no-blank-space">{{user.location}}</h3>
 				<section class="col-sm-12 ad-box">
 					<h4 style="text-align: left">Me in a nutshell</h4>
@@ -41,14 +42,10 @@
 				<section class="col-sm-12 ad-box">
 					<h4 style="text-align: left">Live the local life</h4>
 					<!-- use ng-repeat here -->
-					<p class="col-sm-12" style="font-size: 16px"><span style="font-weight: bold">Activity 0: </span>{{listing.activities[0]}}We want to meet interesting people so we are open to interact with the guests, if they want to, but the garden house is separate, so they can decide!</p>
-					<img class="col-sm-12 listing-img" src="http://placehold.it/400x300" style="margin: 4px">
-					<p class="col-sm-12" style="font-size: 16px"><span style="font-weight: bold">Activity 1: </span>{{listing.activities[1]}}It's in the center of the Silicon Valley. It's closed to University Avenue, where all the restaurants and stores like the Palo Alto Apple Store are located. So it's the best place to start a journey through the Valley.</p>
-					<img class="col-sm-12 listing-img" src="http://placehold.it/400x300" style="margin: 4px">
-					<p class="col-sm-12" style="font-size: 16px"><span style="font-weight: bold">Activity 2: </span>{{listing.activities[2]}}Palo Alto Public Transportation is great! You can get to many places in the Bay Area with the CalTrain or Uber.
 
-</p>
-					<img class="col-sm-12 listing-img" src="http://placehold.it/400x300" style="margin: 4px">
+					<p class="col-sm-12" style="font-size: 16px" ng-repeat="activity in listing.activities"><span style="font-weight: bold">Activity:</span>{{activity}}<br>
+					<img class="col-sm-12 listing-img" src="http://placehold.it/400x300" style="margin: 4px"></p>
+
 				</section>
 			</div>
 			<button ng-click="requestToBook()" class="btn btn-lg btn-orange" style="margin-top: 20px">Request to Book</button>
