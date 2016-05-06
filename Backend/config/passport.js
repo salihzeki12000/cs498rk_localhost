@@ -17,7 +17,6 @@ module.exports = function(passport) {
 		passwordField : 'password',
 	},
 	function(email, password, done) {
-		console.log("inside of sign up");
 		User.findOne({'local.email' : email}, function(err, user) {
 			if(err)
 				return done(err);
@@ -25,14 +24,11 @@ module.exports = function(passport) {
 				return done(null, false);
 			} else {
 				var newUser = new User();
-				console.log("reached here");
 				newUser.local.email = email;
 				newUser.local.password = newUser.generateHash(password);
-				console.log("new user" + JSON.stringify(newUser));
 				newUser.save(function(err) {
 					if(err)
 						throw err;
-					console.log('success!!');
 					return done(null, newUser);
 				});
 			}
@@ -48,7 +44,7 @@ module.exports = function(passport) {
 		User.findOne({'local.email': email}, function(err, user) {
 			if(err) {
 				console.log("error" + err);
-				return done(err);
+				return done(err, {message: err});
 			}
 			if(!user) {
 				console.log("this user doesn't exist");
