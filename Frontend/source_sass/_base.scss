@@ -100,6 +100,10 @@ h5 {
 	border: 2px solid $alert-red;
 }
 
+.service-box {
+	padding: 6px;
+}
+
 .green-banner {
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -145,6 +149,10 @@ h5 {
 	border-top: 1px solid $uiuc-blue;
 }
 
+.profile-text {
+	font-size: 20px;
+}
+
 .btn-orange:hover {
 	background-color: $uiuc-orange; //$transparent-uiuc-orange;
 	color: white;
@@ -152,6 +160,7 @@ h5 {
 }
 
 .no-padding {
+	margin: 0 !important;
 	padding: 0 !important;
 	width: 100%;
 	max-width: none;
@@ -169,6 +178,15 @@ h5 {
 		color: white;
 		margin-bottom: 0;
 	}
+}
+
+.hot-cities-cap {
+	font-family: $fopensans;
+	font-style: italic;
+}
+
+.desc {
+	font-family: $fkalam;
 }
 
 /* CREATE AD PG */
@@ -203,6 +221,11 @@ h5 {
 			height: 27px;
 		}
 	}
+}
+
+.how-works-text {
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 .open {
@@ -279,6 +302,11 @@ header {
 	background-color: $transparent-white;
 }
 
+.canvas-orange {
+	position: relative;
+	background-color: $transparent-uiuc-orange;
+}
+
 
 .host-traveller {
 	background-image: url("../data/DSC_0298_edited.JPG");
@@ -290,7 +318,7 @@ header {
 	@extend .no-padding;
 	position: relative;
 	margin-top: 2px;
-	height: 500px;
+	height: auto;
 	width: 100%;
 }
 
@@ -336,6 +364,11 @@ header {
   	transform: translateY(-50%);
 }
 
+.horizontal-align {
+	position: relative;
+  	left: 50%;
+  	transform: translateX(-50%);
+}
 
 /*section {
   padding: 100px 0;
@@ -364,7 +397,7 @@ header {
 }
 
 .how-works-icon {
-	font-size: 4em;
+	font-size: 50px;
 }
 
 .thumb-img {
@@ -421,8 +454,7 @@ header {
 	font-size: 120px;
 	color: white;
 	text-align: center;
-	font-family: $flobster;
-	font-weight: bold;
+	font-family: $fleckerli;
 	text-shadow: 0px 0px 30px $uiuc-orange;
 }
 
@@ -463,7 +495,6 @@ header {
 
 .city-search {
 	margin-top: 6px;
-	width: 75%;
 }
 
 .landing-heading {
@@ -597,36 +628,79 @@ header {
 	}
 }
 
-.jumbotron {
-	input {
-		margin-left: 10px;
-		width: 95%;
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 768px) {
+	#bg-video {
+		display: none;
+	}
+
+	.bg-video-container {
+		position: relative;
+		width: 100%;
+		height: 380px;
+		overflow: hidden;
+		background-image: url("../data/central-park.png");
+		background-size: cover;
+	}
+
+	.jumbotron {
+		input {
+			margin-left: 10px;
+			width: 95%;
+		}
 	}
 }
 
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
 
+	.title-container {
+		top: 24px;
+	}
+
+
+	.title {
+		margin-top: 18px;
+		font-size: 60px;
+		text-shadow: 0px 0px 30px $uiuc-orange;
+	}
+
+	.sub-title {
+		margin-top: 10px;
+		font-size: 34px;
+	}
+
+	.city-search {
+		margin-top: 22px;
+	}
+
+	.how-works-icon {
+		font-size: 30px;
+	}
+
 }
 
-/* Extra Small Devices, Phones */
-@media only screen and (min-width : 480px) {
+/*small*/
+@media screen and (min-width: 768px) and (max-width: 992px) {
+
+	.how-works-icon {
+		font-size: 40px;
+	}
 
 }
-
-/* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
-
+/*medium*/
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+	.how-works-icon {
+		font-size: 60px;
+	}
 }
 
-/* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
-
-}
-
-/* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
-
+/*large*/
+@media screen and (min-width: 1200px) {
+	.how-works-icon {
+		font-size: 60px;
+	}
 }
 
 /* Traveller Search Page */
