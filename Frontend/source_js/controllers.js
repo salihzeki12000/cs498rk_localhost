@@ -325,14 +325,8 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.listing.images = [];
   $('.alert').hide();
   $scope.displayErr = "";
+
   $scope.submitForm = function(){
-//      console.log($scope.Image1.dataURL);
-//      console.log($scope.Image2);
-   /* $scope.listing.city = $scope.listing.city.name;
-    $scope.listing.roomType = $scope.listing.roomType.name;
-    console.log($scope.listing);
-    console.log($scope.listing.city);
-    console.log("create host ad");*/
     console.log($scope.listing);
 
     // $http.post("http://localhost:4000/api/images", $scope.Image1.dataURL).success(function(data){
@@ -343,6 +337,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 //    $scope.listing.images.push($scope.Image2.dataURL);
 //    $scope.listing.images.push($scope.Image3.dataURL);
 //    $window.localStorage.setItem('exampleImage', $scope.Image1.dataURL);
+
     if ($scope.listing.address !== "" && $scope.listing.price > 0 && $scope.listing.dateStart < $scope.listing.dateEnd){
       
       $scope.listing.city = $scope.listing.city.name;
@@ -350,9 +345,8 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
       
       var tags = [];
       for (var i = 0; i < $scope.listing.tags.length; i++){
-        tags.push($scope.tags[i].name);
+        tags.push($scope.listing.tags[i].name);
       }
-
       $scope.listing.tags = tags;
 
       Listings.postListing($scope.listing).success(function(data){
@@ -364,12 +358,9 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
       }).error(function(err){
         console.log(err);
       });
-    /*} else {
-      $scope.displayErr = "You must fill out the required fields";
-      $('.alert').show();
-    }*/
+    }
+  };
 
-  }
 }]);
 
 appControllers.controller('MatchedController', ['$scope', '$window', function($scope, $window){
