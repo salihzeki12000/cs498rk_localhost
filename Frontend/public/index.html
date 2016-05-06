@@ -90,16 +90,18 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()">&times;</button>
             <h4 class="modal-title">Pending Requests</h4>
           </div>
           <div class="modal-body">
-            <div class="col-md-3 col-md-offset-2" ng-repeat="traveller in requests">
-              <p>{{traveller.name}}</p> <input type="radio" name="accept" ng-click="accept(traveller)" value="accept">accept <input type="radio" g-click="reject(traveller)" name="accept" value="reject"> reject
+            <div class="col-xs-12" ng-repeat="traveller in requests">
+              <p class="profile-text">{{traveller.name}}</p> <!-- <input type="radio" name="accept" ng-click="accept(traveller)" value="accept">accept <input type="radio" ng-click="reject(traveller)" name="accept" value="reject"> reject -->
+              <button ng-click="accept(traveller)" class="btn-orange">accept</button>
+              <button ng-click="reject(traveller)" class="btn-blue">reject</button>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filterAds()"><i class="glyphicon glyphicon-search"></i></button>
           </div>
         </div>
       </div>
