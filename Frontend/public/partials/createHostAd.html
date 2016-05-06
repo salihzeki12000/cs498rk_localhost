@@ -1,4 +1,4 @@
-<div ng-controller='CreateHostAdController' class="container">
+<div ng-controller='CreateHostAdController' class="container hostAdController">
 	<section>
 		<h2>Create a Host Ad</h2>
 		<h4>Room - a sweet place for your guest</h4>
@@ -7,7 +7,7 @@
 				<div class="form-group">
 					<label for="summery" class="control-label">Summary</label>
 					<textarea ng-model="listing.description" class="form-control" id="bio" placeholder="Overview of the trip you are offering" style="width: 100%" required></textarea>
-				</div>			
+				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
@@ -30,10 +30,24 @@
 				<label class="control-label" style="margin-top: 20px">Upload pictures of your home</label>
 			</div>
 			<div class="col-sm-12">
-				<div class="form-group">
-					<div class="col-md-4"><img ng-src="{{roomImg}}"><input type="file"/></div>
-					<div class="col-md-4"><img ng-src="{{roomImg}}"><input type="file"/></div>
-					<div class="col-md-4"><img ng-src="{{roomImg}}"><input type="file"/></div>
+				<div class="form-group col-sm-12">
+					<div class="col-md-4">
+						<img ng-show="Image1" ng-src="{{Image1.url}}" type="{{Image1.file.type}}" max-height="100" max-width="100"/>
+
+						<input type="file" accept="image/*" image="Image1" resize-max-height="300" resize-max-width="250" resize-quality="0.6"/>
+
+					</div>
+					<div class="col-md-4">
+						<img ng-show="Image2" ng-src="{{Image2.url}}" type="{{Image2.file.type}}" resize-max-height="300" resize-max-width="250"/>
+
+						<input type="file" accept="image/*" image="Image2" resize-max-height="300" resize-max-width="250" resize-quality="0.6" resize-max-height="300" resize-max-width="250"/>
+
+					</div>
+					<div class="col-md-4">
+						<img ng-show="Image3" ng-src="{{Image3.url}}" type="{{Image3.file.type}}"/>
+
+						<input type="file" accept="image/*" image="Image3" resize-max-height="300" resize-max-width="250" resize-quality="0.6"/>
+					</div>
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -72,25 +86,25 @@
 					<label for="third" class="control-label">Third activity</label>
 					<input ng-model="thingsToDo.third" id="third" class="form-control" placeholder="Third exciting thing to do" style="width: 100%" required/>
 				</div>
-			</div>		
+			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 				<!-- angular model to be modified -->
 					<label for="fourth" class="control-label">More...</label>
 					<input ng-model="thingsToDo.fourth" id="fourth" class="form-control" placeholder="One more thing..." style="width: 100%" required/>
 				</div>
-			</div>	
+			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 					<label for="price" class="control-label">Price</label>
 					<input ng-model="listing.price" type="number" class="form-control" id="price" style="width: 100%" min=0 required/>
-				</div>		
+				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
 					<label for="tags" class="control-label">Select Tags</label>
 					<select id="tags" class="form-control" ng-options="tag.name for tag in tagList" ng-model="listing.tags" style="width: 100%" multiple></select>
-				</div>			
+				</div>
 			</div>
 			<div class="col-sm-12 col-md-10 col-md-offset-1">
 				<div class="form-group">
