@@ -54,6 +54,11 @@ appServices.factory('Listings', function($http, $window){
             console.log(city);
             return $http.get(baseUrl+'/listings?where={"city":"'+city+'"}');
         },
+        getListingsByUser : function(userId) {
+            var query = '/listings?where={';
+            query += '"hostID" : "' + userId + '"}';
+            return $http.get(baseUrl+query);
+        },
         filterListings : function(city, roomType, dateStart, dateEnd, priceLow, priceHigh, tags){
             var query = '/listings?where={';
             if (city !== "")
@@ -67,7 +72,7 @@ appServices.factory('Listings', function($http, $window){
             query += '}';
             console.log(query);
             return $http.get(baseUrl+query);
-        },
+        }
     }
 });
 
@@ -136,16 +141,16 @@ appServices.factory('CommonData', function(){
 
 appServices.service('Auth', function($window) {
   var auth = {};
-    //$rootScope.loggedIn = false;
-    //$rootScope.user = null;
 
   auth.login = function(user) {
     $window.localStorage.setItem('user', JSON.stringify(user));
+    $window.localStorage.setItem('pendingTravelers', JSON.stringify(user.pendingTravelers));
     $window.localStorage.setItem('loggedIn', 'true');
   };
 
   auth.logout = function() {
     $window.localStorage.setItem('user', "");
+    $window.localStorage.setItem('pendingTravelers', "");
     $window.localStorage.setItem('loggedIn', 'false');
   };
 
