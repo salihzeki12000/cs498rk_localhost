@@ -66,12 +66,17 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
 
 }]);
 
-appControllers.controller('SignupController', ['$scope', '$window', '$route', 'Auth', 'Users', function($scope, $window, $route, Auth, Users) {
+appControllers.controller('SignupController', ['$scope', '$window', '$route', 'Auth', 'Users', 'User', function($scope, $window, $route, Auth, Users, User) {
   $scope.newUser = "";
+  $scope.name ="";
   $scope.signup = function() {
     Users.postSignUp($scope.newUser).success(function (data) {
-      $window.localStorage.setItem('user', JSON.stringify(data.data));
+        var user = data.data;
+        user.name = $scope.name;
+      $window.localStorage.setItem('user', JSON.stringify(user));
       $window.localStorage.setItem('loggedIn', 'true');
+
+      User.put(user._id, user);
       $window.location.href = '#/travellerhost';
       $route.reload();
     });
@@ -162,21 +167,25 @@ appControllers.controller('SettingsController', ['$scope' , '$window' , function
 }]);
 
 
-appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', 'Listings', function($scope, $window, CommonData, Listings) {
+appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', 'Listings', 'User', function($scope, $window, CommonData, Listings, User) {
   $scope.roomTypes = CommonData.getRoomTypes();
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();
   $scope.cities = CommonData.getCities();
   $scope.tagList = CommonData.getTags();
-
-  $scope.listing = {address: "", city: "", bio: "", roomType: $scope.roomTypes[0], price: 0, dateStart: "", dateEnd: "", tags: []};
+  $scope.user = $window.localStorage.getItem('user');
+  var user = JSON.parse($scope.user);
+  console.log($scope.tagList);
+  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomTypes[0], price: 0, dateStart: "", dateEnd: "", tags: []};
   $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
 
   $scope.submitForm = function(){
     console.log("create host ad");
+    console.log($scope.listing);
     Listings.postListing($scope.listing).success(function(data){
       // add the listing id to user
-
+      user.postedHostAds.push(data.data._id);
+      User.put(user._id, user);
       console.log(data);
     }).error(function(err){
       console.log(err);
@@ -217,7 +226,7 @@ appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData
   $scope.img = CommonData.getProfileImg();
 }]);
 
-appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User', 
+appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User',
                           function($scope, $window, $routeParams, Listing, User) {
   console.log('listing detail controller created');
   $scope.requestSent = true;
@@ -244,7 +253,7 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
     $scope.user.matchedTravelers.push(listingID);
     User.put(userID, $scope.user).success(function(data) {
       console.log("request book:", data.message);
-      
+
       if($scope.user.gender == "female") {
         genderPro = "she";
       }
@@ -262,7 +271,7 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 }]);
 
 
-appControllers.controller('EditProfileController', ['$scope', '$routeParams', 'CommonData', 'User', function($scope, 
+appControllers.controller('EditProfileController', ['$scope', '$routeParams', 'CommonData', 'User', function($scope,
                           $routeParams, CommonData, User) {
   // $scope.user = {};
   // test local user
