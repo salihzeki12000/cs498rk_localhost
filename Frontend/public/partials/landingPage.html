@@ -94,9 +94,9 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="row no-gutter">
                     <div ng-repeat="city in hotCities" class="col-lg-4 col-sm-6">
-                        <button ng-click="clickCity(city.name)">
+                        <button ng-click="clickCity(city.name)" style="border-style: none; background-color: #F5F5F5">
                             <img ng-src="{{city.img}}" class="img-responsive" alt="city">
-                            <h3>{{city.name}}</h3>
+                            <h5 style="padding-top: 4px; padding-bottom: 10px">{{city.name}}</h5>
                         </button>
                     </div>
                 </div>

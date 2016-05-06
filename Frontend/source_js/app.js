@@ -70,7 +70,7 @@ app.config(['$routeProvider', function($routeProvider) {
   }).
   when('/matched', {
       templateUrl: 'partials/matched.html',
-      controller: 'MatchingController'
+      // controller: 'MatchedController'
   }).
   otherwise({
     redirectTo: '/landing'
