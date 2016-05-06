@@ -178,7 +178,7 @@ idUsersRoute.put(function(req,res){
 
         user.postedHostAds= data.postedHostAds;
         user.location= data.location;
-        user.matchedHosts= data.matchedHosts;
+        user.matchedHost = data.matchedHost;
         user.matchedTravelers= data.matchedTravelers;
 				user.bio = data.bio;
         user.gender = data.gender;
@@ -348,7 +348,7 @@ idListingsRoute.delete(function(req,res){
     fs.readFile(image.path, function(err, data) {
         if (err){
             return res.status(404).json({message: "Something went wrong", data: null});
-        } 
+        }
         console.log(data);
         fs.writeFile(newImageLocation, data, function(err) {
             if (err){
@@ -405,7 +405,7 @@ function uploadImageToAWS(user, binaryImage, callback) {
     var userId = user._id;
     buf = new Buffer(binaryImage.replace(/^data:image\/\w+;base64,/, ""),'base64');
     var params = {
-        Key: userId.toString(), 
+        Key: userId.toString(),
         Body: buf,
         ContentEncoding: 'base64',
         ContentType: 'image/jpeg',
