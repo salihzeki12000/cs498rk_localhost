@@ -142,6 +142,7 @@ appServices.service('Auth', function($window) {
     $window.localStorage.setItem('user', JSON.stringify(user));
     $window.localStorage.setItem('pendingTravelers', JSON.stringify(user.pendingTravelers));
     $window.localStorage.setItem('loggedIn', 'true');
+    $window.location.reload();
   };
 
   auth.logout = function() {
