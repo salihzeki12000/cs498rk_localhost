@@ -56,7 +56,8 @@
 
         </section>
 
-        <h2 class="col-sm-12" style="text-align: left">My Listings</h2>
+        <h2 class="col-sm-12" style="text-align: left" ng-show="hasListings">My Listings</h2>
+      <div ng-repeat="listing in listings">
         <section class="col-sm-12 ad-box">
 
           <div class="form-group edit-profile-box">
@@ -90,7 +91,8 @@
               <p class="profile-text">{{pendingTravelersText}}</p>
             </div>
           </div>
-
+        </div>
+      </div>
 
         </section>
       <a href="#/edituserprofile"><button ng-click="edit()" class="btn btn-lg btn-orange" style="margin-top: 20px">Edit Profile</button></a>

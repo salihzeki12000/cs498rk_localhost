@@ -18,11 +18,16 @@ module.exports = function(passport) {
 	},
 	function(email, password, done) {
 		User.findOne({'local.email' : email}, function(err, user) {
-			if(err)
+			console.log("INSIDE SIGN UP");
+			if(err) {
+				console.log("error");
 				return done(err);
+			}
 			if(user) {
+				console.log("username already exists");
 				return done(null, false);
 			} else {
+				console.log("looks fine!");
 				var newUser = new User();
 				newUser.local.email = email;
 				newUser.local.password = newUser.generateHash(password);

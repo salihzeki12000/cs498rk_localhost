@@ -45,31 +45,40 @@
       <div ng-switch="loggedIn">
         <!-- SHOW BEFORE LOGGED IN -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-switch-when="false">
-            <ul class="nav navbar-nav navbar-right">
-              <li class="nav-button">
+            <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
+              <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="nav-button">
                 <a class="page-scroll" href="#/landing/#about"  style="color: #F26322;">About</a>
               </li>
               <li class="nav-button"><a href="#/signup" style="color: #F26322;">Signup</a></li>
               <li class="nav-button"><a href="#/login"  style="color: #F26322;">Login</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-md hidden-lg">
+              <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="nav-button">
+                <a class="page-scroll" href="#/landing/#about"  style="color: #F26322;">About</a>
+              </li>
+              <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="nav-button"><a href="#/signup" style="color: #F26322;">Signup</a></li>
+              <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="nav-button"><a href="#/login"  style="color: #F26322;">Login</a></li>
             </ul>
         </div>
 
         <!--SHOW ONCE LOGGED IN!-->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-switch-when="true">
           <ul class="nav navbar-nav navbar-right">
-            <li class="nav-button"><a href="#/travellersearch" title="Search Host Ads"><i class="glyphicon glyphicon-search"></i></a></li>
-            <li class="nav-button"><a href="#/createHostAd" title="Create Host Ad"><i class="fa fa-plus"></i></a></li>
+            <li class="nav-button hidden-sm hidden-xs"><a href="#/travellersearch" title="Search Host Ads"><i class="glyphicon glyphicon-search"></i></a></li>
+            <li class="nav-button hidden-sm hidden-xs"><a href="#/createHostAd" title="Create Host Ad"><i class="fa fa-plus"></i></a></li>
               <li class="dropdown nav-button hidden-sm hidden-xs">
               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img id="profile-img" ng-src="{{img}}" alt="Profile Picture"> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#/profile">Profile</a></li>
-                <li><a href="#/settings">Settings</a></li>
+                <li class="nav button"><a href="#/profile">Profile</a></li>
+                <li class="nav button"><a href="#/settings">Settings</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#/logout" ng-click="logout()">Log out</a></li>
+                <li class="nav button"><a href="#/logout" ng-click="logout()">Log out</a></li>
               </ul>
             </li>
-            <li class="nav-button hidden-md hidden-lg"><a href="#/profile" title="Profile">Profile</a></li>
-            <li class="nav-button hidden-md hidden-lg"><a href="#/logout" ng-click="logout()" title="Logout">Logout</a></li>
+            <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="nav-button hidden-md hidden-lg"><a href="#/travellersearch" title="Search Host Ads"><i class="glyphicon glyphicon-search"></i></a></li>
+            <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="nav-button hidden-md hidden-lg"><a href="#/createHostAd" title="Create Host Ad"><i class="fa fa-plus"></i></a></li>
+            <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="nav-button hidden-md hidden-lg"><a href="#/profile" title="Profile">Profile</a></li>
+            <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" class="nav-button hidden-md hidden-lg"><a href="#/logout" ng-click="logout()" title="Logout">Logout</a></li>
           </ul>
       </div>
       </div>
