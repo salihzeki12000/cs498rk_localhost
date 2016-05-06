@@ -10,7 +10,7 @@ appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'A
   }
   if($scope.loggedIn) {
     $scope.user = JSON.parse($window.localStorage.getItem('user'));
-      User.get($scope.user._id).success(function(data) {
+      User.getFromId($scope.user._id).success(function(data) {
         var newUser = data.data;
         if (newUser.flag) {
           console.log("update me!");
@@ -60,24 +60,24 @@ appControllers.controller('LandingPageController', ['$scope', '$window', 'Common
   }
 }]);
 
-appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'Users', 'User', function($scope, $window, $http, Users, User) {
-
+appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'Listings', 'User', function($scope, $window, $http, Listings, User) {
+  $scope.hasListings = false;
   $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
- //  console.log("user in profile " + $window.localStorage.getItem('user'));
-	// $scope.user = JSON.parse($window.localStorage.getItem('user'));
-    if($scope.profile){
-        $scope.user = JSON.parse($window.localStorage.getItem('user'));
-        // User.getFromId($scope.user._id).success(function(data){
-        //     $scope.user = data.data;
-        //     console.log(data);
-        // }).error(function(err){
-        //     console.log(err);
-        //     $scope.user=null;
-        // });
 
-        //console.log(data);
+  if($scope.profile) {
+      $scope.user = JSON.parse($window.localStorage.getItem('user'));
+      Listings.getListingsByUser($scope.user._id).success(function(data) {
+        $scope.listings = data.data;
+        if ($scope.listings.length > 0) {
+          $scope.hasListings = true;
+        }
+      }).error (function() {
+        console.log("error");
+      });
+
+      //console.log(data);
 //        $scope.user = data;
-    }
+  }
 // $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
 
  }]);
@@ -211,7 +211,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.Image1 = null;
   $scope.Image2 = null;
   $scope.Image3 = null;
-  
+
   $scope.cities = CommonData.getCities();
   $scope.tagList = CommonData.getTags();
   $scope.user = $window.localStorage.getItem('user');
@@ -225,7 +225,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
       console.log($scope.Image2);
     console.log("create host ad");
     console.log($scope.listing);
-/*    Listings.postListing($scope.listing).success(function(data){
+    Listings.postListing($scope.listing).success(function(data){
       // add the listing id to user
       user.postedHostAds.push(data.data._id);
       User.put(user._id, user);
@@ -233,7 +233,8 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
     }).error(function(err){
       console.log(err);
     });
- */ }
+    $window.location.href= "#/profile";
+  }
 }]);
 
 appControllers.controller('MatchingController', ['$scope', '$window', function($scope, $window){

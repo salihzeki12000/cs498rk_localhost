@@ -54,6 +54,11 @@ appServices.factory('Listings', function($http, $window){
             console.log(city);
             return $http.get(baseUrl+'/listings?where={"city":"'+city+'"}');
         },
+        getListingsByUser : function(userId) {
+            var query = '/listings?where={';
+            query += '"hostID" : "' + userId + '"}';
+            return $http.get(baseUrl+query);
+        },
         filterListings : function(city, roomType, dateStart, dateEnd, priceLow, priceHigh, tags){
             var query = '/listings?where={';
             if (city !== "")
@@ -67,7 +72,7 @@ appServices.factory('Listings', function($http, $window){
             query += '}';
             console.log(query);
             return $http.get(baseUrl+query);
-        },
+        }
     }
 });
 
