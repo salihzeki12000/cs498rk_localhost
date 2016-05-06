@@ -32,7 +32,7 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/profile.html',
     controller: 'ProfileController'
   }).
-  when('/createHostAd', {
+  when('/createhostad', {
     templateUrl: 'partials/createHostAd.html',
     controller: 'CreateHostAdController'
   }).
