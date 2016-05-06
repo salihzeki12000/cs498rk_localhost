@@ -1,4 +1,4 @@
-var appControllers = angular.module('appControllers', ['720kb.datepicker','lr.upload', 'ngResource']);
+var appControllers = angular.module('appControllers', ['720kb.datepicker']);
 
 appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'Auth', 'CommonData', function($scope, User, $window, $route, Auth, CommonData) {
   //$("#request-modal").modal({show: true});
@@ -264,6 +264,9 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
       if (city === undefined || city === ""){
         Listings.getListings().success(function(data){
           console.log(data);
+          for (var i = 0; i < data.data.length; i++){
+            data.data[i].img = CommonData.getRandomRoom();
+          }
           $scope.ads = data.data;
         }).error(function(err){
           console.log(err);
@@ -271,6 +274,9 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
       } else {
         Listings.getListingsByCity(city).success(function(data){
           console.log(data);
+          for (var i = 0; i < data.data.length; i++){
+            data.data[i].img = CommonData.getRandomRoom();
+          }
           $scope.ads = data.data;
         }).error(function(err){
           console.log(err);
@@ -294,6 +300,9 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
     Listings.filterListings($scope.city.name, $scope.roomType.value, $scope.dates.dateStart, $scope.dates.dateReturn,
       $scope.priceRange.low, $scope.priceRange.high, tags).success(function(data){
         console.log(data);
+        for (var i = 0; i < data.data.length; i++){
+            data.data[i].img = CommonData.getRandomRoom();
+          }
         $scope.ads = data.data;
       }).error(function(err){
         console.log(err);
@@ -517,8 +526,8 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 }]);
 
 
-appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$window', 'CommonData', 'User', 'upload', function($scope, $routeParams,
-                          $window, CommonData, User, upload) {
+appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$window', 'CommonData', 'User', function($scope, $routeParams,
+                          $window, CommonData, User) {
   // $scope.user = {};
   // test local user
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
