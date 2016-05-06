@@ -205,6 +205,10 @@ h5 {
 	}
 }
 
+.open {
+	background-color: $background;
+}
+
 .user-portrait {
 	max-width: 300px;
 	max-height: 300px;
@@ -277,8 +281,8 @@ header {
 
 
 .host-traveller {
-	background-image: url('https://static.pexels.com/photos/22794/pexels-photo.jpg');
-	max-width: 100%;
+	background-image: url("../data/DSC_0298_edited.JPG");
+	background-size: 100% 100%;
 	height: auto;
 }
 
@@ -468,6 +472,9 @@ header {
 
 /* SEARCH ADS */
 #search-ads {
+	#slide-up {
+
+	}
 	.modal-dialog {
 		margin: 30px;
 	}
@@ -545,7 +552,7 @@ header {
 	font-size: 1.2em;
 	display: inline-block;
 	background-color: $uiuc-blue;
-	margin-left: 5px;
+	margin: 2px;
 }
 
 /*profile page*/
