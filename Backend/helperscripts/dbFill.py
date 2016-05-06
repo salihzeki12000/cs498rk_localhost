@@ -77,9 +77,12 @@ def main(argv):
     userIDs = []
     userNames = []
     userEmails = []
-    jobNames = open('occupations.txt', 'r').read().splitlines();
+    jobNames = open('occupations.txt', 'r').read().splitlines()
     cityNames = open('cities.txt', 'r').read().splitlines()
     tagNames = open('tags.txt', 'r').read().splitlines()
+    bios = open('bio.txt', 'r').read().splitlines()
+    desc = open('descriptions.txt', 'r').read().splitlines()
+
     # Loop 'userCount' number of times
     for i in xrange(userCount):
 
@@ -89,7 +92,7 @@ def main(argv):
         gender = "Male" if randint(0, 1) > 0 else "Female"
 
         params = urllib.urlencode({"name": firstNames[x] + " " + lastNames[y],
-                                    "bio": "Lorem ipsum whatever yadda yadda my life is great how are you",
+                                    "bio": choice(bios),
                                     "local": {
                                         "email": firstNames[x] + "@" + lastNames[y] + ".com",
                                         "password": firstNames[x]+lastNames[y]+str(randint(0,100))
@@ -128,8 +131,8 @@ def main(argv):
         assignedHostID = userIDs[assignedHost]
         assignedHostName = userNames[assignedHost]
         assignedHostEmail = userEmails[assignedHost]
-        description = "It is a long established fact that a reader will do things yadda yadda."
-        bio = "Lorem Ipsum yadda yadda yadda"
+        description = choice(desc)
+        bio = choice(bios)
         price = randint(50, 300)
         address = str(randint(0, 1000)) + " " + str(randint(0, 100)) + " Street"
         roomType = ""
