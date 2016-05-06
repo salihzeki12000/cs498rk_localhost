@@ -1,131 +1,96 @@
-<div ng-controller='LandingPageController'>
-    <!-- <header class="landing">
-      <div class="header-content">
-          <div class="header-content-inner">
-              <h1>Get the Local Experience</h1>
-              <hr>
-              <p>Stay with locals and explore new cities off the beaten path</p>
-              <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" class="form-control input-lg" placeholder="Choose a City..." />
-                    <span class="input-group-btn">
-                      <a href="#/signup">
-                        <button class="btn btn-info btn-lg" type="button">
-                          <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                      </a>
-                    </span>
-                  </div>
-              </div>
-              <a href="#/landing/#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
-          </div>
-      </div>
-    </header> -->
+<div ng-controller='LandingPageController' class="no-padding">
     <div class="container no-padding">
-        <header class="bg-video-container row">
-            <video autoplay loop muted id="bg-video">
-                <source src="data/nyc.mp4" type="video/mp4" />
-            </video>
-            <div class="title-container">
-                <h1 class="title">LocalHost</h1>
-                <h2 class="sub-title">Stay with Locals and Meet Travelers</h2>
-                <div class="row">
-                  <div class="col-sm-8 col-sm-offset-2 city-search">
-                    <select class="form-control input-lg" ng-model="city" ng-options="city.name for city in cities" ng-change="clickCity(city.name)"></select>
-                  </div>
-                </div>
+      <header class="bg-video-container row">
+          <video autoplay loop muted id="bg-video">
+              <source src="data/nyc.mp4" type="video/mp4" />
+          </video>
+          <div class="title-container">
+              <h1 class="col-sm-12 title">LocalHost</h1>
+              <h2 class="col-sm-12 sub-title">Stay with Locals and Meet Travelers</h2>
+              <!-- <div class="row"> -->
+              <div class="col-xs-8 col-xs-offset-2 city-search">
+                <select class="form-control input-lg" ng-model="city" ng-options="city.name for city in cities" ng-change="clickCity(city.name)" style="width: 100%;"></select>
+              </div>
+              <!-- </div> -->
+          </div>
+      </header>
+      <section class="section-how-works row" id="about" style="padding-bottom: 20px;">
+        <div class="col-xs-12 col-md-10 text-center no-padding">
+          <h2 class="section-heading">How it Works</h2>
+          <hr class="col-md-8 col-md-offset-2 primary">
+        </div>
+
+        <div class="row" style="margin-top: 1.5rem; margin-bottom: 1.5rem">
+          <div class="service-box col-md-4 text-center">
+              <i class="glyphicon glyphicon-home how-works-icon "></i>
+              <h3>Advertise your Home</h3>
+              <p class="text-muted how-works-text">Locals share their place, when they are free, and what they like to do in the city</p>
+          </div>
+          <div class="service-box col-md-4 text-center">
+              <i class="glyphicon glyphicon-user how-works-icon" data-wow-delay=".1s"></i>
+              <h3>Make Connections</h3>
+              <p class="text-muted how-works-text">Travellers search for their perfect local city guide and homestay</p>
+          </div>
+
+          <div class="service-box col-md-4 text-center">
+              <i class="glyphicon glyphicon-heart wow how-works-icon bounceIn text-primary" data-wow-delay=".3s"></i>
+              <h3>Discover the Way Locals Live</h3>
+              <p class="text-muted how-works-text">During your stay the host will be your local city guide, personal chef, and friend</p>
+          </div>
+
+      </section>
+
+
+      <section class="section-meet-people row">
+        <div class="col-sm-12 col-md-4" style="padding-top: 20px; padding-bottom: 20px;">
+            <h2 class="landing-heading">Be the guide, meet new people</h2>
+            <div class="btn-container">
+                <a href="#landing/#services" style="text-decoration: none"><button class="btn-orange">How it works</button></a>
             </div>
-        </header>
-
-
-        <section class="section-how-works row" id="about">
-          <div class="vertical-align col-md-10 col-md-offset-1">
-              <div class="row">
-                  <div class="col-lg-12 text-center">
-                      <h2 class="section-heading">How it Works</h2>
-                      <hr class="primary">
-                  </div>
+        </div>
+        <div class="col-sm-12 col-md-8">
+          <div class="canvas-white" style="max-height: 600px">
+              <h4 class="caption">CONNECTED WITH</h4>
+              <div class="icon" >
+                  <img src="data/people-icon.png">
               </div>
-              <div class="row" style="margin-top: 1.5rem;">
-                  <div class="col-md-4 text-center">
-                      <div class="service-box">
-                          <i class="glyphicon glyphicon-home how-works-icon"></i>
-                          <h3>Advertise your Home</h3>
-                          <p class="text-muted">Locals share their place, when they are free, and what they like to do in the city</p>
-                      </div>
-                  </div>
-                  <div class="col-md-4 text-center">
-                      <div class="service-box">
-                          <i class="glyphicon glyphicon-user how-works-icon" data-wow-delay=".1s"></i>
-                          <h3>Make Connections</h3>
-                          <p class="text-muted">Travellers search for their perfect local city guide and homestay</p>
-                      </div>
-                  </div>
-                  <div class="col-md-4 text-center">
-                      <div class="service-box">
-                          <i class="fa fa-4x fa-heart wow bounceIn text-primary" data-wow-delay=".3s"></i>
-                          <h3>Discover the Way Locals Live</h3>
-                          <p class="text-muted">During your stay the host will be your local city guide, personal chef, and friend</p>
-                      </div>
-                  </div>
+              <div style="display: flex; justify-content: center;">
+                  <img class="thumb-img" src="data/alex.png">
+                  <img class="thumb-img" src="data/zack.png">
+              </div>
+              <h4 class="caption" style="font-weight: bold">Murray&nbsp;&nbsp;&nbsp;------&nbsp;&nbsp;&nbsp;Chuanhao</h4>
+              <div class="middle-bar"></div>
+              <h5 class="desc" style="color: #756e6e; overflow: scroll;">When I was traveling solo around Europe this summer, I used LocalHost to meet new people. I met Zach and I enjoyed our conversations about life, and he showed me the best shop to grab an authentic batido milkshake. After just a few short days of hanging in the city, I felt as though I had known him for years. I definitely saw more of the city than I would have on my own.</h5>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-explore row">
+        <div class="col-sm-12 col-md-8">
+            <div class="canvas-white" style="max-height: 500px">
+                <h4 class="caption">STAYED WITH</h4>
+                <div class="icon" >
+                    <img src="data/plane-icon.png">
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <img class="thumb-img" src="data/annie.png">
+                    <img class="thumb-img" src="data/caitlyn.png">
+                </div>
+                <h4 class="caption" style="font-weight: bold">Annie&nbsp;&nbsp;&nbsp;------&nbsp;&nbsp;&nbsp;Caitlyn</h4>
+                <div class="middle-bar"></div>
+                <h5 class="desc" style="color: #756e6e;">Caitlyn is amazing! I loved spending time with her, and her openness and caring nature was so genuine and refreshing. She took me to her favorite places in town, including the best taco restaurant I have ever been to in my life!</h5>
             </div>
-        </section>
-
-
-        <section class="section-meet-people row">
-            <!--<div class="vertical-align">-->
-                <div class="col-sm-12 col-md-4" style="padding-top: 100px">
-                    <h2 class="landing-heading">Be the guide, meet new people</h2>
-                    <div class="btn-container">
-                        <a href="#landing/#services" style="text-decoration: none"><button class="btn-orange">How it works</button></a>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-8">
-                    <div class="canvas-white" style="height: 500px">
-                        <h4 class="caption">CONNECTED WITH</h4>
-                        <div class="icon" >
-                            <img src="data/people-icon.png">
-                        </div>
-                        <div style="display: flex; justify-content: center;">
-                            <img class="thumb-img" src="data/alex.png">
-                            <img class="thumb-img" src="data/zack.png">
-                        </div>
-                        <h4 class="caption" style="font-weight: bold">Alex    <------>    Zack</h4>
-                        <div class="middle-bar"></div>
-                        <h5>When I was traveling solo around Europe this summer, I used LocalHost to meet new people. I met Zach and I enjoyed our conversations about life, and he showed me the best shop to grab an authentic batido milkshake. After just a few short days of hanging in the city, I felt as though I had known him for years. I definitely saw more of the city than I would have on my own.</h5>
-                    </div>
-                </div>
-            <!--</div>-->
-        </section>
-
-        <section class="section-explore row">
-          <!--<div class="vertical-align">-->
-              <div class="col-sm-12 col-md-8">
-                  <div class="canvas-white" style="height: 500px">
-                      <h4 class="caption" style="color: white">STAYED WITH</h4>
-                      <div class="icon" >
-                          <img src="data/plane-icon.png">
-                      </div>
-                      <div style="display: flex; justify-content: center;">
-                          <img class="thumb-img" src="data/annie.png">
-                          <img class="thumb-img" src="data/caitlyn.png">
-                      </div>
-                      <h4 class="caption" style="color: white; font-weight: bold">Annie    <------>    Caitlyn</h4>
-                      <div class="middle-bar"></div>
-                      <h5 style="color: white">Caitlyn is amazing! I loved spending time with her, and her openness and caring nature was so genuine and refreshing. She took me to her favorite places in town, including the best taco restaurant I have ever been to in my life!</h5>
-                  </div>
-              </div>
-              <div class="col-sm-12 col-md-4" style="padding-top: 100px">
-                  <h2 class="landing-heading">Explore the world with new friends</h2>
-                  <div class="btn-container">
-                      <a href="#landing/#services" style="text-decoration: none"><button class="btn btn-orange">Plan a trip</button></a>
-                  </div>
-              </div>
-          <!--</div>-->
-        </section>
+        </div>
+        <div class="col-sm-12 col-md-4" style="padding-top: 20px; padding-bottom: 20px;">
+            <h2 class="landing-heading">Explore the world with new friends</h2>
+            <div class="btn-container">
+                <a href="#landing/#services" style="text-decoration: none"><button class="btn btn-orange">Plan a trip</button></a>
+            </div>
+        </div>
+      </section>
 
         <section class="section-hot-cities row">
-            <h2>Hot cities on LocalHost</h2>
+            <h2 class="hot-cities-cap">Hot cities on LocalHost</h2>
             <div class="col-md-10 col-md-offset-1">
                 <div class="row no-gutter">
                     <div ng-repeat="city in hotCities" class="col-lg-4 col-sm-6">
