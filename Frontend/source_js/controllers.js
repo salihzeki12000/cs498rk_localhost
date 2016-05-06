@@ -56,6 +56,10 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'L
   $scope.hasListings = false;
   $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
 
+  $scope.exampleImg = $window.localStorage.getItem('exampleImage');
+  //console.log($scope.exampleImg);
+
+
   if($scope.profile) {
       var user = JSON.parse($window.localStorage.getItem('user'));
       User.getFromId(user._id).success(function(data) {
@@ -77,8 +81,8 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'L
   // these are dummy listings
  // $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
  // $scope.listing = {description: "My trip is a perfect opportunity to experience local culture", activities: ["My amazing first activity", "My fabulous second activity", "My ingenious third activity"], pendingTravelers: ["Alex", "Daniel"]}/
-/*  $scope.pendingTravelersText = "";
-  var len = $scope.listing.pendingTravelers.length;
+  $scope.pendingTravelersText = "";
+ /* var len = $scope.listing.pendingTravelers.length;
   for(var i = 0; i < len - 1; i++) {
     var tempText = $scope.listing.pendingTravelers[i] + ", ";
     $scope.pendingTravelersText += tempText;
@@ -231,6 +235,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.Image1 = null;
   $scope.Image2 = null;
   $scope.Image3 = null;
+  $scope.roomType = "";
 
   $scope.cities = CommonData.getCities();
   $scope.tagList = CommonData.getTags();
@@ -240,14 +245,28 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 
   $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
 
-  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomTypes[0], price: 0, dateStart: "", dateEnd: "", tags: [], activities: $scope.thingsToDo};
+  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomType.name, price: 0, dateStart: "", dateEnd: "", tags: [], activities: $scope.thingsToDo};
   $scope.listing.images = [];
 
   $scope.submitForm = function(){
 //      console.log($scope.Image1.dataURL);
 //      console.log($scope.Image2);
+    $scope.listing.city = $scope.listing.city.name;
+    $scope.listing.roomType = $scope.listing.roomType.name;
+    console.log($scope.listing);
+    console.log($scope.listing.city);
     console.log("create host ad");
     console.log($scope.listing);
+
+
+    // $http.post("http://localhost:4000/api/images", $scope.Image1.dataURL).success(function(data){
+    //     console.log("wut");
+    // }).error(function(err){
+    //     console.log(err);
+    // })
+//    $scope.listing.images.push($scope.Image2.dataURL);
+//    $scope.listing.images.push($scope.Image3.dataURL);
+//    $window.localStorage.setItem('exampleImage', $scope.Image1.dataURL);
 
     Listings.postListing($scope.listing).success(function(data){
       // add the listing id to user
@@ -257,6 +276,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
     }).error(function(err){
       console.log(err);
     });
+
     $window.location.href= "#/profile";
   }
 }]);
