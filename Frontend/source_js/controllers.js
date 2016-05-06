@@ -59,12 +59,27 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'L
   $scope.exampleImg = $window.localStorage.getItem('exampleImage');
   //console.log($scope.exampleImg);
 
+  $scope.pendingTravelersText = "";
 
   if($scope.profile) {
       var user = JSON.parse($window.localStorage.getItem('user'));
       console.log("user " + JSON.stringify(user));
       User.getFromId(user._id).success(function(data) {
         $scope.user = data.data;
+        var len = $scope.user.pendingTravelers.length;
+        var pendingTravelersIDs = [];
+        for(var i = 0; i < len - 1; i++) {
+          var currUserID = $scope.user.pendingTravelers[i];
+          User.getFromId(currUserID).success(function(data) {
+            var tempText = data.data.name + ", ";
+            $scope.pendingTravelersText += tempText;
+          });
+        }
+        var currUserID = $scope.user.pendingTravelers[len - 1];
+        User.getFromId(currUserID).success(function(data) {
+          $scope.pendingTravelersText += data.data.name;
+        });       
+
         console.log(" scope user " + JSON.stringify($scope.user));
         //$window.localStorage.setItem('user', $scope.user);
         Listings.getListingsByUser($scope.user._id).success(function(data) {
@@ -72,6 +87,10 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'L
           if ($scope.listings.length > 0) {
             $scope.hasListings = true;
           }
+
+
+
+
         }).error (function() {
           console.log("error");
         });
@@ -83,14 +102,14 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'L
   // these are dummy listings
  // $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
  // $scope.listing = {description: "My trip is a perfect opportunity to experience local culture", activities: ["My amazing first activity", "My fabulous second activity", "My ingenious third activity"], pendingTravelers: ["Alex", "Daniel"]}/
-  $scope.pendingTravelersText = "";
- /* var len = $scope.listing.pendingTravelers.length;
-  for(var i = 0; i < len - 1; i++) {
-    var tempText = $scope.listing.pendingTravelers[i] + ", ";
-    $scope.pendingTravelersText += tempText;
-  }
-  $scope.pendingTravelersText += $scope.listing.pendingTravelers[len - 1];
-*/
+  
+  // var len = $scope.listing.pendingTravelers.length;
+  // for(var i = 0; i < len - 1; i++) {
+  //   var tempText = $scope.listing.pendingTravelers[i] + ", ";
+  //   $scope.pendingTravelersText += tempText;
+  // }
+  // $scope.pendingTravelersText += $scope.listing.pendingTravelers[len - 1];
+
 //     if($scope.profile){
 //         $scope.user = JSON.parse($window.localStorage.getItem('user'));
 //         // User.getFromId($scope.user._id).success(function(data){
