@@ -1,0 +1,22 @@
+Software Engineer
+Plumber
+Data Scientist
+Janitor
+Teacher
+Professor
+Surgeon
+Doctor
+Telemarketer
+Dentist
+Lobotomist
+Neurosurgeon
+Social Media Expert
+Veterinarian
+Nutritionist
+Manager
+CEO
+CFO
+Chef
+Principal
+Boxer
+Athlete

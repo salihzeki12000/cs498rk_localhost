@@ -1,27 +1,13 @@
-<section class="row">
-    <div class="col-sm-4 profile-image text-center">
-        <img src="profileimage.jpg"/>
+<div ng-controller='MatchedController' class="container">
+  <section>
+    <h2 style="color: #F26322;">Congratulations!</h2>
+    <h4>You are going to host {{matchedUserName}}!</h4>
+    <h5>Sent your hostee an email now!</h5>
+    <div class="text-center">
+      <a href="mailto:{{user.email}}"><button class="btn btn-lg btn-blue">Send</button></a>
     </div>
-    <div class="col-sm-8">
-        Congratulations on matching with _____________!<p>
-        You are currently moving in on [date] to [date].<p>
-        [insert description of host or room]<p>
-            <div class="col-sm-4">
-                <img src="exampleimage.jpg"/>
-            </div>
-            <div class="col-sm-4">
-                <img src="exampleimage.jpg"/>
-            </div>
-            <div class="col-sm-4">
-                <img src="exampleimage.jpg"/>
-            </div>
-            <div class="col-sm-3">
-                <a href="#">See all images</a>
-            </div>
+    <div class="text-center">
+      <a href="#/"><button class="btn btn-lg btn-orange">OK</button></a>
     </div>
-</section>
-<p>
-<div class="row text-center">
-    <div class="col-sm-4"><a href="#" class="btn btn-orange">Contact Host</a></div>
-    <div class="col-sm-4"><a href="#/listingdetails/awef" class="btn btn-orange">Location Details</a></div>
+  </section>
 </div>
