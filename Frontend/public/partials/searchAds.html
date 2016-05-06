@@ -1,7 +1,7 @@
 <div ng-controller='SearchAdsController' id="search-ads" class="container">
 
   <div class="row search">
-    <div class="col-sm-12 col-md-8 col-md-offset-2 city-search">
+    <div class="col-xs-11 col-xs-offset-2 col-sm-11 col-sm-offset-2 col-md-8  city-search">
       <select class="form-control input-lg" ng-model="city" ng-options="city.name for city in cities" ng-change="changeCity(city.name)"></select>
     </div>
   </div>
@@ -23,7 +23,7 @@
     <div class="col-sm-11 section" id="slide-up">
       <div ng-repeat="ad in ads">
         <div class="row ad text-center">
-          <div class="col-sm-10 col-md-2 col-sm-offset-1">
+          <div class="col-sm-12 col-md-2 col-md-offset-1">
             <div class="row">
               <div class="search-img">
                 <p class="price">${{ad.price}}/day</p>
@@ -34,7 +34,7 @@
               <p class="room-type"><b>Room Type: </b>{{ad.roomType}}</p>
             </div>
           </div>
-          <div class="col-sm-11 col-md-6">
+          <div class="col-sm-12 col-md-6">
             <div class="row">
               <a ng-href="#/hostbio/{{ad.hostID}}"><h4>{{ad.hostName}}</h4></a>
             </div>
@@ -43,7 +43,7 @@
                 <br>
               </div>
             </div>
-          <div class="col-sm-11 col-md-3 text-center">
+          <div class="col-sm-12 col-md-3 text-center">
             <p class="tags"><b>Tags: </b> </p>
             <div ng-repeat="tag in ad.tags">
               <span class="label label-info label-tag">{{tag}}</span>

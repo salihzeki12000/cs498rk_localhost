@@ -1,6 +1,7 @@
 var appControllers = angular.module('appControllers', ['720kb.datepicker', 'imageupload']);
 
 appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', 'Auth', 'CommonData', function($scope, Users, $window, $route, Auth, CommonData) {
+
   if ($window.localStorage.getItem('loggedIn') !== null) {
     $scope.loggedIn = ($window.localStorage.getItem('loggedIn') === 'true');
   } else {
@@ -16,6 +17,12 @@ appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', '
   $window.localStorage.setItem('baseurl', 'http://localhost:4000');
   console.log("logged in? " + $window.localStorage.getItem('loggedIn'));
 
+  $scope.changeRoute = function () {
+    $(".navbar-toggle").addClass("collapsed");
+    $(".navbar-toggle").attr({
+          "aria-expanded" : "false"
+    });
+  }
   $scope.logout = function() {
     Auth.logout();
     /*$window.localStorage.setItem('user', "");
