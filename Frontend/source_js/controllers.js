@@ -19,7 +19,7 @@ appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'A
           });
         };
         console.log("update me!");
-        //$("#request-modal").modal({ show : true });
+        $("#request-modal").modal({ show : true });
       }
     });
   } else {
@@ -301,7 +301,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
       $scope.displayErr = "You must fill out the required fields";
       $('.alert').show();
     }
-    
+
   }
 }]);
 
@@ -453,7 +453,7 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
           console.log($scope.imageSrc);
       });
   }
-  
+
   $scope.formData = {
       image: $scope.imageSrc,
       message: "hello"
@@ -504,12 +504,12 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
       console.log(err);
     });
    }*/
- 
+
 
 
 
     /**COPYING CODE**/
-   
+
       /*$http
       .post('api/user',{
         user: $scope.user,
@@ -555,7 +555,7 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
         console.log(err);
       })
     };
-  
+
 
      $scope.getFile = function (){
         console.log("GET FILE");
@@ -568,7 +568,7 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
                   $scope.doUpload();
               });
       };
-   
+
    /*   $scope.$on("fileProgress", function(e, progress) {
           $scope.progress = progress.loaded / progress.total;
       });*/
@@ -580,7 +580,7 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
                 $scope.file = (e.srcElement || e.target).files[0];
                 $scope.getFile();
               })
-              
+
             }
         }
     });
