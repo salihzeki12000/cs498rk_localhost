@@ -1,11 +1,89 @@
 <div ng-controller="ProfileController" class="container">
+  <div class="row" style="margin-top: 10px; margin-bottom: 10px">
+    <div class="col-sm-12 col-md-4">
+      <img src="../data/profile-placeholder.png" class="user-portrait">
+      <div class="col-sm-12 green-box" style="max-width: 300px">
+        <h4 style="color: #41b866">OVERVIEW</h4>
+        <p style="text-align: left; font-size: 20px;">{{user.name}}<br>{{user.age}}, {{user.gender}}</p>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-8">
+      <div class="row">
+        <h2 class="col-sm-12" style="text-align: left">User Profile</h2>
+        <section class="col-sm-12 ad-box">
 
-    <div class="page-header text-center">
+          <div class="form-group edit-profile-box" style="margin-top: 4px">
+            <p for="name" class="col-md-3 edit-profile-font">Your name:</p>
+            <div class="col-md-9">
+              <p class="profile-text">{{user.name}}</p>
+            </div>
+          </div>
+
+          <div class="form-group edit-profile-box" style="margin-top: 4px">
+            <p for="gender" class="col-md-3 edit-profile-font">Your gender:</p>
+            <div class="col-md-9">
+              <p class="profile-text">{{user.gender}}</p>
+            </div>
+          </div>
+
+          <div class="form-group edit-profile-box">
+            <p for="location" class="col-md-3 edit-profile-font">Your location:</p>
+            <div class="col-md-9">
+              <p class="profile-text">{{user.location}}</p>
+            </div>
+          </div>
+
+          <div class="form-group edit-profile-box">
+            <p for="location" class="col-md-3 edit-profile-font">Your occupation:</p>
+            <div class="col-md-9">
+              <p class="profile-text">{{user.occupation}}</p>
+            </div>
+          </div>
+
+          <div class="form-group edit-profile-box">
+            <p for="location" class="col-md-3 edit-profile-font">Your age:</p>
+            <div class="col-md-9">
+              <p class="profile-text">{{user.age}}</p>
+            </div>
+          </div>
+
+          <div class="form-group edit-profile-box">
+            <p for="location" class="col-md-3 edit-profile-font">Brief Introduction:</p>
+            <div class="col-md-9">
+              <p class="profile-text">{{user.bio}}</p>
+            </div>
+          </div>
+
+        </section>
+      <a href="#/edituserprofile/{{user._id}}"><button ng-click="edit()" class="btn btn-lg btn-orange" style="margin-top: 20px">Edit Profile</button></a>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--     <div class="page-header text-center">
       <h1><i class="glyphicon glyphicon-user"></i> Profile Page</h1>
     </div>
 
     <div class="row">
-        <!-- PROFILE INFORMATION -->
+
             <div class="well" ng-show="profile">
                 <h3><span class="fa fa-user"></span> Profile</h3>
 
@@ -19,8 +97,12 @@
                 <a href="#/login" class="btn btn-orange">Login</a>
                 <a href="#/signup" class="btn btn-orange">Signup</a>
             </div>
-
+<<<<<<< HEAD
+=======
+    </div>
+>>>>>>> 1a8ba987abc0616cfa7a1ff4fefb2fac0eb280bd
 </div>
+ -->
 
 
 

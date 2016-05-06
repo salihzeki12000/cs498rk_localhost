@@ -10,7 +10,6 @@ appServices.factory('Users', function($http, $window) {
             return $http.post(baseUrl+'/signup', user);
         },
         postLogIn: function(user) {
-            //var baseUrl = $window.sessionStorage.baseurl;
             return $http.post(baseUrl+'/login', user);
         }
     }
@@ -30,6 +29,14 @@ appServices.factory('User', function($http, $window) {
         },
         delete : function(userId) {
             return $http.delete(baseUrl+'/users/' + userId);
+        },
+        //upload
+        uploadImage : function(formData) {
+            console.log(formData);
+            return $http.post(baseUrl+'/upload', formData,
+                       { headers: { 'Content-Type': "application/x-www-form-urlencoded; charset=utf-8" },
+                        transformRequest: angular.identity
+                    });
         }
     }
 });
