@@ -300,12 +300,14 @@ appControllers.controller('EditProfileController', ['$scope', '$window', '$route
   $scope.upload = function(image){
     console.log("UPLOAD");
     console.log(image);
-    var formData = new FormData();
-    formData = {image: image};
+    //var formData = new FormData();
+    $scope.formData = {image: image};
     //formData.append('image', image, image.file.name);
     //formData.set('image', image, image.file.name);
     //console.log(formData);
-    User.uploadImage(formData)
+    var data = { headers: { 'Content-Type': "application/x-www-form-urlencoded; charset=utf-8" },
+                        transformRequest: angular.identity};
+    User.uploadImage($scope.formData, data)
       .success(function(result) {
         console.log(result);
         $scope.uploadedImgSrc = result.src;

@@ -311,23 +311,29 @@ var uploadRoute = router.route('/upload');
 uploadRoute.post(function(req, res) {
     console.log("POST");
     console.log(req.json);
+    console.log(req.form);
     if (req.json === undefined){
-        return res.status(404).json({message: "Something went wrong", data: null});
+        return res.status(404).json({message: "Can't find the file!", data: null});
     }
     var image = req.json.image;
     //var image =  req.files.image;
     var filename = image.file.name;
     var path = '../Frontend/public/data/';
     var newImageLocation = path.join(__dirname, path, filename);
-    
+    console.log(newImageLocation);
+    console.log(image.path);
     fs.readFile(image.path, function(err, data) {
+        if (err){
+            return res.status(404).json({message: "Something went wrong", data: null});
+        } 
+        console.log(data);
         fs.writeFile(newImageLocation, data, function(err) {
             if (err){
-                return res.status(404).json({message: "Something went wrong, can't find the file", data: null});
+                return res.status(404).json({message: "Something went wrong", data: null});
             }
             return res.status(200).json({ 
                 src: path + filename,
-                size: image.size
+                size: image.file.size
             });
         });
         console.log("POSTED!!");
