@@ -342,6 +342,7 @@ act = [];
 
   $('.alert').hide();
   $scope.displayErr = "";
+
   $scope.submitForm = function(){
       var act = [];
     if($scope.thingsToDo.first)
@@ -382,6 +383,7 @@ act = [];
     console.log($scope.listing);
     console.log($scope.listing.city);
     console.log("create host ad")W;*/
+
     console.log($scope.listing);
 
 
@@ -397,14 +399,15 @@ act = [];
 //    $scope.listing.images.push($scope.Image2.dataURL);
 //    $scope.listing.images.push($scope.Image3.dataURL);
 //    $window.localStorage.setItem('exampleImage', $scope.Image1.dataURL);
+
     if ($scope.listing.address !== "" && $scope.listing.price > 0 && $scope.listing.dateStart < $scope.listing.dateEnd){
 
       $scope.listing.city = $scope.listing.city.name;
       $scope.listing.roomType = $scope.listing.roomType.name;
-
+      
       var tags = [];
       for (var i = 0; i < $scope.listing.tags.length; i++){
-        tags.push($scope.tags[i].name);
+        tags.push($scope.listing.tags[i].name);
       }
 
       $scope.listing.tags = tags;
@@ -418,12 +421,9 @@ act = [];
       }).error(function(err){
         console.log(err);
       });
-    /*} else {
-      $scope.displayErr = "You must fill out the required fields";
-      $('.alert').show();
-    }*/
+    }
+  };
 
-  }
 }]);
 
 appControllers.controller('MatchedController', ['$scope', '$window', function($scope, $window){
