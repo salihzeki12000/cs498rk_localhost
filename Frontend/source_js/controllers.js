@@ -371,14 +371,48 @@ appControllers.controller('EditProfileController', ['$scope', '$window', 'Common
       $window.location.href = '#/profile/'+$routeParams._id;
     })
   }
+  $scope.acceptTypes = 'image/*';
+  $scope.imageSrc = "";
 
-  $scope.upload = function(image){
-    console.log(image);
+  $scope.onLoad = function(files){
+    fileReader.readAsDataUrl(files[0], $scope)
+      .then(function(result) {
+          $scope.profile_picture = result;
+          $scope.imageSrc = result;
+          console.log($scope.imageSrc);
+      });
+  }
+  
+  $scope.formData = {
+      image: $scope.imageSrc,
+      message: "hello"
   };
+
+   $scope.callback = function(response){
+    console.log($scope.formData);
+    console.log(response);
+   }
+
+ }]);
+
+
+     /* User.uploadImage(image)
+      .success(function(result) {
+        console.log(result);
+        $scope.uploadedImgSrc = result.src;
+        $scope.sizeInBytes = result.size;
+    }).error(function(err){
+      console.log(err);
+    });
+   }*/
+ 
+
+
+
     /**COPYING CODE**/
-    $scope.submit = function() {
+   /* $scope.submit = function() {
       console.log("HI");
-    };
+    };*/
   
       /*$http
       .post('api/user',{
@@ -398,7 +432,7 @@ appControllers.controller('EditProfileController', ['$scope', '$window', 'Common
         delete $window.sessionStorage.token;
       });*/
 
-    $scope.doUpload = function () {
+    /*$scope.doUpload = function () {
       console.log("UPLOAD");
         upload({
           url: 'http://localhost:4000/api/upload',
@@ -416,46 +450,34 @@ appControllers.controller('EditProfileController', ['$scope', '$window', 'Common
               console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
           }
         );
-     };
+     };*/
 
-     $scope.getFile = function (){
-      console.log("GET FILE");
+   /*  $scope.getFile = function (){
+        console.log("GET FILE");
           //$scope.progress = 0;
-          fileReader.readAsDataUrl($scope.file, $scope)
-                .then(function(result) {
-                    $scope.profile_picture = result;
-                    $scope.imageSrc = result;
-                    console.log($scope.imageSrc);
-                    $scope.doUpload();
-                });
+        fileReader.readAsDataUrl($scope.file, $scope)
+              .then(function(result) {
+                  $scope.profile_picture = result;
+                  $scope.imageSrc = result;
+                  console.log($scope.imageSrc);
+                  $scope.doUpload();
+              });
       };
-   
+   */
       /*$scope.$on("fileProgress", function(e, progress) {
           $scope.progress = progress.loaded / progress.total;
-      });*/
-
-  
-    /****************/
-    
-   /* User.uploadImage(image)
-      .success(function(result) {
-        console.log(result);
-        $scope.uploadedImgSrc = result.src;
-        $scope.sizeInBytes = result.size;
-    }).error(function(err){
-      console.log(err);
-    });
-   }*/
-
-}])
-  .directive("ngFileSelect",function(){
-    return {
-        link: function($scope,el){
-          el.bind("change", function(e){
-            $scope.file = (e.srcElement || e.target).files[0];
-            $scope.getFile();
-          })
-          
+      });
+    }]);
+      .directive("ngFileSelect",function(){
+        return {
+            link: function($scope,el){
+              el.bind("change", function(e){
+                $scope.file = (e.srcElement || e.target).files[0];
+                $scope.getFile();
+              })
+              
+            }
         }
-    }
-});
+    });*/
+
+      /****************/

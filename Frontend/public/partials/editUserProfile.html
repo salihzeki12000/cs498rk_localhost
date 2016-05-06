@@ -8,13 +8,26 @@
 	          <button type="submit" ng-click="upload(image)">upload?</button>-->
 
 	          <!--NEW CODE-->
-	          <input type="file" ng-file-select="onFileSelect($files)" >
+	          <!--<input type="file" ng-file-select="onFileSelect($files)" >
 			   <span ng-show="imageSrc">
 			   		Preview:<br />
 			   		<img class="img-thumbnail" ng-src="{{imageSrc}}" /><br/>
 			   </span>
 	          <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}"/> 
-				<button type="submit">upload?</button>
+				<button type="submit">upload?</button>-->
+				<!--end new code-->
+
+				<!--angular-upload-->
+				<div
+				  class="btn btn-primary btn-upload"
+				  upload-button
+				  accept="acceptTypes"
+				  data="formData"
+				  url="http://localhost:4000/api/upload"
+				  on-success="callback(response)"
+				  on-upload="onLoad(files)"
+				>Upload!!</div>
+
 
       		</form>
 

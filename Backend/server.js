@@ -52,10 +52,6 @@ app.use(passport.session());
 
 require('./app/routes.js')(app, passport);
 
-/***********AWS bucket**************/
-AWS.config.update({accessKeyId: 'key', secretAccessKey: 'secret', region: 'us-west-1'});
-var s3Bucket = new AWS.S3( { params: {Bucket: 'localhostimages'} } );
-
 //Begin routing code
 var router = express.Router();
 app.use('/api', router);
@@ -321,7 +317,7 @@ idListingsRoute.delete(function(req,res){
 });
 
 /***********UPLOAD**************/
-var uploadRoute = router.route('/upload/');
+
 /*uploadRoute.post(function(req, res) {
     console.log("POST");
     //console.log(req);
@@ -356,31 +352,42 @@ var uploadRoute = router.route('/upload/');
     });
     return res.status(404).json({message: "Something went wrong", data: null});
 });*/
+var uploadRoute = router.route('/upload');
+
+/***********AWS bucket**************/
+AWS.config.update({accessKeyId: 'AKIAJGBBJX3JDBLQHFJA', secretAccessKey: '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', region: 'us-west-2'});
+var s3Bucket = new AWS.S3( { params: {Bucket: 'localhostimages'} } );
 
 uploadRoute.post(function(req, res) {
-    console.log("HI BACKEND");
+    console.log("SUP BACKEND");
+    console.log(req.json);
     console.log(req.body);
-    //var binaryImage = req.body.img;
+    console.log(req.files);
+    //console.log(req.body);
+    var binaryImage = "";
     var userID = 1
-    var img = new Buffer(binaryImage.replace(/^data:image\/\w+;base64,/, ""),'base64');
+    //var img = new Buffer(binaryImage.replace(/^data:image\/\w+;base64,/, ""),'base64');
+    var img = "";
     var params = {
-        Key: userID,
-        Body: img,
+        Key: "userID222",
+        Body: "body2",
         ContentEncoding: 'base64',
         ContentType: 'image/*',
         ACL: 'public-read'
     };
-      s3bucket.upload(params, function(err, data) {
+    s3Bucket.upload(params, function(err, data) {
         if (err) {
           console.log("Error uploading data: ", err);
-          return res.status(404).json({message:"upload failed", data: []})
+          return res.status(404).json({message:"upload failed", data: []});
         } else {
-          console.log("Successfully uploaded data to myBucket/myKey");
+          console.log("Successfully uploaded data to my bucket");
+          console.log(data);
           var url = data.Location;
           return res.status(200).json({ message:"success", data: {url: url} });
         }
       });
 });
+
 /**
 FROM SARAH'S PROJECT
 function uploadImageToAWS(user, binaryImage, callback) {
