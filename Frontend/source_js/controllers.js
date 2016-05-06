@@ -1,4 +1,4 @@
-var appControllers = angular.module('appControllers', ['720kb.datepicker']);
+var appControllers = angular.module('appControllers', ['720kb.datepicker', 'imageupload']);
 
 appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', 'Auth', 'CommonData', function($scope, Users, $window, $route, Auth, CommonData) {
   if ($window.localStorage.getItem('loggedIn') !== null) {
@@ -48,6 +48,7 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'U
    $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
    console.log("user in profile " + $window.localStorage.getItem('user'));
 	 $scope.user = JSON.parse($window.localStorage.getItem('user'));
+
  }]);
 
 appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Auth', 'Users', function($scope, $window, $route, Auth, Users) {
@@ -281,7 +282,7 @@ appControllers.controller('EditProfileController', ['$scope', '$window', '$route
   // test local user
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
   $scope.cities = CommonData.getCities();
-  $scope.genders = [{name: "male"}, {name: "female"}, {name: "others"}];
+  $scope.genders = [{name: "male"}, {name: "female"}, {name: "other"}];
   var userID = $routeParams._id;
   User.getFromId(userID).success(function(data) {
     $scope.user = data.data;
@@ -295,4 +296,23 @@ appControllers.controller('EditProfileController', ['$scope', '$window', '$route
       $window.location.href = '#/landing';
     })
   }
+
+  $scope.upload = function(image){
+    console.log("UPLOAD");
+    console.log(image);
+    var formData = new FormData();
+    formData = {image: image};
+    //formData.append('image', image, image.file.name);
+    //formData.set('image', image, image.file.name);
+    //console.log(formData);
+    User.uploadImage(formData)
+      .success(function(result) {
+        console.log(result);
+        $scope.uploadedImgSrc = result.src;
+        $scope.sizeInBytes = result.size;
+    }).error(function(err){
+      console.log(err);
+    });
+   }
+
 }]);
