@@ -8,13 +8,12 @@ appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'A
   }
   if($scope.loggedIn) {
     $scope.user = JSON.parse($window.localStorage.getItem('user'));
-      User.getFromId($scope.user._id).success(function(data) {
-        var newUser = data.data;
-        if (newUser.flag) {
-          console.log("update me!");
-
-        }
-      })
+    User.getFromId($scope.user._id).success(function(data) {
+      var newUser = data.data;
+      if (newUser.flag) {
+        console.log("update me!");
+      }
+    });
   } else {
     $scope.user = null;
   }
@@ -131,8 +130,8 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
 
         User.put(user._id, user);
         Auth.login(data.data);
+
         $window.location.href = '#/travellerhost';
-        $route.reload();
     }).error(function(data) {
       $('.alert').show();
     });
