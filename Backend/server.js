@@ -372,8 +372,8 @@ uploadRoute.post(function(req, res) {
     //var img = new Buffer(binaryImage.replace(/^data:image\/\w+;base64,/, ""),'base64');
     var img = "";
     var params = {
-        Key: "userID222",
-        Body: "body2",
+        Key: "userID33",
+        Body: "body23",
         ContentEncoding: 'base64',
         ContentType: 'image/*',
         ACL: 'public-read'

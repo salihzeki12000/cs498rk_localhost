@@ -1,4 +1,4 @@
-var appControllers = angular.module('appControllers', ['720kb.datepicker', 'lr.upload', 'ngResource']);
+var appControllers = angular.module('appControllers', ['720kb.datepicker','lr.upload', 'ngResource']);
 
 appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', 'Auth', 'CommonData', function($scope, Users, $window, $route, Auth, CommonData) {
   if ($window.localStorage.getItem('loggedIn') !== null) {
@@ -373,8 +373,8 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 
 
 
-appControllers.controller('EditProfileController', ['$scope', '$window', 'CommonData', 'User', 'fileReader', function($scope,
-                          $window, CommonData, User, fileReader) {
+appControllers.controller('EditProfileController', ['$scope', '$window', 'CommonData', 'User', 'fileReader', 'upload', function($scope,
+                          $window, CommonData, User, fileReader, upload) {
   // $scope.user = {};
   // test local user
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
@@ -388,8 +388,8 @@ appControllers.controller('EditProfileController', ['$scope', '$window', 'Common
   $scope.submitChange = function() {
       $scope.user.gender = $scope.gender.name;
       $scope.user.location=$scope.location.name;
-      console.log($scope.user.gender.name);
-      console.log($scope.user.location.name);
+      //console.log($scope.user.gender.name);
+      //console.log($scope.user.location.name);
       User.put($scope.user._id, $scope.user).success(function(data) {
       console.log("Edit user:", data.message);
       $window.location.href = '#/profile';
@@ -416,6 +416,33 @@ appControllers.controller('EditProfileController', ['$scope', '$window', 'Common
     console.log($scope.formData);
     console.log(response);
    }
+$scope.myFile = "";
+   $scope.doUpload = function (image) {
+    console.log(image);
+    console.log("Upload");
+    //console.log($scope.myFile);
+    /*fileReader.readAsDataUrl($scope.file, $scope)
+      .then(function(result) {
+          $scope.profile_picture = result;
+          $scope.imageSrc = result;
+          console.log($scope.imageSrc);
+      });*/
+    upload({
+      url: 'http://localhost:4000/api/upload',
+      method: 'POST',
+      data: {
+        //image: $scope.imageSrc,
+        File: image//$scope.myFile // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
+      }
+    }).then(
+      function (response) {
+        console.log(response.data); // will output whatever you choose to return from the server on a successful upload
+      },
+      function (response) {
+          console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
+      }
+    );
+  }
 
  }]);
 

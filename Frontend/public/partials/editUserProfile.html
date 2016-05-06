@@ -3,9 +3,9 @@
 		<div class="col-sm-12 col-md-4">
 			<img src="../data/profile-placeholder.png" class="user-portrait">
 			<br><br>
-			<form class="form-group row" id="imgForm" ng-submit="submit()">
-	          <!--<input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.6" name="image" id="image"/>
-	          <button type="submit" ng-click="upload(image)">upload?</button>-->
+			<form class="form-group row" id="imgForm">
+	          <input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.6" name="image" id="image"/>
+	          <button type="submit" ng-click="doUpload(image)">upload?</button>
 
 	          <!--NEW CODE-->
 	          <!--<input type="file" ng-file-select="onFileSelect($files)" >
@@ -16,9 +16,10 @@
 	          <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}"/> 
 				<button type="submit">upload?</button>-->
 				<!--end new code-->
-
+				<input type="file" name="myFile"/>
+				<button ng-click="doUpload()" type="submit">upload</button>
 				<!--angular-upload-->
-				<div
+				<!--<div
 				  class="btn btn-primary btn-upload"
 				  upload-button
 				  accept="acceptTypes"
@@ -26,7 +27,7 @@
 				  url="http://localhost:4000/api/upload"
 				  on-success="callback(response)"
 				  on-upload="onLoad(files)"
-				>Upload!!</div>
+				>Upload!!</div>-->
 
 
       		</form>
