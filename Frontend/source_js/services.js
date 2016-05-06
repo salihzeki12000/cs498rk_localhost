@@ -1,7 +1,8 @@
 var appServices = angular.module('appServices', []);
 
 appServices.factory('Users', function($http, $window) {
-    var baseUrl = 'http://localhost:4000';
+    //var baseUrl = 'http://localhost:4000';
+    var baseUrl = 'http://162.243.235.34:4000/';
     return {
         get : function() {
             return $http.get(baseUrl+'/profile');
@@ -16,7 +17,8 @@ appServices.factory('Users', function($http, $window) {
 });
 
 appServices.factory('User', function($http, $window) {
-    var baseUrl = 'http://localhost:4000' +'/api';
+    //var baseUrl = 'http://localhost:4000' +'/api';
+    var baseUrl = 'http://162.243.235.34:4000/api';
     return {
         getFromId : function(userId) {
             return $http.get(baseUrl+'/users/' + userId);
@@ -31,14 +33,15 @@ appServices.factory('User', function($http, $window) {
             return $http.delete(baseUrl+'/users/' + userId);
         },
         //upload
-        uploadImage : function(image) {
+        /*uploadImage : function(image) {
             return $http.post(baseUrl+'/upload/', image);
-        }
+        }*/
     }
 });
 
 appServices.factory('Listings', function($http, $window){
-    var baseUrl = 'http://localhost:4000'+'/api';
+    //var baseUrl = 'http://localhost:4000'+'/api';
+    var baseUrl = 'http://162.243.235.34:4000/api';
     return {
         postListing : function(listing){
             return $http.post(baseUrl+'/listings', listing);
@@ -73,7 +76,8 @@ appServices.factory('Listings', function($http, $window){
 });
 
 appServices.factory('Listing', function($http, $window){
-    var baseUrl = 'http://localhost:4000'+'/api';
+    //var baseUrl = 'http://localhost:4000'+'/api';
+    var baseUrl = 'http://162.243.235.34:4000/api';
     return {
         getFromId : function(listingId){
             return $http.get(baseUrl+'/listings/' + listingId);
@@ -96,6 +100,7 @@ appServices.factory('CommonData', function(){
     var commonRoomImg = "http://i.imgur.com/tXMM9Ed.jpg";
     var mapImg = "http://i.imgur.com/ODTtRQr.png";
     var roomImgs = ["room1.jpg", "room2.jpeg", "room3.jpg", "room4.jpg", "room5.jpg"];
+    var listingImgs = ["beach.jpeg","people.jpeg","wine.jpeg", "bar.jpeg", "dancing.jpeg", "swimming.jpeg", "soccer.jpeg", "canoe.jpeg"];
     var roomTypes = [{name: "Private Room", value: "Private"}, {name: "Shared Room", value: "Shared"}];
     var cities = [{name:'San Francisco, USA', value:'San Francisco, USA'},{name:'Singapore, Singapore', value:'Singapore, Singapore'},{name:'Prague, Czech Republic', value:'Prague, Czech Republic'},
         {name:'Marrakech, Morocco', value:'Marrakech, Morocco'},{name:'Quito, Ecuador', value:'Quito, Ecuador'},{name:'Brisbane, Australia', value:'Brisbane, Australia'}];
@@ -137,6 +142,11 @@ appServices.factory('CommonData', function(){
             var rand = Math.floor(Math.random()*5);
             var path = "./data/"
             return path + roomImgs[rand];
+        },
+        getRandomImg : function(){
+            var rand = Math.floor(Math.random()*8);
+            var path = "./data/"
+            return path + listingImgs[rand];   
         }
     }
 });
@@ -160,55 +170,3 @@ appServices.service('Auth', function($window) {
   return auth;
 });
 
-
-appServices.factory('fileReader', function($q, $log){
-    //var fileReader = function ($q, $log) {
- 
-        var onLoad = function(reader, deferred, scope) {
-            return function () {
-                scope.$apply(function () {
-                    deferred.resolve(reader.result);
-                });
-            };
-        };
- 
-        var onError = function (reader, deferred, scope) {
-            return function () {
-                scope.$apply(function () {
-                    deferred.reject(reader.result);
-                });
-            };
-        };
- 
-        var onProgress = function(reader, scope) {
-            return function (event) {
-                scope.$broadcast("fileProgress",
-                    {
-                        total: event.total,
-                        loaded: event.loaded
-                    });
-            };
-        };
- 
-        var getReader = function(deferred, scope) {
-            var reader = new FileReader();
-            reader.onload = onLoad(reader, deferred, scope);
-            reader.onerror = onError(reader, deferred, scope);
-            reader.onprogress = onProgress(reader, scope);
-            return reader;
-        };
- 
-        var readAsDataURL = function (file, scope) {
-            var deferred = $q.defer();
-             
-            var reader = getReader(deferred, scope);         
-            reader.readAsDataURL(file);
-             
-            return deferred.promise;
-        };
- 
-        return {
-            readAsDataUrl: readAsDataURL  
-        };
-    //};
-})

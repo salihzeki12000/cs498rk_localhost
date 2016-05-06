@@ -155,32 +155,7 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'L
 //      console.log($scope.images.length);
   }
 
-  // these are dummy listings
- // $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
- // $scope.listing = {description: "My trip is a perfect opportunity to experience local culture", activities: ["My amazing first activity", "My fabulous second activity", "My ingenious third activity"], pendingTravelers: ["Alex", "Daniel"]}/
-
-  // var len = $scope.listing.pendingTravelers.length;
-  // for(var i = 0; i < len - 1; i++) {
-  //   var tempText = $scope.listing.pendingTravelers[i] + ", ";
-  //   $scope.pendingTravelersText += tempText;
-  // }
-  // $scope.pendingTravelersText += $scope.listing.pendingTravelers[len - 1];
-
-//     if($scope.profile){
-//         $scope.user = JSON.parse($window.localStorage.getItem('user'));
-//         // User.getFromId($scope.user._id).success(function(data){
-//         //     $scope.user = data.data;
-//         //     console.log(data);
-//         // }).error(function(err){
-//         //     console.log(err);
-//         //     $scope.user=null;
-//         // });
-
-//         //console.log(data);
-// //        $scope.user = data;
-//     }
-// $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
-
+ 
  }]);
 
 appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Auth', 'Users', function($scope, $window, $route, Auth, Users) {
@@ -337,14 +312,14 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 
   $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
 
-act = [];
+  var act = [];
   $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomType.name, price: 0, dateStart: "", dateEnd: "", tags: [], activities: act};
 
   $('.alert').hide();
   $scope.displayErr = "";
 
   $scope.submitForm = function(){
-      var act = [];
+    act = [];
     if($scope.thingsToDo.first)
         act.push($scope.thingsToDo.first);
     if($scope.thingsToDo.second)
@@ -353,11 +328,11 @@ act = [];
         act.push($scope.thingsToDo.third);
     if($scope.thingsToDo.fourth)
         act.push($scope.thingsToDo.fourth);
-
-    var listingTags = [];
+    $scope.listing.activities = act;
+    /*var listingTags = [];
     for(var i = 0; i < tags.length; i++){
         listingTags.push(tags[i]);
-    }
+    }*/
 //      console.log($scope.Image1.dataURL);
 //      console.log($scope.Image2);
     var hostImagesArr = [];
@@ -372,25 +347,8 @@ act = [];
         $window.localStorage.setItem('2example1', $scope.Image1.dataURL);
         $window.localStorage.setItem('2example2', $scope.Image2.dataURL);
         $window.localStorage.setItem('2example3', $scope.Image3.dataURL);
-    }
-
-    $scope.listing.activities = act;
-    //$scope.listing.city = $scope.listing.city.name;
-   /* $scope.listing.city = $scope.listing.city.name;
-    $scope.listing.roomType = $scope.listing.roomType.name;
-    $scope.listing.tags = listingTags;
-
-    console.log($scope.listing);
-    console.log($scope.listing.city);
-    console.log("create host ad")W;*/
-
-    console.log($scope.listing);
-
-
-
-
-//      $scope.listing.roomType = $scope.listing.roomType.name;
-
+    } 
+   
     // $http.post("http://localhost:4000/api/images", $scope.Image1.dataURL).success(function(data){
     //     console.log("wut");
     // }).error(function(err){
@@ -459,15 +417,18 @@ appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData
   $scope.img = CommonData.getProfileImg();
 }]);
 
-appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User',
-                          function($scope, $window, $routeParams, Listing, User) {
+appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User', 'CommonData',
+                          function($scope, $window, $routeParams, Listing, User, CommonData) {
   console.log('listing detail controller created');
   $scope.requestSent = false;
   $scope.requestSentError = false;
   $scope.requestSentText = 'Request';
-  $scope.img1 = $window.localStorage.getItem('example1');
-  $scope.img2 = $window.localStorage.getItem('example2');
-  $scope.img3 = $window.localStorage.getItem('example3');
+  //$scope.img1 = $window.localStorage.getItem('example1');
+  //$scope.img2 = $window.localStorage.getItem('example2');
+  //$scope.img3 = $window.localStorage.getItem('example3');
+  $scope.img1 = CommonData.getRandomImg();
+  $scope.img2 = CommonData.getRandomImg();
+  $scope.img3 = CommonData.getRandomImg();
   console.log($routeParams._id);
   $scope.listing= {};
   $scope.host = {};
@@ -492,21 +453,6 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
   console.log("user" + JSON.stringify($scope.user));
   console.log("listing" + JSON.stringify($scope.listing));
 
-
-
-//  $scope.user = {name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
-//  $scope.listing = {description: "Interaction with Guests We want to meet interesting people so we are open to interact with the guests, if they want to, but the garden house is separate, so they can decide! The Neighborhood It's in the center of the Silicon Valley. It's closed to University Avenue, where all the restaurants and stores like the Palo Alto Apple Store are located. So it's the best place to start a journey through the Valley. Getting Around Palo Alto Public Transportation is great! You can get to many places in the Bay Area with the CalTrain or Uber. Other Things to Note There is no kitchen in the garden house, just a sink, but if you are here, you want to eat out and go to events anyway ;-)"}
-  // get listing and host data, uncommnet when hook up to database
-  // $scope.user = {};
-  // $scope.listings = {};
-  // var listingID = $routeParams._id;
-  // Listings.getFromId(listingID).success(function(data) {
-  //   $scope.listing = data.data;
-  //   var hostID = $scope.listing.hostID;
-  //   User.getFromId(hostID).success(function(data) {
-  //     $scope.user = data.data;
-  //   });
-  // })
 
   $scope.requestToBook = function() {
     console.log("request to book button pressed! " + JSON.stringify($scope.host));
@@ -572,150 +518,5 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
         $('.alert').show();
       }
   }
-  /*$scope.acceptTypes = 'image/*';
-  $scope.imageSrc = "";
 
-  $scope.onLoad = function(files){
-    fileReader.readAsDataUrl(files[0], $scope)
-      .then(function(result) {
-          $scope.profile_picture = result;
-          $scope.imageSrc = result;
-          console.log($scope.imageSrc);
-      });
-  }
-
-  $scope.formData = {
-      image: $scope.imageSrc,
-      message: "hello"
-  };
-
-   $scope.callback = function(response){
-    console.log($scope.formData);
-    console.log(response);
-   }
-   */
-    $scope.myFile = "";
-   $scope.doUpload = function (image) {
-    console.log(image);
-    console.log("Upload");
-    //console.log($scope.myFile);
-    /*fileReader.readAsDataUrl($scope.file, $scope)
-      .then(function(result) {
-          $scope.profile_picture = result;
-          $scope.imageSrc = result;
-          console.log($scope.imageSrc);
-      });*/
-    upload({
-      url: 'http://localhost:4000/api/upload',
-      method: 'POST',
-      data: {
-        //image: $scope.imageSrc,
-        File: image//$scope.myFile // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
-      }
-    }).then(
-      function (response) {
-        console.log(response.data); // will output whatever you choose to return from the server on a successful upload
-      },
-      function (response) {
-          console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
-      }
-    );
-  }
-
-
-
-
-     /* User.uploadImage(image)
-      .success(function(result) {
-        console.log(result);
-        $scope.uploadedImgSrc = result.src;
-        $scope.sizeInBytes = result.size;
-    }).error(function(err){
-      console.log(err);
-    });
-   }*/
-
-
-
-
-    /**COPYING CODE**/
-
-      /*$http
-      .post('api/user',{
-        user: $scope.user,
-        community: {
-          name: $scope.community,
-          privacy: false
-        },
-        profile_picture: $scope.profile_picture
-      })
-      .success(function(data, status, headers, config) {
-        console.log(data);
-        $window.sessionStorage.token = data.token;
-      })
-      .error(function(data, status, headers, config) {
-        console.log(data);
-        delete $window.sessionStorage.token;
-      });*/
-
-    /*$scope.doUpload = function () {
-      console.log("UPLOAD");
-        upload({
-          url: 'http://localhost:4000/api/upload',
-          method: 'POST',
-          data: {
-            anint: 123,
-            aBlob: Blob([1,2,3]), // Only works in newer browsers
-            aFile: $scope.file, // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
-          }
-        }).then(
-          function (response) {
-            console.log(response.data); // will output whatever you choose to return from the server on a successful upload
-          },
-          function (response) {
-              console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
-          }
-        );
-     };*/
-
-    $scope.submit = function() {
-      User.addPic($scope.profile_picture).success(function(data){
-        console.log(data);
-      }).error(function(err){
-        console.log(err);
-      })
-    };
-
-
-     $scope.getFile = function (){
-        console.log("GET FILE");
-          //$scope.progress = 0;
-        fileReader.readAsDataUrl($scope.file, $scope)
-              .then(function(result) {
-                  $scope.profile_picture = result;
-                  $scope.imageSrc = result;
-                  console.log($scope.imageSrc);
-                  $scope.doUpload();
-              });
-      };
-
-   /*   $scope.$on("fileProgress", function(e, progress) {
-          $scope.progress = progress.loaded / progress.total;
-      });*/
-    }])
-      .directive("ngFileSelect",function(){
-        return {
-            link: function($scope,el){
-              el.bind("change", function(e){
-                $scope.file = (e.srcElement || e.target).files[0];
-                $scope.getFile();
-              })
-
-            }
-        }
-    });
-
-      /****************/
-
-
- //}]); //end edit controller
+ }]);
