@@ -1,6 +1,7 @@
 var appControllers = angular.module('appControllers', ['720kb.datepicker', 'imageupload']);
 
 appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'Auth', 'CommonData', function($scope, User, $window, $route, Auth, CommonData) {
+  $("#request-modal").modal({ show : false });
   if ($window.localStorage.getItem('loggedIn') !== null) {
     $scope.loggedIn = ($window.localStorage.getItem('loggedIn') === 'true');
   } else {
@@ -12,6 +13,7 @@ appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'A
       var newUser = data.data;
       if (newUser.flag) {
         console.log("update me!");
+        $("#request-modal").modal({ show : true });
       }
     });
   } else {
@@ -60,8 +62,10 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'L
 
   if($scope.profile) {
       var user = JSON.parse($window.localStorage.getItem('user'));
+      console.log("user " + JSON.stringify(user));
       User.getFromId(user._id).success(function(data) {
         $scope.user = data.data;
+        console.log(" scope user " + JSON.stringify($scope.user));
         //$window.localStorage.setItem('user', $scope.user);
         Listings.getListingsByUser($scope.user._id).success(function(data) {
           $scope.listings = data.data;
@@ -111,14 +115,16 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
 
   $scope.login = function() {
     console.log($scope.user);
-    Users.postLogIn($scope.user).success(function (data) {
-      Auth.login(data.data);
-      /*$window.localStorage.setItem('user', JSON.stringify(data.data));
-      $window.localStorage.setItem('loggedIn', 'true');*/
-      $window.location.href = '#/profile';
-    }).error(function (data) {
-      $('.alert').show();
-    });
+    if($scope.user.email !== undefined && $scope.user.password !== undefined) {
+      Users.postLogIn($scope.user).success(function (data) {
+        Auth.login(data.data);
+        /*$window.localStorage.setItem('user', JSON.stringify(data.data));
+        $window.localStorage.setItem('loggedIn', 'true');*/
+        $window.location.href = '#/profile';
+      }).error(function (data) {
+        $('.alert').show();
+      });
+    }
   };
 
 }]);
@@ -128,17 +134,21 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
   $('.alert').hide();
   $scope.name ="";
   $scope.signup = function() {
-    Users.postSignUp($scope.newUser).success(function (data) {
-        var user = data.data;
-        user.name = $scope.name;
+        console.log($scope.newUser);
+    //if email is correct type!
+    if($scope.name !== undefined && $scope.newUser.email !== undefined && $scope.newUser.password !== undefined) {
+      Users.postSignUp($scope.newUser).success(function (data) {
+          var user = data.data;
+          user.name = $scope.name;
 
-        User.put(user._id, user);
-        Auth.login(data.data);
+          User.put(user._id, user);
+          Auth.login(data.data);
 
-        $window.location.href = '#/travellerhost';
-    }).error(function(data) {
-      $('.alert').show();
-    });
+          $window.location.href = '#/travellerhost';
+      }).error(function(data) {
+        $('.alert').show();
+      });
+    }
   }
 
 }]);
