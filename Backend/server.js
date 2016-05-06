@@ -142,7 +142,6 @@ usersRoute.post(function(req,res){
 		age: data.age,
 		gender: data.gender,
 		occupation: data.occupation,
-
     });
 	newUser.local.email = data.local.email;
 	newUser.local.password = newUser.generateHash(data.local.password);
@@ -153,6 +152,7 @@ usersRoute.post(function(req,res){
         res.status(201).json({message: "User created", data: newUser});
     });
 });
+
 idUsersRoute.get(function(req,res){
 	User.findById(req.params.id, function(err, user){
 		if(err) return res.status(404).json({message: 'User not found'});
@@ -179,11 +179,12 @@ idUsersRoute.put(function(req,res){
         user.location= data.location;
         user.matchedHosts= data.matchedHosts;
         user.matchedTravelers= data.matchedTravelers;
-		user.bio = data.bio;
+				user.bio = data.bio;
         user.gender = data.gender;
         user.age = data.age;
         user.occupation = data.occupation;
-		user.flag = data.flag;
+				user.pendingTravelers = data.pendingTravelers;
+				user.flag = data.flag;
         user.save(function(err){
             if(err){
 				console.error(err);
