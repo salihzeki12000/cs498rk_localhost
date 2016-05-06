@@ -84,13 +84,15 @@ def main(argv):
         # Pick a random first name and last name
         x = randint(0,99)
         y = randint(0,99)
+        gender = "Male" if randint(0, 1) > 0 else "Female"
         params = urllib.urlencode({"name": firstNames[x] + " " + lastNames[y],
                                     "bio": "Lorem ipsum whatever",
                                     "local": {
                                         "email": firstNames[x] + "@" + lastNames[y] + ".com",
                                         "password": firstNames[x]+lastNames[y]+str(randint(0,100))
                                     },
-                                    "age": str(randint(20,60))
+                                    "age": str(randint(20,60)),
+                                    "gender" : gender
                                     })
 
         # POST the user
@@ -123,7 +125,7 @@ def main(argv):
         assignedHostID = userIDs[assignedHost]
         assignedHostName = userNames[assignedHost]
         assignedHostEmail = userEmails[assignedHost]
-        description = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
+        description = "It is a long established fact that a reader will do things yadda yadda."
         bio = "Lorem Ipsum yadda yadda yadda"
         price = randint(50, 300)
         address = str(randint(0, 1000)) + " " + str(randint(0, 100)) + " Street"
@@ -158,7 +160,7 @@ def main(argv):
         conn.request("POST", "/api/listings", params, headers)
         response = conn.getresponse()
         data = response.read()
-        #print(data)
+        print(data)
         d = simplejson.loads(data)
 
         listingID = str(d['data']['_id'])
