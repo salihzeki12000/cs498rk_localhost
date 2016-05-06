@@ -374,7 +374,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
     }*/
 //      console.log($scope.Image1.dataURL);
 //      console.log($scope.Image2);
-    var hostImagesArr = [];
+    /*var hostImagesArr = [];
     if($scope.Image1) hostImagesArr.push(String($scope.Image1.dataURL));
     if($scope.Image2) hostImagesArr.push(String($scope.Image2.dataURL));
     if($scope.Image3) hostImagesArr.push(String($scope.Image3.dataURL));
@@ -386,7 +386,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
         $window.localStorage.setItem('2example1', $scope.Image1.dataURL);
         $window.localStorage.setItem('2example2', $scope.Image2.dataURL);
         $window.localStorage.setItem('2example3', $scope.Image3.dataURL);
-    } 
+    } */
 
     // $http.post("http://localhost:4000/api/images", $scope.Image1.dataURL).success(function(data){
     //     console.log("wut");
