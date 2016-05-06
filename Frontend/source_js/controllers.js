@@ -304,7 +304,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 //    $window.localStorage.setItem('exampleImage', $scope.Image1.dataURL);
     if ($scope.listing.description !== "" && $scope.listing.address !== "" && $scope.listing.city !== undefined
       && $scope.listing.dateStart !== "" && $scope.listing.dateEnd !== "" && $scope.listing.roomType !== undefined
-      && $scope.listing.price !== 0 && $scope.listing.dateStart < $scope.listing.dateEnd){
+      && $scope.listing.price !== 0 && $scope.listing.dateStart < $scope.listing.dateEnd) {
       $scope.listing.city = $scope.listing.city.name;
       $scope.listing.roomType = $scope.listing.roomType.name;
       Listings.postListing($scope.listing).success(function(data){
