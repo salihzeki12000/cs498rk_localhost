@@ -2,7 +2,7 @@ var appServices = angular.module('appServices', []);
 
 appServices.factory('Users', function($http, $window) {
     //var baseUrl = 'http://localhost:4000';
-    var baseUrl = 'http://162.243.235.34:4000/';
+    var baseUrl = 'http://162.243.235.34:4000';
     return {
         get : function() {
             return $http.get(baseUrl+'/profile');
