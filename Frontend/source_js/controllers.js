@@ -1,4 +1,4 @@
-var appControllers = angular.module('appControllers', ['720kb.datepicker','lr.upload', 'ngResource']);
+var appControllers = angular.module('appControllers', ['720kb.datepicker']);
 
 appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'Auth', 'CommonData', function($scope, User, $window, $route, Auth, CommonData) {
   //$("#request-modal").modal({show: true});
@@ -517,8 +517,8 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 }]);
 
 
-appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$window', 'CommonData', 'User', 'upload', function($scope, $routeParams,
-                          $window, CommonData, User, upload) {
+appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$window', 'CommonData', 'User', function($scope, $routeParams,
+                          $window, CommonData, User) {
   // $scope.user = {};
   // test local user
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
