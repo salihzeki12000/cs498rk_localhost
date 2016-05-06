@@ -77,7 +77,9 @@ def main(argv):
     userIDs = []
     userNames = []
     userEmails = []
-
+    jobNames = open('occupations.txt', 'r').read().splitlines();
+    cityNames = open('cities.txt', 'r').read().splitlines()
+    tagNames = open('tags.txt', 'r').read().splitlines()
     # Loop 'userCount' number of times
     for i in xrange(userCount):
 
@@ -85,14 +87,16 @@ def main(argv):
         x = randint(0,99)
         y = randint(0,99)
         gender = "Male" if randint(0, 1) > 0 else "Female"
+
         params = urllib.urlencode({"name": firstNames[x] + " " + lastNames[y],
-                                    "bio": "Lorem ipsum whatever",
+                                    "bio": "Lorem ipsum whatever yadda yadda my life is great how are you",
                                     "local": {
                                         "email": firstNames[x] + "@" + lastNames[y] + ".com",
                                         "password": firstNames[x]+lastNames[y]+str(randint(0,100))
                                     },
                                     "age": str(randint(20,60)),
-                                    "gender" : gender
+                                    "gender" : gender,
+                                    "occupation" : choice(jobNames)
                                     })
 
         # POST the user
@@ -111,11 +115,10 @@ def main(argv):
         userNames.append(str(d['data']['name']))
         userEmails.append(str(d['data']['local']['email']))
 
-    # Open 'listings.txt' for sample listing names
-    #f = open('listings.txt','r')
-    #listingNames = f.read().splitlines()
-    cityNames = open('cities.txt', 'r').read().splitlines()
-    tagNames = open('tags.txt', 'r').read().splitlines()
+    # Open 'activities.txt' for sample listing names
+    f = open('activities.txt','r')
+    activities = f.read().splitlines()
+    # print(choice(activities))
     #print(tagNames)
     # Loop 'listingCount' number of times
     for i in xrange(listingCount):
@@ -142,10 +145,16 @@ def main(argv):
             tags.append(tagNames[b])
         else:
             tags.append(tagNames[a])
+        listingActivities = []
+        numActivities = randint(1,4);
+    #    print(numActivities)
+        for i in xrange(numActivities):
+            listingActivities.append(str(choice(activities)))
+#        print(listingActivities)
         #print(tags)
         #print(tags)
-
-        params = urllib.urlencode({'city': choice(cityNames),
+        cityLoc = choice(cityNames)
+        params = urllib.urlencode({'city': cityLoc,
                                 'address': address,
                                 'hostName': assignedHostName,
                                 'hostID': assignedHostID,
@@ -153,7 +162,8 @@ def main(argv):
                                 'description': description,
                                 'price': price,
                                 'roomType': roomType,
-                                'tags': tags
+                                'tags': tags,
+                                'activities': listingActivities
                                 })
 
         # POST the listing
@@ -179,7 +189,8 @@ def main(argv):
         assignedHostPassword = str(d['data'][0]['local']['password'])
         assignedHostBio = str(d['data'][0]['bio'])
         assignedHostAge = str(d['data'][0]['age'])
-
+        assignedHostOccupation = str(d['data'][0]['occupation'])
+        assignedHostGender = str(d['data'][0]['gender'])
 #        assignedUserDate = str(d['data'][0]['dateCreated'])
 
         assignedHostListing = d['data'][0]['postedHostAds']
@@ -192,10 +203,13 @@ def main(argv):
         # PUT in the user
         params = urllib.urlencode({'_id': assignedHostID,
                                 'name': assignedHostName,
+                                'gender': assignedHostGender,
                                 'local':{
                                     'email': assignedHostEmail,
                                     'password': assignedHostPassword
                                 },
+                                'location': cityLoc,
+                                'occupation': assignedHostOccupation,
                                 'age': assignedHostAge,
                                 'bio': assignedHostBio,
                                 'postedHostAds': assignedHostListing}, True)

@@ -50,14 +50,14 @@ appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'U
  //  console.log("user in profile " + $window.localStorage.getItem('user'));
 	// $scope.user = JSON.parse($window.localStorage.getItem('user'));
     if($scope.profile){
-        $scope.user = JSON.parse($window.localStorage.getItem('user'));
-        // User.getFromId($scope.user._id).success(function(data){
-        //     $scope.user = data.data;
-        //     console.log(data);
-        // }).error(function(err){
-        //     console.log(err);
-        //     $scope.user=null;
-        // });
+        var userID = JSON.parse($window.localStorage.getItem('user'));
+
+        User.getFromId(userID._id).success(function(data){
+            $scope.user = data.data;
+        }).error(function(err){
+            console.log(err);
+            $scope.user = null;
+        })
 
         //console.log(data);
 //        $scope.user = data;
