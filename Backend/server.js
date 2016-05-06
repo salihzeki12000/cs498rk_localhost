@@ -128,6 +128,8 @@ usersRoute.post(function(req,res){
         location: data.location,
 //        matchedHosts: [],
         matchedTravelers: [],
+		pendingTravelers: [],
+		flag: false,
         dateCreated: d.getDate(),
 		bio: data.bio,
 		age: data.age,

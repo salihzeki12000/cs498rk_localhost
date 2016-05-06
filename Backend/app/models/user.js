@@ -11,6 +11,8 @@ var userSchema = new mongoose.Schema({
 	location		: String,
 	matchedHost		: String,  //only match with 1 host at any time
 	matchedTravelers: [String],
+	pendingTravelers: [String],
+	flag			: Boolean,
 	bio				: String,
 	gender			: String,
 	occupation		: String,
