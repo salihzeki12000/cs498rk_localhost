@@ -1,6 +1,7 @@
 var appControllers = angular.module('appControllers', ['720kb.datepicker','lr.upload', 'ngResource']);
 
 appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'Auth', 'CommonData', function($scope, User, $window, $route, Auth, CommonData) {
+  $scope.requests = [];
   $("#request-modal").modal({ show : false });
   if ($window.localStorage.getItem('loggedIn') !== null) {
     $scope.loggedIn = ($window.localStorage.getItem('loggedIn') === 'true');
@@ -12,6 +13,11 @@ appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'A
     User.getFromId($scope.user._id).success(function(data) {
       var newUser = data.data;
       if (newUser.flag) {
+        for(var i = 0; i < newUser.pendingTravelers.length; i++) {
+          User.getFromId(newUser.pendingTravelers[i]).success(function (data) {
+            $scope.requests.push(data.data);
+          });
+        };
         console.log("update me!");
         $("#request-modal").modal({ show : true });
       }
@@ -142,7 +148,7 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
       Users.postSignUp($scope.newUser).success(function (data) {
           var user = data.data;
           user.name = $scope.name;
-
+          user.flag = false;
           User.put(user._id, user);
           Auth.login(data.data);
 
@@ -295,7 +301,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
       $scope.displayErr = "You must fill out the required fields";
       $('.alert').show();
     }
-    
+
   }
 }]);
 
@@ -381,9 +387,11 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
   $scope.requestToBook = function() {
     console.log("request to book button pressed! " + JSON.stringify($scope.host));
     var hostID = $scope.host._id;
+    console.log("traveller id " +  $scope.user._id);
     var travellerID = $scope.user._id;
     var listingID = $scope.listing._id;
     $scope.host.pendingTravelers.push(travellerID);
+    console.log("host pending travellers " +  $scope.host.pendingTravelers);
     $scope.host.flag = true;
     User.put(hostID, $scope.host).success(function(data) {
       console.log("request book:", data.message);
@@ -445,7 +453,7 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
           console.log($scope.imageSrc);
       });
   }
-  
+
   $scope.formData = {
       image: $scope.imageSrc,
       message: "hello"
@@ -496,12 +504,12 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
       console.log(err);
     });
    }*/
- 
+
 
 
 
     /**COPYING CODE**/
-   
+
       /*$http
       .post('api/user',{
         user: $scope.user,
@@ -547,7 +555,7 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
         console.log(err);
       })
     };
-  
+
 
      $scope.getFile = function (){
         console.log("GET FILE");
@@ -560,7 +568,7 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
                   $scope.doUpload();
               });
       };
-   
+
    /*   $scope.$on("fileProgress", function(e, progress) {
           $scope.progress = progress.loaded / progress.total;
       });*/
@@ -572,7 +580,7 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
                 $scope.file = (e.srcElement || e.target).files[0];
                 $scope.getFile();
               })
-              
+
             }
         }
     });
