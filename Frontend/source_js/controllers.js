@@ -10,10 +10,11 @@ appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'A
   }
   if($scope.loggedIn) {
     $scope.user = JSON.parse($window.localStorage.getItem('user'));
-      User.get(user._id).success(function(data) {
+      User.get($scope.user._id).success(function(data) {
         var newUser = data.data;
         if (newUser.flag) {
           console.log("update me!");
+
         }
       })
   } else {
@@ -62,51 +63,21 @@ appControllers.controller('LandingPageController', ['$scope', '$window', 'Common
 appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'Users', 'User', function($scope, $window, $http, Users, User) {
 
   $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
-
-  // substitute dummy data with get services
-
-
-  //  console.log("user in profile " + $window.localStorage.getItem('user'));
+ //  console.log("user in profile " + $window.localStorage.getItem('user'));
 	// $scope.user = JSON.parse($window.localStorage.getItem('user'));
     if($scope.profile){
-        var userID = JSON.parse($window.localStorage.getItem('user'));
-
-        User.getFromId(userID._id).success(function(data){
-            $scope.user = data.data;
-        }).error(function(err){
-            console.log(err);
-            $scope.user = null;
-        })
+        $scope.user = JSON.parse($window.localStorage.getItem('user'));
+        // User.getFromId($scope.user._id).success(function(data){
+        //     $scope.user = data.data;
+        //     console.log(data);
+        // }).error(function(err){
+        //     console.log(err);
+        //     $scope.user=null;
+        // });
 
         //console.log(data);
 //        $scope.user = data;
     }
-
-
-  // these are dummy listings
- // $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
- // $scope.listing = {description: "My trip is a perfect opportunity to experience local culture", activities: ["My amazing first activity", "My fabulous second activity", "My ingenious third activity"], pendingTravelers: ["Alex", "Daniel"]}
-  $scope.pendingTravelersText = "";
-  var len = $scope.listing.pendingTravelers.length;
-  for(var i = 0; i < len - 1; i++) {
-    var tempText = $scope.listing.pendingTravelers[i] + ", ";
-    $scope.pendingTravelersText += tempText;
-  }
-  $scope.pendingTravelersText += $scope.listing.pendingTravelers[len - 1];
-
-//     if($scope.profile){
-//         $scope.user = JSON.parse($window.localStorage.getItem('user'));
-//         // User.getFromId($scope.user._id).success(function(data){
-//         //     $scope.user = data.data;
-//         //     console.log(data);
-//         // }).error(function(err){
-//         //     console.log(err);
-//         //     $scope.user=null;
-//         // });
-
-//         //console.log(data);
-// //        $scope.user = data;
-//     }
 // $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
 
  }]);
@@ -151,7 +122,6 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
 }]);
 
 appControllers.controller('hostOrTravellerController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData){
-  $scope.user = {_id: "1234", email: "abc@gmail.com", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
 
 }]);
 
@@ -260,9 +230,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   }
 }]);
 
-appControllers.controller('MatchedController', ['$scope', '$window', function($scope, $window){
-  $scope.user = {_id: "1234", email: "abc@gmail.com", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
-  $scope.matchedUserName = $scope.user.name;
+appControllers.controller('MatchingController', ['$scope', '$window', function($scope, $window){
 
 }]);
 
