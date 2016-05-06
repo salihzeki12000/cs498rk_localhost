@@ -123,19 +123,26 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
 appControllers.controller('SignupController', ['$scope', '$window', '$route', 'Auth', 'Users', 'User', function($scope, $window, $route, Auth, Users, User) {
   $scope.newUser = "";
   $('.alert').hide();
+  $scope.errorMsg = "";
   $scope.name ="";
   $scope.signup = function() {
-    Users.postSignUp($scope.newUser).success(function (data) {
-        var user = data.data;
-        user.name = $scope.name;
+    if ($scope.name !== "" && $scope.newUser.email !== "" && $scope.newUser.password !== ""){
+      Users.postSignUp($scope.newUser).success(function (data) {
+          var user = data.data;
+          user.name = $scope.name;
 
-        User.put(user._id, user);
-        Auth.login(data.data);
-        $window.location.href = '#/travellerhost';
-        $route.reload();
-    }).error(function(data) {
+          User.put(user._id, user);
+          Auth.login(data.data);
+          $window.location.href = '#/travellerhost';
+          $route.reload();
+      }).error(function(data) {
+        $scope.errorMsg = "This email already exists. Please choose a different email or log in.";
+        $('.alert').show();
+      });
+    } else {
+      $scope.errorMsg = "You must enter a name, username, and password";
       $('.alert').show();
-    });
+    }
   }
 
 }]);
@@ -365,8 +372,8 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 }]);
 
 
-appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$window', 'CommonData', 'User', function($scope, $routeParams,
-                          $window, CommonData, User) {
+appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$window', 'CommonData', 'User', 'upload', function($scope, $routeParams,
+                          $window, CommonData, User, upload) {
   // $scope.user = {};
   // test local user
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
@@ -375,17 +382,27 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
   $scope.gender = "";
   $scope.location="";
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
-
+  $('.alert').hide();
   console.log($scope.user);
   $scope.submitChange = function() {
       $scope.user.gender = $scope.gender.name;
-      $scope.user.location=$scope.location.name;
-      User.put($scope.user._id, $scope.user).success(function(data) {
-      console.log("Edit user:", data.message + JSON.stringify(data.data));
-      $window.location.href = '#/profile';
-    });
+      $scope.user.location = $scope.location.name;
+      if ($scope.user.name !== "" && $scope.user.name !== undefined
+        && $scope.user.gender !== "" && $scope.user.gender !== undefined
+        && $scope.user.location !== "" && $scope.user.location !== undefined
+        && $scope.user.occupation !== "" && $scope.user.occupation !== undefined
+        && $scope.user.age !== "" && $scope.user.age !== undefined
+        && $scope.user.bio !== "" && $scope.user.bio !== undefined) {
+        User.put($scope.user._id, $scope.user).success(function(data) {
+          console.log("Edit user:", data.message + JSON.stringify(data.data));
+          $window.location.href = '#/profile';
+        });
+      } else {
+        $scope.displayErr = "You must fill out every field";
+        $('.alert').show();
+      }
   }
-  $scope.acceptTypes = 'image/*';
+  /*$scope.acceptTypes = 'image/*';
   $scope.imageSrc = "";
 
   $scope.onLoad = function(files){
@@ -406,7 +423,8 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$
     console.log($scope.formData);
     console.log(response);
    }
-$scope.myFile = "";
+   */
+    $scope.myFile = "";
    $scope.doUpload = function (image) {
     console.log(image);
     console.log("Upload");
@@ -434,7 +452,7 @@ $scope.myFile = "";
     );
   }
 
- }]);
+
 
 
      /* User.uploadImage(image)
@@ -451,10 +469,7 @@ $scope.myFile = "";
 
 
     /**COPYING CODE**/
-   /* $scope.submit = function() {
-      console.log("HI");
-    };*/
-  
+   
       /*$http
       .post('api/user',{
         user: $scope.user,
@@ -493,7 +508,16 @@ $scope.myFile = "";
         );
      };*/
 
-   /*  $scope.getFile = function (){
+    $scope.submit = function() {
+      User.addPic($scope.profile_picture).success(function(data){
+        console.log(data);
+      }).error(function(err){
+        console.log(err);
+      })
+    };
+  
+
+     $scope.getFile = function (){
         console.log("GET FILE");
           //$scope.progress = 0;
         fileReader.readAsDataUrl($scope.file, $scope)
@@ -504,11 +528,11 @@ $scope.myFile = "";
                   $scope.doUpload();
               });
       };
-   */
-      /*$scope.$on("fileProgress", function(e, progress) {
+   
+   /*   $scope.$on("fileProgress", function(e, progress) {
           $scope.progress = progress.loaded / progress.total;
-      });
-    }]);
+      });*/
+    }])
       .directive("ngFileSelect",function(){
         return {
             link: function($scope,el){
@@ -519,6 +543,9 @@ $scope.myFile = "";
               
             }
         }
-    });*/
+    });
 
       /****************/
+
+
+ //}]); //end edit controller
