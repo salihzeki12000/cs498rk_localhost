@@ -22,10 +22,10 @@
     "angular-route": "~1.3.14",
     "bootstrap": "3.3.6",
     "angularjs-datepicker": "^2.0.0",
-    "angularjs-imageupload-directive": "*",
+    /*"angularjs-imageupload-directive": "*",
     "angular-upload": "^1.0.12",
     "install": "^1.0.4",
-    "angular-resource": "^1.5.5"
+    "angular-resource": "^1.5.5"*/
   },
   "resolutions": {
     "angular": "~1.3.13"
