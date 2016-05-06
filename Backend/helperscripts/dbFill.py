@@ -192,7 +192,7 @@ def main(argv):
         assignedHostOccupation = str(d['data'][0]['occupation'])
         assignedHostGender = str(d['data'][0]['gender'])
 #        assignedUserDate = str(d['data'][0]['dateCreated'])
-
+        assignedFlag = str(d['data'][0]['flag'])
         assignedHostListing = d['data'][0]['postedHostAds']
         # Append the new listingID to pending listings
 #            assignedUserTasks = d['data'][0]['pendingTasks']
@@ -209,6 +209,7 @@ def main(argv):
                                     'password': assignedHostPassword
                                 },
                                 'location': cityLoc,
+                                'flag' : assignedFlag,
                                 'occupation': assignedHostOccupation,
                                 'age': assignedHostAge,
                                 'bio': assignedHostBio,

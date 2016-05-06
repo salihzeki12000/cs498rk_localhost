@@ -32,7 +32,7 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/profile.html',
     controller: 'ProfileController'
   }).
-  when('/createhostad', {
+  when('/createHostAd', {
     templateUrl: 'partials/createHostAd.html',
     controller: 'CreateHostAdController'
   }).
@@ -70,7 +70,7 @@ app.config(['$routeProvider', function($routeProvider) {
   }).
   when('/matched', {
       templateUrl: 'partials/matched.html',
-      controller: 'MatchingController'
+      // controller: 'MatchedController'
   }).
   otherwise({
     redirectTo: '/landing'
