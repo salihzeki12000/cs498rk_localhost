@@ -1,6 +1,7 @@
 var appControllers = angular.module('appControllers', ['720kb.datepicker', 'imageupload']);
 
-appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', 'Auth', 'CommonData', function($scope, Users, $window, $route, Auth, CommonData) {
+appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'Auth', 'CommonData', function($scope, User, $window, $route, Auth, CommonData) {
+
 
   if ($window.localStorage.getItem('loggedIn') !== null) {
     $scope.loggedIn = ($window.localStorage.getItem('loggedIn') === 'true');
@@ -9,6 +10,12 @@ appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', '
   }
   if($scope.loggedIn) {
     $scope.user = JSON.parse($window.localStorage.getItem('user'));
+      User.get(user._id).success(function(data) {
+        var newUser = data.data;
+        if (newUser.flag) {
+          console.log("update me!");
+        }
+      })
   } else {
     $scope.user = null;
   }
@@ -23,10 +30,11 @@ appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', '
           "aria-expanded" : "false"
     });
   }
+
+
+
   $scope.logout = function() {
     Auth.logout();
-    /*$window.localStorage.setItem('user', "");
-    $window.localStorage.setItem('loggedIn', 'false');*/
     $scope.user = null;
     $scope.loggedIn = false;
     $route.reload();
@@ -103,8 +111,6 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
 
         User.put(user._id, user);
         Auth.login(data.data);
-        /*$window.localStorage.setItem('user', JSON.stringify(data.data));
-        $window.localStorage.setItem('loggedIn', 'true');*/
         $window.location.href = '#/travellerhost';
         $route.reload();
     }).error(function(data) {
@@ -259,22 +265,22 @@ appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData
 appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User',
                           function($scope, $window, $routeParams, Listing, User) {
   console.log('listing detail controller created');
-  $scope.requestSent = true;
+  $scope.requestSent = false;
   $scope.requestSentError = false;
   $scope.requestSentText = 'Request';
   console.log($routeParams._id);
   $scope.listing= {};
-  $scope.user = {};
-
+  $scope.host = {};
+  $scope.user = JSON.parse($window.localStorage.getItem('user'));
   Listing.getFromId($routeParams._id).success(function(data){
     //   console.log("what the fuck");
       $scope.listing = data.data;
 //      console.log(data);
 //      console.log($scope.listing);
       User.getFromId($scope.listing.hostID).success(function(data){
-          $scope.user = data.data;
+          $scope.host = data.data;
       }).error(function(err){
-          $scope.user = null;
+          $scope.host = null;
           console.log(err);
       });
   }).error(function(err){
@@ -282,8 +288,9 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
       console.log(err);
   });
   var genderPro = "he";
-  console.log($scope.user);
-  console.log($scope.listing);
+  console.log("host" + JSON.stringify($scope.host));
+  console.log("user" + JSON.stringify($scope.user));
+  console.log("listing" + JSON.stringify($scope.listing));
 
 
 
@@ -302,16 +309,18 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
   // })
 
   $scope.requestToBook = function() {
-    console.log("request to book button pressed!");
-    var userID = $scope.user._id;
-    $scope.user.matchedTravelers.push(listingID);
-    User.put(userID, $scope.user).success(function(data) {
+    console.log("request to book button pressed! " + JSON.stringify($scope.host));
+    var hostID = $scope.host._id;
+    var travellerID = $scope.user._id;
+    var listingID = $scope.listing._id;
+    $scope.host.pendingTravelers.push(travellerID);
+    $scope.host.flag = true;
+    User.put(hostID, $scope.host).success(function(data) {
       console.log("request book:", data.message);
-
-      if($scope.user.gender == "female") {
+      if($scope.host.gender == "female") {
         genderPro = "she";
       }
-      $scope.requestSentText += ' sent to ' + $scope.user.name + ", " + genderPro + "will reply you in a moment!";
+      $scope.requestSentText += ' sent to ' + $scope.host.name + ", " + genderPro + " will reply you when he gets the message!";
       $scope.requestSent = true;
       $scope.requestSentError = false;
     }).error(function(err) {

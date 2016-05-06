@@ -136,16 +136,16 @@ appServices.factory('CommonData', function(){
 
 appServices.service('Auth', function($window) {
   var auth = {};
-    //$rootScope.loggedIn = false;
-    //$rootScope.user = null;
 
   auth.login = function(user) {
     $window.localStorage.setItem('user', JSON.stringify(user));
+    $window.localStorage.setItem('pendingTravelers', JSON.stringify(user.pendingTravelers));
     $window.localStorage.setItem('loggedIn', 'true');
   };
 
   auth.logout = function() {
     $window.localStorage.setItem('user', "");
+    $window.localStorage.setItem('pendingTravelers', "");
     $window.localStorage.setItem('loggedIn', 'false');
   };
 

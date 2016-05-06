@@ -1,7 +1,7 @@
 <div ng-controller='ListingDetailsController' class="container">
 	<div class="row" style="margin-top: 10px; margin-bottom: 10px">
 		<div class="col-sm-12 col-md-4">
-			<img src="../data/isaac.jpg" class="user-portrait">
+			<img src="../data/isaac.jpg" class="host-portrait">
 			<div class="col-sm-12 green-banner">
 				<p>VERIFIED HOST</p>
 			</div>
@@ -17,14 +17,14 @@
 		</div>
 		<div class="col-sm-12 col-md-8">
 			<div class="row">
-				<h2 class="col-sm-12" style="text-align: left">{{user.name}}</h2>
-				<h3 class="col-sm-12 no-blank-space">{{user.location}}</h3>
+				<h2 class="col-sm-12" style="text-align: left">{{host.name}}</h2>
+				<h3 class="col-sm-12 no-blank-space">{{host.location}}</h3>
 				<section class="col-sm-12 ad-box">
 					<h4 style="text-align: left">Me in a nutshell</h4>
-					<p class="col-sm-6" style="font-size: 16px"><span style="font-weight: bold">Gender: </span>{{user.gender}} <br>
-                    <span style="font-weight: bold">Age: </span> {{user.age}}</p>
-					<p class="col-sm-6" style="font-size: 16px"><span style="font-weight: bold">Occupation: </span>{{user.occupation}}</p>
-					<p class="col-sm-12" style="font-size: 16px"><span style="font-weight: bold">Self intro: </span>{{user.bio}}</p>
+					<p class="col-sm-6" style="font-size: 16px"><span style="font-weight: bold">Gender: </span>{{host.gender}} <br>
+                    <span style="font-weight: bold">Age: </span> {{host.age}}</p>
+					<p class="col-sm-6" style="font-size: 16px"><span style="font-weight: bold">Occupation: </span>{{host.occupation}}</p>
+					<p class="col-sm-12" style="font-size: 16px"><span style="font-weight: bold">Self intro: </span>{{host.bio}}</p>
 				</section>
 				<section class="col-sm-12 ad-box">
 					<h4 style="text-align: left">Welcome to my place</h4>
@@ -41,7 +41,7 @@
 				<section class="col-sm-12 ad-box">
 					<h4 style="text-align: left">Live the local life</h4>
 					<!-- use ng-repeat here -->
-					<p class="col-sm-12" style="font-size: 16px"><span style="font-weight: bold">Activity 0: </span>{{listing.activities[0]}}We want to meet interesting people so we are open to interact with the guests, if they want to, but the garden house is separate, so they can decide!</p>
+					<p class="col-sm-12" style="font -size: 16px"><span style="font-weight: bold">Activity 0: </span>{{listing.activities[0]}}We want to meet interesting people so we are open to interact with the guests, if they want to, but the garden house is separate, so they can decide!</p>
 					<img class="col-sm-12 listing-img" src="http://placehold.it/400x300" style="margin: 4px">
 					<p class="col-sm-12" style="font-size: 16px"><span style="font-weight: bold">Activity 1: </span>{{listing.activities[1]}}It's in the center of the Silicon Valley. It's closed to University Avenue, where all the restaurants and stores like the Palo Alto Apple Store are located. So it's the best place to start a journey through the Valley.</p>
 					<img class="col-sm-12 listing-img" src="http://placehold.it/400x300" style="margin: 4px">
