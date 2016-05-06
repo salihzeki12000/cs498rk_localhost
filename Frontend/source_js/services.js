@@ -10,7 +10,6 @@ appServices.factory('Users', function($http, $window) {
             return $http.post(baseUrl+'/signup', user);
         },
         postLogIn: function(user) {
-            //var baseUrl = $window.sessionStorage.baseurl;
             return $http.post(baseUrl+'/login', user);
         }
     }
@@ -30,6 +29,14 @@ appServices.factory('User', function($http, $window) {
         },
         delete : function(userId) {
             return $http.delete(baseUrl+'/users/' + userId);
+        },
+        //upload
+        uploadImage : function(formData) {
+            console.log(formData);
+            return $http.post(baseUrl+'/upload', formData,
+                       { headers: { 'Content-Type': "application/x-www-form-urlencoded; charset=utf-8" },
+                        transformRequest: angular.identity
+                    });
         }
     }
 });
@@ -127,19 +134,19 @@ appServices.factory('CommonData', function(){
     }
 });
 
-appServices.service('Auth', function($rootScope) {
+appServices.service('Auth', function($window) {
   var auth = {};
     //$rootScope.loggedIn = false;
     //$rootScope.user = null;
 
   auth.login = function(user) {
-    $rootScope.user = user;
-    $rootScope.loggedIn = true;
+    $window.localStorage.setItem('user', JSON.stringify(user));
+    $window.localStorage.setItem('loggedIn', 'true');
   };
 
   auth.logout = function() {
-    $rootScope.user = null;
-    $rootScope.loggedIn = false;
+    $window.localStorage.setItem('user', "");
+    $window.localStorage.setItem('loggedIn', 'false');
   };
 
   return auth;

@@ -1,4 +1,4 @@
-var appControllers = angular.module('appControllers', ['720kb.datepicker']);
+var appControllers = angular.module('appControllers', ['720kb.datepicker', 'imageupload']);
 
 appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', 'Auth', 'CommonData', function($scope, Users, $window, $route, Auth, CommonData) {
   if ($window.localStorage.getItem('loggedIn') !== null) {
@@ -17,8 +17,9 @@ appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', '
   console.log("logged in? " + $window.localStorage.getItem('loggedIn'));
 
   $scope.logout = function() {
-    $window.localStorage.setItem('user', "");
-    $window.localStorage.setItem('loggedIn', 'false');
+    Auth.logout();
+    /*$window.localStorage.setItem('user', "");
+    $window.localStorage.setItem('loggedIn', 'false');*/
     $scope.user = null;
     $scope.loggedIn = false;
     $route.reload();
@@ -44,11 +45,11 @@ appControllers.controller('LandingPageController', ['$scope', '$window', 'Common
 }]);
 
 appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'Users', function($scope, $window, $http, Users) {
+
   $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
  //  console.log("user in profile " + $window.localStorage.getItem('user'));
 	// $scope.user = JSON.parse($window.localStorage.getItem('user'));
   $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
-
 
  }]);
 
@@ -59,8 +60,9 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
   $scope.login = function() {
     console.log($scope.user);
     Users.postLogIn($scope.user).success(function (data) {
-      $window.localStorage.setItem('user', JSON.stringify(data.data));
-      $window.localStorage.setItem('loggedIn', 'true');
+      Auth.login(data.data);
+      /*$window.localStorage.setItem('user', JSON.stringify(data.data));
+      $window.localStorage.setItem('loggedIn', 'true');*/
       $window.location.href = '#/profile';
     }).error(function (data) {
       console.log("error");
@@ -69,14 +71,20 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
 
 }]);
 
-appControllers.controller('SignupController', ['$scope', '$window', '$route', 'Auth', 'Users', function($scope, $window, $route, Auth, Users) {
+appControllers.controller('SignupController', ['$scope', '$window', '$route', 'Auth', 'Users', 'User', function($scope, $window, $route, Auth, Users, User) {
   $scope.newUser = "";
+  $scope.name ="";
   $scope.signup = function() {
     Users.postSignUp($scope.newUser).success(function (data) {
-      $window.localStorage.setItem('user', JSON.stringify(data.data));
-      $window.localStorage.setItem('loggedIn', 'true');
-      $window.location.href = '#/travellerhost';
-      $route.reload();
+        var user = data.data;
+        user.name = $scope.name;
+
+        User.put(user._id, user);
+        Auth.login(data.data);
+        /*$window.localStorage.setItem('user', JSON.stringify(data.data));
+        $window.localStorage.setItem('loggedIn', 'true');*/
+        $window.location.href = '#/travellerhost';
+        $route.reload();
     });
   }
 
@@ -165,21 +173,25 @@ appControllers.controller('SettingsController', ['$scope' , '$window' , function
 }]);
 
 
-appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', 'Listings', function($scope, $window, CommonData, Listings) {
+appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', 'Listings', 'User', function($scope, $window, CommonData, Listings, User) {
   $scope.roomTypes = CommonData.getRoomTypes();
   $scope.img = CommonData.getProfileImg();
   $scope.roomImg = CommonData.getRoomImg();
   $scope.cities = CommonData.getCities();
   $scope.tagList = CommonData.getTags();
-
-  $scope.listing = {address: "", city: "", bio: "", roomType: $scope.roomTypes[0], price: 0, dateStart: "", dateEnd: "", tags: []};
+  $scope.user = $window.localStorage.getItem('user');
+  var user = JSON.parse($scope.user);
+  console.log($scope.tagList);
+  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomTypes[0], price: 0, dateStart: "", dateEnd: "", tags: []};
   $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
 
   $scope.submitForm = function(){
     console.log("create host ad");
+    console.log($scope.listing);
     Listings.postListing($scope.listing).success(function(data){
       // add the listing id to user
-
+      user.postedHostAds.push(data.data._id);
+      User.put(user._id, user);
       console.log(data);
     }).error(function(err){
       console.log(err);
@@ -220,7 +232,7 @@ appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData
   $scope.img = CommonData.getProfileImg();
 }]);
 
-appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User', 
+appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User',
                           function($scope, $window, $routeParams, Listing, User) {
   console.log('listing detail controller created');
   $scope.requestSent = true;
@@ -247,7 +259,7 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
     $scope.user.matchedTravelers.push(listingID);
     User.put(userID, $scope.user).success(function(data) {
       console.log("request book:", data.message);
-      
+
       if($scope.user.gender == "female") {
         genderPro = "she";
       }
@@ -265,13 +277,14 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 }]);
 
 
-appControllers.controller('EditProfileController', ['$scope', '$routeParams', 'CommonData', 'User', function($scope, 
-                          $routeParams, CommonData, User) {
+
+appControllers.controller('EditProfileController', ['$scope', '$window', '$routeParams', 'CommonData', 'User', function($scope,
+                          $window, $routeParams, CommonData, User) {
   // $scope.user = {};
   // test local user
-  $scope.user = {name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
+  $scope.user = JSON.parse($window.localStorage.getItem('user'));
   $scope.cities = CommonData.getCities();
-  $scope.genders = [{name: "male"}, {name: "female"}, {name: "others"}];
+  $scope.genders = [{name: "male"}, {name: "female"}, {name: "other"}];
   var userID = $routeParams._id;
   User.getFromId(userID).success(function(data) {
     $scope.user = data.data;
@@ -285,4 +298,23 @@ appControllers.controller('EditProfileController', ['$scope', '$routeParams', 'C
       $window.location.href = '#/landing';
     })
   }
+
+  $scope.upload = function(image){
+    console.log("UPLOAD");
+    console.log(image);
+    var formData = new FormData();
+    formData = {image: image};
+    //formData.append('image', image, image.file.name);
+    //formData.set('image', image, image.file.name);
+    //console.log(formData);
+    User.uploadImage(formData)
+      .success(function(result) {
+        console.log(result);
+        $scope.uploadedImgSrc = result.src;
+        $scope.sizeInBytes = result.size;
+    }).error(function(err){
+      console.log(err);
+    });
+   }
+
 }]);

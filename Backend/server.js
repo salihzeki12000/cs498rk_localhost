@@ -10,7 +10,9 @@ var express = require('express'),
 	configDB = require('./config/database.js'),
 	Listing = require('./app/models/listing'),
     User = require('./app/models/user'),
-		LocalStrategy = require('passport-local').Strategy;
+	LocalStrategy = require('passport-local').Strategy,
+    path = require('path'),
+    fs = require('fs');
 
 mongoose.connect(configDB.url); // db connection
 //debugging!
@@ -105,15 +107,18 @@ usersRoute.get(function(req,res){
 
 usersRoute.post(function(req,res){
     var data = (req.body);
-	data.local = data.local.replace(/\'/g, "\"");
-	var datLocal = JSON.parse(data.local);
-	console.log((data.local));
-	console.log(datLocal);
-	console.log(datLocal.password);
-	console.log(datLocal.email);
+	if(typeof data.local === 'string'){
+		data.local = data.local.replace(/\'/g, "\"");
+		data.local = JSON.parse(data.local);
+	}
+
+	// console.log((data.local));
+	// console.log(datLocal);
+	// console.log(datLocal.password);
+	// console.log(datLocal.email);
 	//console.log(data.local.email);
 	console.log(data);
-    if(!data.name || !datLocal.email || !datLocal.password){
+    if(!data.name || !data.local.email || !data.local.password){
         return res.status(500).json({message: "Valid name and email required", data: null});
     }
     var d = new Date();
@@ -127,8 +132,8 @@ usersRoute.post(function(req,res){
 		bio: data.bio,
 		age: data.age
     });
-	newUser.local.email = datLocal.email;
-	newUser.local.password = newUser.generateHash(datLocal.password);
+	newUser.local.email = data.local.email;
+	newUser.local.password = newUser.generateHash(data.local.password);
     newUser.save(function(err){
         if(err){
             return res.status(500).send({'error':'internal service error', data:null});
@@ -158,6 +163,7 @@ idUsersRoute.put(function(req,res){
 //        password: data.local.password;
 		user.local.email = user.local.email;
 		user.local.password = user.local.password;
+
         user.postedHostAds= data.postedHostAds;
         user.location= data.location;
         user.matchedHosts= data.matchedHosts;
@@ -227,7 +233,13 @@ listingsRoute.get(function(req,res){
 });
 listingsRoute.post(function(req,res){
     var data = req.body;
-	console.log(data);
+	if(typeof data.tags === 'string'){
+		data.tags = data.tags.replace(/\'/g, "\"");
+	//	console.log(JSON.parse(data.tags));
+		data.tags=JSON.parse(data.tags);
+	}
+//	console.log("______________");
+//	console.log(data);
     if(!data.hostName || !data.address){
         return res.status(500).json({message: "Valid host name and address required", data: null});
     }
@@ -292,6 +304,35 @@ idListingsRoute.delete(function(req,res){
 
         return res.status(200).json({message: "Ad removed.", data : null});
     });
+});
+
+/***********UPLOAD**************/
+var uploadRoute = router.route('/upload');
+uploadRoute.post(function(req, res) {
+    console.log("POST");
+    console.log(req.json);
+    if (req.json === undefined){
+        return res.status(404).json({message: "Something went wrong", data: null});
+    }
+    var image = req.json.image;
+    //var image =  req.files.image;
+    var filename = image.file.name;
+    var path = '../Frontend/public/data/';
+    var newImageLocation = path.join(__dirname, path, filename);
+    
+    fs.readFile(image.path, function(err, data) {
+        fs.writeFile(newImageLocation, data, function(err) {
+            if (err){
+                return res.status(404).json({message: "Something went wrong, can't find the file", data: null});
+            }
+            return res.status(200).json({ 
+                src: path + filename,
+                size: image.size
+            });
+        });
+        console.log("POSTED!!");
+    });
+    
 });
 
 app.listen(port);
