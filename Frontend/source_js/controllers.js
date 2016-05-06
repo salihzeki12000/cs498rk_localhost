@@ -226,17 +226,6 @@ appControllers.controller('SearchAdsController', ['$scope', '$window', 'CommonDa
   }
 }]);
 
-appControllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
-  $scope.url = $window.localStorage.baseurl;
-
-  $scope.setUrl = function(){
-    console.log("base url: " +$scope.url);
-    $window.localStorage.baseurl = $scope.url;
-    $scope.displayText = "URL set";
-  };
-
-}]);
-
 
 appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'CommonData', 'Listings', 'User', '$http', function($scope, $window, CommonData, Listings, User, $http) {
   $scope.roomTypes = CommonData.getRoomTypes();

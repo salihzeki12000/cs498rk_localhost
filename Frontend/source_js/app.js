@@ -24,10 +24,6 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'partials/login.html',
     controller: 'LoginController'
   }).
-  when('/settings', {
-    templateUrl: 'partials/settings.html',
-    controller: 'SettingsController'
-  }).
   when('/profile', {
     templateUrl: 'partials/profile.html',
     controller: 'ProfileController'
