@@ -251,23 +251,23 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.tagList = CommonData.getTags();
   $scope.user = $window.localStorage.getItem('user');
   var user = JSON.parse($scope.user);
-  console.log($scope.tagList);
+  //console.log($scope.tagList);
 
   $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
 
-  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomType.name, price: 0, dateStart: "", dateEnd: "", tags: [], activities: $scope.thingsToDo};
+  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: "", price: 0, dateStart: "", dateEnd: "", tags: [], activities: $scope.thingsToDo};
   $scope.listing.images = [];
-
+  $('.alert').hide();
+  $scope.displayErr = "";
   $scope.submitForm = function(){
 //      console.log($scope.Image1.dataURL);
 //      console.log($scope.Image2);
-    $scope.listing.city = $scope.listing.city.name;
+   /* $scope.listing.city = $scope.listing.city.name;
     $scope.listing.roomType = $scope.listing.roomType.name;
     console.log($scope.listing);
     console.log($scope.listing.city);
-    console.log("create host ad");
+    console.log("create host ad");*/
     console.log($scope.listing);
-
 
     // $http.post("http://localhost:4000/api/images", $scope.Image1.dataURL).success(function(data){
     //     console.log("wut");
@@ -277,17 +277,25 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 //    $scope.listing.images.push($scope.Image2.dataURL);
 //    $scope.listing.images.push($scope.Image3.dataURL);
 //    $window.localStorage.setItem('exampleImage', $scope.Image1.dataURL);
-
-    Listings.postListing($scope.listing).success(function(data){
-      // add the listing id to user
-      user.postedHostAds.push(data.data._id);
-      User.put(user._id, user);
-      console.log(data);
-    }).error(function(err){
-      console.log(err);
-    });
-
-    $window.location.href= "#/profile";
+    if ($scope.listing.description !== "" && $scope.listing.address !== "" && $scope.listing.city !== undefined
+      && $scope.listing.dateStart !== "" && $scope.listing.dateEnd !== "" && $scope.listing.roomType !== undefined
+      && $scope.listing.price !== 0 && $scope.listing.dateStart < $scope.listing.dateEnd){
+      $scope.listing.city = $scope.listing.city.name;
+      $scope.listing.roomType = $scope.listing.roomType.name;
+      Listings.postListing($scope.listing).success(function(data){
+        // add the listing id to user
+        user.postedHostAds.push(data.data._id);
+        User.put(user._id, user);
+        console.log(data);
+        $window.location.href= "#/profile";
+      }).error(function(err){
+        console.log(err);
+      });
+    } else {
+      $scope.displayErr = "You must fill out the required fields";
+      $('.alert').show();
+    }
+    
   }
 }]);
 
