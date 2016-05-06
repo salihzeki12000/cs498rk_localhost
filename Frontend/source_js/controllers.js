@@ -301,15 +301,18 @@ appControllers.controller('EditProfileController', ['$scope', '$window', '$route
 
   $scope.upload = function(image){
     console.log("UPLOAD");
-    console.log(image);
-    //var formData = new FormData();
-    $scope.formData = {image: image};
-    //formData.append('image', image, image.file.name);
+    //console.log(image);
+    //var form = document.getElementById('imgForm');
+    //var fd = new FormData(form);
+    //var formData = {image: image};
+    //fd.append('image', image, image.file.name);
+    //fd.set('image', image);
+    //console.log(fd);
     //formData.set('image', image, image.file.name);
-    //console.log(formData);
-    var data = { headers: { 'Content-Type': "application/x-www-form-urlencoded; charset=utf-8" },
-                        transformRequest: angular.identity};
-    User.uploadImage($scope.formData, data)
+   // console.log(formData);
+   // var data = { headers: { 'Content-Type': undefined },
+                        //transformRequest: angular.identity };
+    User.uploadImage(image)
       .success(function(result) {
         console.log(result);
         $scope.uploadedImgSrc = result.src;
