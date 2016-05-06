@@ -1,6 +1,6 @@
 var appControllers = angular.module('appControllers', ['720kb.datepicker', 'imageupload']);
 
-appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', 'Auth', 'CommonData', function($scope, Users, $window, $route, Auth, CommonData) {
+appControllers.controller('MainCtrl', ['$scope', 'User', '$window', '$route', 'Auth', 'CommonData', function($scope, User, $window, $route, Auth, CommonData) {
   if ($window.localStorage.getItem('loggedIn') !== null) {
     $scope.loggedIn = ($window.localStorage.getItem('loggedIn') === 'true');
   } else {
@@ -8,6 +8,13 @@ appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', '
   }
   if($scope.loggedIn) {
     $scope.user = JSON.parse($window.localStorage.getItem('user'));
+      User.getFromId($scope.user._id).success(function(data) {
+        var newUser = data.data;
+        if (newUser.flag) {
+          console.log("update me!");
+
+        }
+      })
   } else {
     $scope.user = null;
   }
@@ -16,10 +23,10 @@ appControllers.controller('MainCtrl', ['$scope', 'Users', '$window', '$route', '
   $window.localStorage.setItem('baseurl', 'http://localhost:4000');
   console.log("logged in? " + $window.localStorage.getItem('loggedIn'));
 
+
+
   $scope.logout = function() {
     Auth.logout();
-    /*$window.localStorage.setItem('user', "");
-    $window.localStorage.setItem('loggedIn', 'false');*/
     $scope.user = null;
     $scope.loggedIn = false;
     $route.reload();
@@ -44,48 +51,43 @@ appControllers.controller('LandingPageController', ['$scope', '$window', 'Common
   }
 }]);
 
-appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'Users', 'User', function($scope, $window, $http, Users, User) {
-
+appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'Listings', 'User', function($scope, $window, $http, Listings, User) {
+  $scope.hasListings = false;
   $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
+
   $scope.exampleImg = $window.localStorage.getItem('exampleImage');
-  console.log($scope.exampleImg);
-  // substitute dummy data with get services
+  //console.log($scope.exampleImg);
 
 
-  //  console.log("user in profile " + $window.localStorage.getItem('user'));
-//	 $scope.user = JSON.parse($window.localStorage.getItem('user'));
-    if($scope.profile){
-        var userID = JSON.parse($window.localStorage.getItem('user'));
-
-        User.getFromId(userID._id).success(function(data){
-            $scope.user = data.data;
-        }).error(function(err){
-            console.log(err);
-            $scope.user = null;
-        })
-
-        //console.log(data);
-//        $scope.user = data;
-    }
-/*    $scope.listings = [];
-    for(var i = 0; i < $scope.user.postedHostAds.length; i++){
-        Listing.getFromId($scope.user.postedHostAds[i]).success(function(data){
-            $scope.listings
-        })
-    }
-*/
+  if($scope.profile) {
+      var user = JSON.parse($window.localStorage.getItem('user'));
+      User.getFromId(user._id).success(function(data) {
+        $scope.user = data.data;
+        //$window.localStorage.setItem('user', $scope.user);
+        Listings.getListingsByUser($scope.user._id).success(function(data) {
+          $scope.listings = data.data;
+          if ($scope.listings.length > 0) {
+            $scope.hasListings = true;
+          }
+        }).error (function() {
+          console.log("error");
+        });
+      }).error(function() {
+        console.log("error");
+    });
+  }
 
   // these are dummy listings
  // $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
  // $scope.listing = {description: "My trip is a perfect opportunity to experience local culture", activities: ["My amazing first activity", "My fabulous second activity", "My ingenious third activity"], pendingTravelers: ["Alex", "Daniel"]}/
   $scope.pendingTravelersText = "";
-  var len = $scope.listing.pendingTravelers.length;
+ /* var len = $scope.listing.pendingTravelers.length;
   for(var i = 0; i < len - 1; i++) {
     var tempText = $scope.listing.pendingTravelers[i] + ", ";
     $scope.pendingTravelersText += tempText;
   }
   $scope.pendingTravelersText += $scope.listing.pendingTravelers[len - 1];
-
+*/
 //     if($scope.profile){
 //         $scope.user = JSON.parse($window.localStorage.getItem('user'));
 //         // User.getFromId($scope.user._id).success(function(data){
@@ -133,8 +135,6 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
 
         User.put(user._id, user);
         Auth.login(data.data);
-        /*$window.localStorage.setItem('user', JSON.stringify(data.data));
-        $window.localStorage.setItem('loggedIn', 'true');*/
         $window.location.href = '#/travellerhost';
         $route.reload();
     }).error(function(data) {
@@ -145,7 +145,6 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
 }]);
 
 appControllers.controller('hostOrTravellerController', ['$scope', '$window', 'CommonData', function($scope, $window, CommonData){
-  $scope.user = {_id: "1234", email: "abc@gmail.com", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
 
 }]);
 
@@ -235,6 +234,7 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
   $scope.Image1 = null;
   $scope.Image2 = null;
   $scope.Image3 = null;
+  $scope.roomType = "";
 
   $scope.cities = CommonData.getCities();
   $scope.tagList = CommonData.getTags();
@@ -244,14 +244,19 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 
   $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
 
-  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomTypes[0], price: 0, dateStart: "", dateEnd: "", tags: [], activities: $scope.thingsToDo};
+  $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomType.name, price: 0, dateStart: "", dateEnd: "", tags: [], activities: $scope.thingsToDo};
   $scope.listing.images = [];
 
   $scope.submitForm = function(){
 //      console.log($scope.Image1.dataURL);
 //      console.log($scope.Image2);
+    $scope.listing.city = $scope.listing.city.name;
+    $scope.listing.roomType = $scope.listing.roomType.name;
+    console.log($scope.listing);
+    console.log($scope.listing.city);
     console.log("create host ad");
     console.log($scope.listing);
+
 
     // $http.post("http://localhost:4000/api/images", $scope.Image1.dataURL).success(function(data){
     //     console.log("wut");
@@ -271,13 +276,11 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
       console.log(err);
     });
 
-    $window.location.href="#/profile"
-    }
+    $window.location.href= "#/profile";
+  }
 }]);
 
-appControllers.controller('MatchedController', ['$scope', '$window', function($scope, $window){
-  $scope.user = {_id: "1234", email: "abc@gmail.com", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
-  $scope.matchedUserName = $scope.user.name;
+appControllers.controller('MatchingController', ['$scope', '$window', function($scope, $window){
 
 }]);
 
@@ -313,22 +316,22 @@ appControllers.controller('HostBioController', ['$scope', '$window', 'CommonData
 appControllers.controller('ListingDetailsController', ['$scope', '$window', '$routeParams', 'Listing', 'User',
                           function($scope, $window, $routeParams, Listing, User) {
   console.log('listing detail controller created');
-  $scope.requestSent = true;
+  $scope.requestSent = false;
   $scope.requestSentError = false;
   $scope.requestSentText = 'Request';
   console.log($routeParams._id);
   $scope.listing= {};
-  $scope.user = {};
-
+  $scope.host = {};
+  $scope.user = JSON.parse($window.localStorage.getItem('user'));
   Listing.getFromId($routeParams._id).success(function(data){
     //   console.log("what the fuck");
       $scope.listing = data.data;
 //      console.log(data);
 //      console.log($scope.listing);
       User.getFromId($scope.listing.hostID).success(function(data){
-          $scope.user = data.data;
+          $scope.host = data.data;
       }).error(function(err){
-          $scope.user = null;
+          $scope.host = null;
           console.log(err);
       });
   }).error(function(err){
@@ -336,8 +339,9 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
       console.log(err);
   });
   var genderPro = "he";
-  console.log($scope.user);
-  console.log($scope.listing);
+  console.log("host" + JSON.stringify($scope.host));
+  console.log("user" + JSON.stringify($scope.user));
+  console.log("listing" + JSON.stringify($scope.listing));
 
 
 
@@ -356,16 +360,18 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
   // })
 
   $scope.requestToBook = function() {
-    console.log("request to book button pressed!");
-    var userID = $scope.user._id;
-    $scope.user.matchedTravelers.push(listingID);
-    User.put(userID, $scope.user).success(function(data) {
+    console.log("request to book button pressed! " + JSON.stringify($scope.host));
+    var hostID = $scope.host._id;
+    var travellerID = $scope.user._id;
+    var listingID = $scope.listing._id;
+    $scope.host.pendingTravelers.push(travellerID);
+    $scope.host.flag = true;
+    User.put(hostID, $scope.host).success(function(data) {
       console.log("request book:", data.message);
-
-      if($scope.user.gender == "female") {
+      if($scope.host.gender == "female") {
         genderPro = "she";
       }
-      $scope.requestSentText += ' sent to ' + $scope.user.name + ", " + genderPro + "will reply you in a moment!";
+      $scope.requestSentText += ' sent to ' + $scope.host.name + ", " + genderPro + " will reply to you when he gets the message!";
       $scope.requestSent = true;
       $scope.requestSentError = false;
     }).error(function(err) {
@@ -380,7 +386,7 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 
 
 
-appControllers.controller('EditProfileController', ['$scope', '$window', 'CommonData', 'User', function($scope,
+appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$window', 'CommonData', 'User', function($scope, $routeParams,
                           $window, CommonData, User) {
   // $scope.user = {};
   // test local user
@@ -395,12 +401,10 @@ appControllers.controller('EditProfileController', ['$scope', '$window', 'Common
   $scope.submitChange = function() {
       $scope.user.gender = $scope.gender.name;
       $scope.user.location=$scope.location.name;
-      console.log($scope.user.gender.name);
-      console.log($scope.user.location.name);
       User.put($scope.user._id, $scope.user).success(function(data) {
-      console.log("Edit user:", data.message);
+      console.log("Edit user:", data.message + JSON.stringify(data.data));
       $window.location.href = '#/profile';
-    })
+    });
   }
 
   $scope.upload = function(image){
