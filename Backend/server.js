@@ -163,9 +163,9 @@ idUsersRoute.get(function(req,res){
 });
 idUsersRoute.put(function(req,res){
 	var data = req.body;
-//	if(!data.name || !data.local.email || !data.local.password){
-//        return res.status(500).json({message: "Valid name and email required", data: null});
-//    }
+	if(!data.name || !data.local.email || !data.local.password){
+        return res.status(500).json({message: "Valid name and email required", data: null});
+    }
     User.findById(req.params.id, function(err, user){
         if(err || user === null) res.status(404).json({message:"User not found", data:null});
 
