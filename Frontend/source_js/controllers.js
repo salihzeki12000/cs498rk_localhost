@@ -337,14 +337,14 @@ appControllers.controller('CreateHostAdController', ['$scope' , '$window' , 'Com
 
   $scope.thingsToDo = {first: "", second: "", third: "", fourth: ""};
 
-act = [];
+  var act = [];
   $scope.listing = {hostName: user.name, hostID: user._id, address: "", city: "", bio: "", roomType: $scope.roomType.name, price: 0, dateStart: "", dateEnd: "", tags: [], activities: act};
 
   $('.alert').hide();
   $scope.displayErr = "";
 
   $scope.submitForm = function(){
-      var act = [];
+    act = [];
     if($scope.thingsToDo.first)
         act.push($scope.thingsToDo.first);
     if($scope.thingsToDo.second)
@@ -353,11 +353,11 @@ act = [];
         act.push($scope.thingsToDo.third);
     if($scope.thingsToDo.fourth)
         act.push($scope.thingsToDo.fourth);
-
-    var listingTags = [];
+    $scope.listing.activities = act;
+    /*var listingTags = [];
     for(var i = 0; i < tags.length; i++){
         listingTags.push(tags[i]);
-    }
+    }*/
 //      console.log($scope.Image1.dataURL);
 //      console.log($scope.Image2);
     var hostImagesArr = [];
@@ -372,25 +372,8 @@ act = [];
         $window.localStorage.setItem('2example1', $scope.Image1.dataURL);
         $window.localStorage.setItem('2example2', $scope.Image2.dataURL);
         $window.localStorage.setItem('2example3', $scope.Image3.dataURL);
-    }
-
-    $scope.listing.activities = act;
-    //$scope.listing.city = $scope.listing.city.name;
-   /* $scope.listing.city = $scope.listing.city.name;
-    $scope.listing.roomType = $scope.listing.roomType.name;
-    $scope.listing.tags = listingTags;
-
-    console.log($scope.listing);
-    console.log($scope.listing.city);
-    console.log("create host ad")W;*/
-
-    console.log($scope.listing);
-
-
-
-
-//      $scope.listing.roomType = $scope.listing.roomType.name;
-
+    } 
+   
     // $http.post("http://localhost:4000/api/images", $scope.Image1.dataURL).success(function(data){
     //     console.log("wut");
     // }).error(function(err){
