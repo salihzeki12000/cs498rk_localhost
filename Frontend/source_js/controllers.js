@@ -461,9 +461,16 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
   $scope.listing= {};
   $scope.host = {};
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
+  $scope.actitivies = [];
+
   Listing.getFromId($routeParams._id).success(function(data){
-    //   console.log("what the fuck");
       $scope.listing = data.data;
+      //console.log($scope.listing);
+      for (var i = 0; i < $scope.listing.activities.length; i++){
+       // console.log($scope.listing.activities[i]);
+        $scope.actitivies.push({activity: $scope.listing.activities[i], img: CommonData.getRandomImg()});
+      }
+     // console.log($scope.activities);
 //      console.log(data);
 //      console.log($scope.listing);
       User.getFromId($scope.listing.hostID).success(function(data){
