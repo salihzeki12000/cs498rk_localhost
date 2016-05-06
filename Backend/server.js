@@ -95,7 +95,7 @@ usersRoute.get(function(req,res){
     }
 
     query.exec(function(err, users){
-        if(err) return console.error(err);
+        if(err) return res.status(404).json({message:"User not found", data:null});
 
         res.status(200).json({message:'OK', data:users});
     });
@@ -176,6 +176,7 @@ idUsersRoute.put(function(req,res){
         user.gender = data.gender;
         user.age = data.age;
         user.occupation = data.occupation;
+		user.flag = data.flag;
         user.save(function(err){
             if(err){
 				console.error(err);
@@ -230,7 +231,7 @@ listingsRoute.get(function(req,res){
     }
 
     query.exec(function(err, listings){
-        if(err) return console.error(err);
+        if(err) return res.status(404).json({message:"Listing not found", data:null});
 
         res.status(200).json({message:'OK', data:listings});
     });

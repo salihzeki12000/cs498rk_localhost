@@ -15,7 +15,7 @@ var listingSchema = new mongoose.Schema({
 	tags				: [String],
 	pendingTravelers	: [String], //list of IDs
 	currentTraveler		: String,
-	currentTravelerName	: String,
+	currentTravelerName	: String
 
 
 });
