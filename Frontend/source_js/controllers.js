@@ -343,7 +343,7 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 
 
 
-appControllers.controller('EditProfileController', ['$scope', '$window', 'CommonData', 'User', function($scope,
+appControllers.controller('EditProfileController', ['$scope', '$routeParams', '$window', 'CommonData', 'User', function($scope, $routeParams,
                           $window, CommonData, User) {
   // $scope.user = {};
   // test local user
@@ -358,12 +358,12 @@ appControllers.controller('EditProfileController', ['$scope', '$window', 'Common
   $scope.submitChange = function() {
       $scope.user.gender = $scope.gender.name;
       $scope.user.location=$scope.location.name;
-      console.log($scope.user.gender.name);
-      console.log($scope.user.location.name);
-      User.put(userID, $scope.user).success(function(data) {
+      //console.log($scope.user.gender.name);
+      //console.log($scope.user.location.name);
+      User.put($scope.user._id, $scope.user).success(function(data) {
       console.log("Edit user:", data.message);
-      $window.location.href = '#/profile/'+$routeParams._id;
-    })
+      $window.location.href = '#/profile';
+    });
   }
 
   $scope.upload = function(image){
