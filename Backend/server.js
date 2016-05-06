@@ -60,6 +60,13 @@ var home = router.route('/');
 home.get(function(req,res){
     res.json({message: "Please use either /api/users or /api/listings"});
 });
+var image = router.route('/image');
+image.post(function(req,res){
+	var data = req.body;
+	console.log(data);
+	res.status(200).json({message: "WE OKAY"});
+});
+
 /*----------------------------User Route--------------------------------------*/
 var usersRoute = router.route('/users');
 var idUsersRoute = router.route('/users/:id');
