@@ -181,8 +181,8 @@ h5 {
 }
 
 .hot-cities-cap {
-	font-family: $fopensans;
-	font-style: italic;
+	font-family: $fpaci;
+	color: $uiuc-orange;
 }
 
 .desc {
@@ -568,6 +568,7 @@ header {
 			}
 		}
 	}
+
 }
 
 #priceModal {
@@ -688,12 +689,40 @@ header {
 		font-size: 40px;
 	}
 
+	.bg-video-container {
+		max-height: 460px;
+	}
+
 }
 /*medium*/
 @media screen and (min-width: 992px) and (max-width: 1200px) {
 	.how-works-icon {
-		font-size: 60px;
+		font-size: 50px;
 	}
+
+	.bg-video-container {
+		max-height: 500px;
+	}
+
+	.title-container {
+		top: 60px;
+	}
+
+	.title {
+		margin-top: 40px;
+		font-size: 80px;
+		text-shadow: 0px 0px 30px $uiuc-orange;
+	}
+
+	.sub-title {
+		margin-top: 20px;
+		font-size: 40px;
+	}
+
+	.city-search {
+		margin-top: 40px;
+	}
+
 }
 
 /*large*/
@@ -701,6 +730,30 @@ header {
 	.how-works-icon {
 		font-size: 60px;
 	}
+
+	.bg-video-container {
+		max-height: 600px;
+	}
+
+	.title-container {
+		top: 80px;
+	}
+
+	.title {
+		margin-top: 40px;
+		font-size: 100px;
+		text-shadow: 0px 0px 30px $uiuc-orange;
+	}
+
+	.sub-title {
+		margin-top: 20px;
+		font-size: 46px;
+	}
+
+	.city-search {
+		margin-top: 40px;
+	}
+
 }
 
 /* Traveller Search Page */

@@ -44,18 +44,32 @@ appControllers.controller('LandingPageController', ['$scope', '$window', 'Common
   }
 }]);
 
-appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'Users', function($scope, $window, $http, Users) {
+appControllers.controller('ProfileController', ['$scope', '$window', '$http', 'Users', 'User', function($scope, $window, $http, Users, User) {
 
   $scope.profile = ($window.localStorage.getItem('loggedIn') === 'true');
  //  console.log("user in profile " + $window.localStorage.getItem('user'));
 	// $scope.user = JSON.parse($window.localStorage.getItem('user'));
-  $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
+    if($scope.profile){
+        $scope.user = JSON.parse($window.localStorage.getItem('user'));
+        // User.getFromId($scope.user._id).success(function(data){
+        //     $scope.user = data.data;
+        //     console.log(data);
+        // }).error(function(err){
+        //     console.log(err);
+        //     $scope.user=null;
+        // });
+
+        //console.log(data);
+//        $scope.user = data;
+    }
+// $scope.user = {_id: "1234", name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
 
  }]);
 
 appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Auth', 'Users', function($scope, $window, $route, Auth, Users) {
   $scope.data = "";
   $scope.displayText = "";
+  $('.alert').hide();
 
   $scope.login = function() {
     console.log($scope.user);
@@ -65,7 +79,7 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
       $window.localStorage.setItem('loggedIn', 'true');*/
       $window.location.href = '#/profile';
     }).error(function (data) {
-      console.log("error");
+      $('.alert').show();
     });
   };
 
@@ -73,6 +87,7 @@ appControllers.controller('LoginController', ['$scope', '$window', '$route', 'Au
 
 appControllers.controller('SignupController', ['$scope', '$window', '$route', 'Auth', 'Users', 'User', function($scope, $window, $route, Auth, Users, User) {
   $scope.newUser = "";
+  $('.alert').hide();
   $scope.name ="";
   $scope.signup = function() {
     Users.postSignUp($scope.newUser).success(function (data) {
@@ -85,6 +100,8 @@ appControllers.controller('SignupController', ['$scope', '$window', '$route', 'A
         $window.localStorage.setItem('loggedIn', 'true');*/
         $window.location.href = '#/travellerhost';
         $route.reload();
+    }).error(function(data) {
+      $('.alert').show();
     });
   }
 
@@ -238,9 +255,33 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
   $scope.requestSent = true;
   $scope.requestSentError = false;
   $scope.requestSentText = 'Request';
+  console.log($routeParams._id);
+  $scope.listing= {};
+  $scope.user = {};
+
+  Listing.getFromId($routeParams._id).success(function(data){
+    //   console.log("what the fuck");
+      $scope.listing = data.data;
+//      console.log(data);
+//      console.log($scope.listing);
+      User.getFromId($scope.listing.hostID).success(function(data){
+          $scope.user = data.data;
+      }).error(function(err){
+          $scope.user = null;
+          console.log(err);
+      });
+  }).error(function(err){
+      $scope.listing= null;
+      console.log(err);
+  });
   var genderPro = "he";
-  $scope.user = {name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
-  $scope.listing = {description: "Interaction with Guests We want to meet interesting people so we are open to interact with the guests, if they want to, but the garden house is separate, so they can decide! The Neighborhood It's in the center of the Silicon Valley. It's closed to University Avenue, where all the restaurants and stores like the Palo Alto Apple Store are located. So it's the best place to start a journey through the Valley. Getting Around Palo Alto Public Transportation is great! You can get to many places in the Bay Area with the CalTrain or Uber. Other Things to Note There is no kitchen in the garden house, just a sink, but if you are here, you want to eat out and go to events anyway ;-)"}
+  console.log($scope.user);
+  console.log($scope.listing);
+
+
+
+//  $scope.user = {name: "Isaac Clerencia", location: "Mountain View, CA, United States", occupation: "Software Engineer", age: "23", gender: "male", bio: "I am curious about everything and a bit of a computer nerd, but still socially capable :P In fact I love meeting new people, going out and I am usually up for anything ... I will enjoy as much a visit to a local bookshop, a BBQ in the park, discussing about whatever, some adventure sport, a good hike or a crazy night out until dawn."};
+//  $scope.listing = {description: "Interaction with Guests We want to meet interesting people so we are open to interact with the guests, if they want to, but the garden house is separate, so they can decide! The Neighborhood It's in the center of the Silicon Valley. It's closed to University Avenue, where all the restaurants and stores like the Palo Alto Apple Store are located. So it's the best place to start a journey through the Valley. Getting Around Palo Alto Public Transportation is great! You can get to many places in the Bay Area with the CalTrain or Uber. Other Things to Note There is no kitchen in the garden house, just a sink, but if you are here, you want to eat out and go to events anyway ;-)"}
   // get listing and host data, uncommnet when hook up to database
   // $scope.user = {};
   // $scope.listings = {};
@@ -278,24 +319,26 @@ appControllers.controller('ListingDetailsController', ['$scope', '$window', '$ro
 
 
 
-appControllers.controller('EditProfileController', ['$scope', '$window', '$routeParams', 'CommonData', 'User', function($scope,
-                          $window, $routeParams, CommonData, User) {
+appControllers.controller('EditProfileController', ['$scope', '$window', 'CommonData', 'User', function($scope,
+                          $window, CommonData, User) {
   // $scope.user = {};
   // test local user
   $scope.user = JSON.parse($window.localStorage.getItem('user'));
   $scope.cities = CommonData.getCities();
   $scope.genders = [{name: "male"}, {name: "female"}, {name: "other"}];
-  var userID = $routeParams._id;
-  User.getFromId(userID).success(function(data) {
-    $scope.user = data.data;
-  }).error(function(err) {
-    console.log(err);
-  });
+  $scope.gender = "";
+  $scope.location="";
+  $scope.user = JSON.parse($window.localStorage.getItem('user'));
 
+  console.log($scope.user);
   $scope.submitChange = function() {
-    User.put(userID, $scope.user).success(function(data) {
+      $scope.user.gender = $scope.gender.name;
+      $scope.user.location=$scope.location.name;
+      console.log($scope.user.gender.name);
+      console.log($scope.user.location.name);
+      User.put(userID, $scope.user).success(function(data) {
       console.log("Edit user:", data.message);
-      $window.location.href = '#/landing';
+      $window.location.href = '#/profile/'+$routeParams._id;
     })
   }
 
